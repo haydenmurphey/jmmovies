@@ -11,6 +11,8 @@ function setup() {
     keyval = new Keyval(KEYVAL_API_KEY);
 }
 
+
+
 function draw() {
     background(0);
 }
@@ -23,19 +25,28 @@ function fetchData() {
     });
 }
 
+let img;
 let ball_x = 200;
 let ball_y = 50;
 let ball_dy = 0; // acceleration
 let gravity = 0.5;
 let start_stop = true;
+let irotate = 0;
+function preload(){
+  img = loadImage('https://www.jmu.edu/cise/cs/_images/faculty-staff-images/riley.png');
+}
 
 function setup() {
   createCanvas(400, 400);
+  angleMode(DEGREES);
 }
 
 function draw() {
   background(220);
-  
+  rotate(irotate);
+  image(img,10,10,50,50);
+  irotate += 5;
+
   // Draw button
   button = createButton("Start/Stop");
 
