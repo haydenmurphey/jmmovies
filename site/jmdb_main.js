@@ -1,5 +1,4 @@
 
-let button;
 let keyval;
 let input;
 
@@ -23,64 +22,4 @@ function fetchData() {
             console.log(data);
         });
     });
-}
-
-let img;
-let ball_x = 200;
-let ball_y = 50;
-let ball_dy = 0; // acceleration
-let gravity = 0.5;
-let start_stop = true;
-let irotate = 0;
-
-function setup() {
-  frameRate(60);
-  createCanvas(800, 800, WEBGL);
-  angleMode(DEGREES);
-  
-  
-
-}
-
-function draw() {
-  background(220);
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.01);
-  torus(30,15);
-  
-
-  // Draw button
-  button = createButton("Start/Stop");
-
-  button.position(0, 425);
-  button.mousePressed(start);
-  
-  // Draw ball
-  fill(0, 255, 255);
-  circle(ball_x, ball_y, 30);
-  
-  // Acceleration with gravity
-  ball_dy += gravity;
-  ball_y += ball_dy;
-  
-  // Bounce
-  if (ball_y > 379) {
-    ball_dy *= -1;  
-  } 
-  
-  // Start and stop ball from moving
-  function start() {
-    if (start_stop == true) {
-      start_stop = false;
-      y_save = ball_y;
-      dy_save = ball_dy;
-      gravity = 0;
-      ball_dy = 0;
-    } else {
-      start_stop = true;
-      gravity = 0.5;
-      ball_y = y_save;
-      ball_dy = dy_save;
-    }  
-  }
 }
