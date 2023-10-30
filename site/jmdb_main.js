@@ -70,6 +70,11 @@ function searchTV(value){
     loadJSON(url, function(inp){
         searchData = inp;
     });
+
+    searchResult = Array(20);
+    for (let i = 0; i < 20 ; i++){
+        searchResult[i] = new TvShow(searchData, i);
+      }
 }
 
 function searchActor(value){
