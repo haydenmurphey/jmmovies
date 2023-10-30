@@ -56,13 +56,12 @@ function searchType(){
 function searchMovie(value){
     let url = "https://api.themoviedb.org/3/search/movie?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;    
     loadJSON(url, function(inp){
-        searchData = inp;
+      searchData = inp;
+      searchResult = Array(20);
+      for (let i = 0; i < 20 ; i++){
+        searchResult[i] = new Movie(searchData, i);
+      }
     });
-    
-    searchResult = Array(20);
-    for (let i = 0; i < 20 ; i++){
-      searchResult[i] = new Movie(searchData, 20);
-    }
 }
 
 function searchTV(value){
