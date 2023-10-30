@@ -4,30 +4,31 @@ let search_button;
 let search_dropdown;
 let searchData;
 let searchDiv;
+let searchResult;
 
 function setup() {
 
-  searchDiv = createDiv();
+    searchDiv = createDiv();
 
 
-  search_bar = createInput();
-  search_bar.size(300);
-  search_bar.center();
+    search_bar = createInput();
+    search_bar.size(300);
+    search_bar.center();
 
-  search_dropdown = createSelect();
-  search_dropdown.position(search_bar.x - 76,search_bar.y);
-  search_dropdown.size(75);
-  search_dropdown.option("Movie");
-  search_dropdown.option("TV Show");
-  search_dropdown.option("Actor");
-  search_dropdown.option("User");
-  
-  search_button = createButton("Search");
-  search_button.position(search_bar.x + 307, search_bar.y);
-  search_button.size(75);
-  search_button.mousePressed(searchType);
-  
-  keyval = new Keyval(KEYVAL_API_KEY);
+    search_dropdown = createSelect();
+    search_dropdown.position(search_bar.x - 76,search_bar.y);
+    search_dropdown.size(75);
+    search_dropdown.option("Movie");
+    search_dropdown.option("TV Show");
+    search_dropdown.option("Actor");
+    search_dropdown.option("User");
+    
+    search_button = createButton("Search");
+    search_button.position(search_bar.x + 307, search_bar.y);
+    search_button.size(75);
+    search_button.mousePressed(searchType);
+    
+    keyval = new Keyval(KEYVAL_API_KEY);
 
 }
 
@@ -57,6 +58,11 @@ function searchMovie(value){
     loadJSON(url, function(inp){
         searchData = inp;
     });
+    
+    searchResult = Array(20);
+    for (let i = 0; i < 20 ; i++){
+      searchResult[i] = new Movie(searchData, 20);
+    }
 }
 
 function searchTV(value){
