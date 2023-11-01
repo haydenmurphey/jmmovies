@@ -62,6 +62,13 @@ function searchMovie(value){
         searchResult[i] = new Movie(searchData, i);
         print(searchResult[i]);
       }
+      let x = 100;
+      let y = 100;
+      for (let i = 0; i < searchResult.length; i++){
+        searchResult[i].display(x, y);
+        y += 200;
+      }
+
     });
 }
 
