@@ -10,10 +10,19 @@
         margin: center;
         background-color: darkgray;
         }
-        h1 {
-            color: darkorchid;
-            border: 2px yellow;
-        }
+            .title {
+                border: 2px solid black;
+                padding-left: 10px;
+                text-align: left;
+            }
+            .title h1 {
+                font-size: 35px;
+                background: linear-gradient(to right, purple, darkorchid);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                display: inline-block;
+            }   
         </style>
     <script src="../p5.js"></script>
     <script src="../api_keys.js"></script>
@@ -25,7 +34,7 @@
     </head>
 
     <body>
-        <div class="header">
+        <div class="title">
             <h1>JMMovies</h1>
         </div>
         <main>
