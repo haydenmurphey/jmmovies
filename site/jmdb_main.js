@@ -7,13 +7,13 @@ let searchDiv;
 let searchResult;
 
 function setup() {
-
+    createCanvas(windowWidth, windowHeight);
     searchDiv = createDiv();
 
 
     search_bar = createInput();
     search_bar.size(300);
-    search_bar.center();
+    search_bar.position(windowWidth/2 - 150, 50);
 
     search_dropdown = createSelect();
     search_dropdown.position(search_bar.x - 76,search_bar.y);
