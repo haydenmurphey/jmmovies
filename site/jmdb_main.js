@@ -7,13 +7,13 @@ let searchDiv;
 let searchResult;
 
 function setup() {
-
+    createCanvas(windowWidth, windowHeight);
     searchDiv = createDiv();
 
 
     search_bar = createInput();
     search_bar.size(300);
-    search_bar.center();
+    search_bar.position(windowWidth/2 - 150, 50);
 
     search_dropdown = createSelect();
     search_dropdown.position(search_bar.x - 76,search_bar.y);
@@ -56,19 +56,35 @@ function searchType(){
 function searchMovie(value){
     let url = "https://api.themoviedb.org/3/search/movie?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;    
     loadJSON(url, function(inp){
-        searchData = inp;
+      searchData = inp;
+      searchResult = Array(20);
+      for (let i = 0; i < 20 ; i++){
+        searchResult[i] = new Movie(searchData, i);
+        print(searchResult[i]);
+      }
+      let x = 100;
+      let y = 100;
+      for (let i = 0; i < searchResult.length; i++){
+        searchResult[i].display(x, y);
+        y += 200;
+      }
+
     });
-    
-    searchResult = Array(20);
-    for (let i = 0; i < 20 ; i++){
-      searchResult[i] = new Movie(searchData, 20);
-    }
 }
 
 function searchTV(value){
     let url = "https://api.themoviedb.org/3/search/tv?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
+        searchResult = Array(20);
+        x = 40;
+        y = 100;
+        for (let i = 0; i < 20; i++){
+          searchResult[i] = new TvShow(searchData, i);
+          searchResult[i].display(x,y);
+          y += 200;
+          print(searchResult[i]);
+        }
     });
 }
 
@@ -76,6 +92,15 @@ function searchActor(value){
     let url = "https://api.themoviedb.org/3/search/person?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
+        searchResult = new Array(20);
+        x = 40;
+        y = 100;
+        for (let i = 0; i < 20; i++){
+          searchResult[i] = new Person(searchData, i);
+          searchResult[i].display(x,y);
+          y += 200;
+          print(searchResult[i]);
+        }
     });
 }
 
