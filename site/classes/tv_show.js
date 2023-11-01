@@ -19,5 +19,12 @@ class TvShow{
         this.image.position(x, y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
+        fill("black");
+        textWrap(WORD);
+        if(this.description == ""){
+            text("NO DESCRIPTION", x + 200, y, 1000);
+        } else {
+            text(this.description, x + 200, y, 1000);
+        }
     }
 }

@@ -7,7 +7,7 @@ let searchDiv;
 let searchResult;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, 10000);
     searchDiv = createDiv();
 
 
