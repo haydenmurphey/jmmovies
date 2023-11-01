@@ -22,7 +22,8 @@ class Movie{
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
-        text("text", x + 200, y);
+        textWrap(WORD);
+        text(this.description, x + 200, y, 1000);
 
     }
 
