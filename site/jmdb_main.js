@@ -56,7 +56,6 @@ function searchType(){
 function searchMovie(value){
     let url = "https://api.themoviedb.org/3/search/movie?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;    
     loadJSON(url, function(inp){
-      createCanvas(windowWidth, 10000);
       searchData = inp;
       searchResult = Array(20);
       background('darkgray');
@@ -80,9 +79,10 @@ function searchMovie(value){
 function searchTV(value){
     let url = "https://api.themoviedb.org/3/search/tv?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
-        createCanvas(windowWidth, 10000);
         searchData = inp;
         searchResult = Array(20);
+        background('darkgray');
+
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
@@ -97,9 +97,10 @@ function searchTV(value){
 function searchActor(value){
     let url = "https://api.themoviedb.org/3/search/person?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
-        createCanvas(windowWidth, 10000);
         searchData = inp;
         searchResult = new Array(20);
+        background('darkgray');
+
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
