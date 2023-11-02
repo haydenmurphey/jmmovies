@@ -19,11 +19,15 @@ class Movie{
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
+        fill("black");
+        textWrap(WORD);
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
-        textWrap(WORD);
         text(this.description, x + 200, y, 1000);
+        textSize(30);
+        text(this.name, x + 200, y - 50);
+        textSize(12);
 
     }
 

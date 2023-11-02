@@ -26,5 +26,8 @@ class TvShow{
         } else {
             text(this.description, x + 200, y, 1000);
         }
+        textSize(30);
+        text(this.name, x + 200, y - 50);
+        textSize(12);
     }
 }
