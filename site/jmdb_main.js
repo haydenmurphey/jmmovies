@@ -7,7 +7,7 @@ let searchDiv;
 let searchResult;
 
 function setup() {
-    createCanvas(windowWidth, 10000);
+    createCanvas(windowWidth, 3000);
     searchDiv = createDiv();
 
 
@@ -58,6 +58,7 @@ function searchMovie(value){
     loadJSON(url, function(inp){
       searchData = inp;
       searchResult = Array(20);
+      background('darkgray');
       for (let i = 0; i < 20 ; i++){
         searchResult[i] = new Movie(searchData, i);
         print(searchResult[i]);
@@ -65,8 +66,11 @@ function searchMovie(value){
       let x = 100;
       let y = 100;
       for (let i = 0; i < searchResult.length; i++){
-        searchResult[i].display(x, y);
-        y += 200;
+        if (searchResult[i] != null){
+            searchResult[i].display(x, y);
+            y += 200;
+        }
+        
       }
 
     });
