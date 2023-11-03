@@ -7,7 +7,7 @@ let searchDiv;
 let searchResult;
 
 function setup() {
-    createCanvas(windowWidth, 3000);
+    createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 
 
@@ -21,7 +21,7 @@ function setup() {
     search_dropdown.option("Movie");
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
-    search_dropdown.option("User");
+    //search_dropdown.option("User");
     
     search_button = createButton("Search");
     search_button.position(search_bar.x + 307, search_bar.y);
