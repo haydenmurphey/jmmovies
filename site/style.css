@@ -1,19 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: 'Courier New', Courier, monospace;
     align-items: center;
     justify-content: center;
-  }
-  
-  .header { 
-    background-color: white;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .header h1 {
-    border: 2px solid yellow;
-    padding: 20px;
-  }
-  
+}
