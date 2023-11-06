@@ -5,11 +5,12 @@ let search_dropdown;
 let searchData;
 let searchDiv;
 let searchResult;
+let login_input;
+let login_button;
 
 function setup() {
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
-
 
     search_bar = createInput();
     search_bar.size(300);
@@ -27,8 +28,14 @@ function setup() {
     search_button.position(search_bar.x + 307, search_bar.y);
     search_button.size(75);
     search_button.mousePressed(searchType);
-    
+
+    login_button = createButton("Login");
+    login_input = createInput();
+    login_button.position(1200, search_bar.y);
+
     keyval = new Keyval(KEYVAL_API_KEY);
+
+
 
 }
 
@@ -69,10 +76,8 @@ function searchMovie(value){
         if (searchResult[i] != null){
             searchResult[i].display(x, y);
             y += 200;
-        }
-        
+        } 
       }
-
     });
 }
 
