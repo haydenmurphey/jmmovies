@@ -33,6 +33,8 @@ function setup() {
     login_input = createInput();
     login_button.position(1200, search_bar.y);
 
+    displayRecents();
+
     keyval = new Keyval(KEYVAL_API_KEY);
 
 
@@ -131,12 +133,18 @@ function searchUser(value){
 
 }
 
-
-
 function fetchData() {
     keyval.set("test", input.value(), function (data) {
         keyval.get("test", function (data) {
             console.log(data);
         });
     });
+}
+
+function displayRecents() {
+   fill("black");
+   textSize(30);
+   text("Recently Released Movies/Shows:", 50, 75);
+
+   
 }
