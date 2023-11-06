@@ -37,6 +37,11 @@ function draw() {
 }
 
 function searchType(){
+    if (searchResult != null){
+        for (let i = 0; i < searchResult.length; i ++){
+            searchResult[i].image.remove();
+        }
+    }
     let dropdown_value = search_dropdown.value();
     if (dropdown_value === "Movie"){
         searchMovie(search_bar.value());
@@ -56,10 +61,11 @@ function searchType(){
 function searchMovie(value){
     let url = "https://api.themoviedb.org/3/search/movie?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;    
     loadJSON(url, function(inp){
-      searchData = inp;
-      searchResult = Array(20);
-      background('darkgray');
-      for (let i = 0; i < 20 ; i++){
+    
+    searchData = inp;
+    searchResult = Array(20);
+    background('darkgray');
+    for (let i = 0; i < 20 ; i++){
         searchResult[i] = new Movie(searchData, i);
         print(searchResult[i]);
       }
