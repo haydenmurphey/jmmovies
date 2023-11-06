@@ -49,6 +49,10 @@ function searchType(){
             searchResult[i].image.remove();
         }
     }
+    if(search_bar.value() == ""){
+        background("darkgray");
+        return;
+    }
     let dropdown_value = search_dropdown.value();
     if (dropdown_value === "Movie"){
         searchMovie(search_bar.value());
