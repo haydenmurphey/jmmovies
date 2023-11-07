@@ -4,3 +4,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.title h1:hover {
+    background-color: gray;
+}
