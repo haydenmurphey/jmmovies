@@ -7,6 +7,8 @@ let searchDiv;
 let searchResult;
 let login_input;
 let login_button;
+let user;
+
 
 function setup() {
     createCanvas(windowWidth, 5000);
@@ -31,17 +33,41 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_button.position(1200, search_bar.y);
+    login_input.position(1300, search_bar.y);
+    login_button.position(login_input.x - 50, search_bar.y);
+    login_button.mousePressed(login);
+    let saveButton = createButton("save");
+    saveButton.position(800,300);
+    saveButton.mousePressed(saveUser);
 
     keyval = new Keyval(KEYVAL_API_KEY);
-
-
-
 }
 
 function draw() {
 
 }
+
+function login(){
+    let user_keyval = new Keyval(KEYVAL_API_KEY);
+
+    user_keyval.get(login_input.value(), function(data){
+        test = data;
+        print(test);
+    }, 
+    function(){
+        print("error");
+    });
+}
+
+function saveUser(){
+    let user_keyval = new Keyval(KEYVAL_API_KEY);
+
+    user_keyval.set(login_input.value(), function(data){
+        print(data);
+    });
+
+}
+
 
 function searchType(){
     if (searchResult != null){
