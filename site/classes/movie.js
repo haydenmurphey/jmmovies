@@ -1,13 +1,24 @@
 class Movie{
-    constructor(moviesJson, num){
-        this.name = moviesJson.results[num].title;
-        this.imgPath = moviesJson.results[num].poster_path;
-        this.releaseDate = moviesJson.results[num].release_date;
-        this.id = moviesJson.results[num].id;
-        this.description = moviesJson.results[num].overview;
-        this.reviewAverage = moviesJson.results[num].vote_average;
-        this.popularity = moviesJson.results[num].popularity;
-        this.image = createElement("img");
+    constructor(type, moviesJson, num=0){
+        if (type === "search"){
+            this.name = moviesJson.results[num].title;
+            this.imgPath = moviesJson.results[num].poster_path;
+            this.releaseDate = moviesJson.results[num].release_date;
+            this.id = moviesJson.results[num].id;
+            this.description = moviesJson.results[num].overview;
+            this.reviewAverage = moviesJson.results[num].vote_average;
+            this.popularity = moviesJson.results[num].popularity;
+            this.image = createElement("img");
+        }
+        if (type === "id"){
+            this.name = moviesJson.title;
+            this.imgPath = moviesJson.poster_path;
+            this.releaseDate = moviesJson.release_date;
+            this.id = moviesJson.id;
+            this.description = moviesJson.overview;
+            this.reviewAverage = moviesJson.vote_average;
+            this.popularity = moviesJson.popularity;
+        }
     }
 
 

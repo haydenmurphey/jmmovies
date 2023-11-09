@@ -7,7 +7,7 @@ let searchDiv;
 let searchResult;
 let login_input;
 let login_button;
-let user;
+let user = null;
 let users;
 let user_json;
 let user_keyval = new Keyval(KEYVAL_API_KEY);
@@ -20,6 +20,7 @@ function setup() {
     search_bar = createInput();
     search_bar.size(300);
     search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.class("search");
 
     search_dropdown = createSelect();
     search_dropdown.position(search_bar.x - 76,search_bar.y);
@@ -60,20 +61,23 @@ function login(){
         json structure
         array of users
             user_name
-            favorite movie id
-            currently watching
-            to_watch
+            favorite movie id 
+            currently watching[] array of ids
+            to_watch[] array of ids
     */
-
-
-
-    user_keyval.get(login_input.value(), function(data){
-        test = data;
-        print(test);
-    }, 
-    function(){
-        print("error");
-    });
+    let user_found = false;
+    if (login_input.value() === ""){
+        return;
+    }
+    for (let i = 0; i < users.length; i++){
+        if (users[i].username === login_input.value()){
+            user = users[i];
+            user_found = true;
+        }
+    }
+    if (!user_found){
+        users.push(new User(login_input.value()));
+    }   
 }
 
 function saveUsers(){
@@ -81,15 +85,9 @@ function saveUsers(){
     let json = {};
     json.username = user.username;
     json.favorite = user.favorite_movie.id;
-
-    
-    user_keyval.set(login_input.value(), "blub" ,function(data){
-        print(data);
-    });
-
 }
 
-function getUsers(data){
+function getUsers(){
     let key = "users";
 
     url = "https://keyval.learnscrum.xyz/keystore/${key}?apikey=${KEYVAL_API_KEY}";
@@ -101,10 +99,6 @@ function getUsers(data){
         }
     });
 }
-
-
-
-
 
 function searchType(){
     if (searchResult != null){
@@ -140,7 +134,7 @@ function searchMovie(value){
     searchResult = Array(searchData.results.length);
     background('darkgray');
     for (let i = 0; i < searchData.results.length ; i++){
-        searchResult[i] = new Movie(searchData, i);
+        searchResult[i] = new Movie("search", searchData, i);
         print(searchResult[i]);
       }
       let x = 100;
