@@ -58,10 +58,9 @@ function login(){
     ideas:
         store all users in a json file
         json structure
-        num users
         array of users
             user_name
-            favorite movie
+            favorite movie id
             currently watching
             to_watch
     */
@@ -83,9 +82,7 @@ function saveUsers(){
     json.username = user.username;
     json.favorite = user.favorite_movie.id;
 
-
-
-
+    
     user_keyval.set(login_input.value(), "blub" ,function(data){
         print(data);
     });
@@ -98,9 +95,9 @@ function getUsers(data){
     url = "https://keyval.learnscrum.xyz/keystore/${key}?apikey=${KEYVAL_API_KEY}";
     loadJSON(url, function(data){
         user_json = data;
-        users = Array(user_json.num_users);
-        for (let i = 0; i < user_json.num_users; i++){
-            users[i] = new User(user_json.users[i].username, );
+        users = Array(user_json.users.length);
+        for (let i = 0; i < user_json.users.length; i++){
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
         }
     });
 }
@@ -140,9 +137,9 @@ function searchMovie(value){
     loadJSON(url, function(inp){
     
     searchData = inp;
-    searchResult = Array(20);
+    searchResult = Array(searchData.results.length);
     background('darkgray');
-    for (let i = 0; i < 20 ; i++){
+    for (let i = 0; i < searchData.results.length ; i++){
         searchResult[i] = new Movie(searchData, i);
         print(searchResult[i]);
       }
