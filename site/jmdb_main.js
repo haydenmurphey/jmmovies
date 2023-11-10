@@ -195,7 +195,7 @@ function searchTV(value){
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
-          searchResult[i] = new TvShow(searchData, i);
+          searchResult[i] = new TvShow(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
@@ -213,7 +213,7 @@ function searchActor(value){
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
-          searchResult[i] = new Person(searchData, i);
+          searchResult[i] = new Person(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
