@@ -27,6 +27,21 @@ class Movie{
     getImage(){
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
+
+    displayHome = (x, y) =>{
+        this.image.position(x, y);
+        this.image.attribute("src", this.getImage());
+        this.image.size(120,180);
+        fill("black");
+        textWrap(WORD);
+        if (this.imgPath == null){
+            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
+        }
+        this.button.position(x, y + 100);
+        textSize(20);
+        text(this.name, x, y + 100);
+        textSize(12);
+    }   
     
     display = (x, y) =>{
         this.image.position(x,y);

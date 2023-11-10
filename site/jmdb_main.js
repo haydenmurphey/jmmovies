@@ -58,6 +58,7 @@ function setup() {
 
 
     displayRecents();
+    displayTrending();
 }
 
 function preload(){
@@ -277,4 +278,28 @@ function displayRecents() {
    text("Recently Released Movies/Shows:", 50, 75);
 
    
+}
+
+function displayTrending() {
+    fill("black");
+    textSize(30);
+    text("Trending Movies:", 50, 300);
+
+    let url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US" + "&api_key=" + TMDB_API_KEY;
+    data = loadJSON(url, function(data){
+        let searchResults = Array(10);
+        for (let i = 0; i < 10; i++) {
+            searchResults[i] = new Movie("search", data, i, "");
+        }
+
+        let x = 50;
+        let y = 400;
+        
+        for (let i = 0; i < searchResults.length; i++) {
+            if (searchResults[i] != null) {
+                searchResults[i].displayHome(x, y);
+                x += 140;
+            }
+        }
+    });
 }
