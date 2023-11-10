@@ -14,6 +14,7 @@ let logout_button;
 let search_val = "";
 let to_favorite;
 let upcomingMovie;
+let trendingMovies;
 
 
 function setup() {
@@ -57,10 +58,13 @@ function setup() {
     
     login();
 
-
-
-    displayRecents();
     displayUpcoming();
+    displayRecents();
+    displayTrending();
+}
+
+function preload(){
+    let key = "users";
 
     url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
     loadJSON(url, function(data){
@@ -183,8 +187,13 @@ function searchType(){
             upcomingMovie[i].image.remove();
             
         }
-
     }
+    if (trendingMovies != null) {
+        for (let i = 0; i < trendingMovies.length; i ++) {
+            trendingMovies[i].image.remove();
+        }
+    }
+
     if(search_bar.value() == ""){
         background("darkgray");
         return;
@@ -281,10 +290,52 @@ function displayUserProfile(){
 function displayRecents() {
    fill("black");
    textSize(30);
-   text("Recently Released Movies/Shows:", 50, 75);
+   text("Recently Released Movies:", 50, 75);
+
+   let date = new Date;
+   let year = date.getFullYear();
+   let month = date.getMonth() + 1;
+   let day = date.getDate();
+   
+   let min_date;
+   let max_date = year + "-" + month + "-" + day;
+
+   if (month - 1 < 1) {
+     min_date = year - 1 + "-12-" + date;
+   } else {
+    min_date = year + "-" + (month - 1) + "-" + day;
+   }
+
+   let url1 = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=";
+   url1 = url1 + min_date;
+   url2 = "&primary_release_date.lte=";
+   url2 = url2 + max_date +  "&api_key=" + TMDB_API_KEY;
+   let finalUrl = url1 + url2;
+
+   if (searchResult == null) {
+   loadJSON(finalUrl, function (data) {
+      let recentlyReleased = Array(10);
+      for (let i = 0; i < 10; i++) {
+        recentlyReleased[i] = new Movie("search", data, i, "");
+        //print(recentlyReleased[i]);
+      }
+
+      let x = 50;
+      let y = 200;
+
+      for (let i = 0; i < recentlyReleased.length; i++) {
+        if (recentlyReleased[i] != null) {
+            recentlyReleased[i].HomeDisplay(x, y);
+            x += 140;
+        }
+      }
+
+      
+   });  
+}
+}
 
    
-}
 
 function displayUpcoming() {
     let date = new Date;
@@ -308,29 +359,58 @@ function displayUpcoming() {
     }
     
     let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=${min_date}&primary_release_date.lte=${max_date}&api_key=` + TMDB_API_KEY;
+    
+    fill("black");
+    textSize(30);
+    text("Upcoming Movies:", 50, 730);
 
+    if(searchResult == null){
     
         loadJSON(url, function (data) {
-            upcomingMovie = Array(9);
-            background('darkgray');
+            upcomingMovie = Array(10);
     
-            for (let i = 0; i < 9; i++) {
-                upcomingMovie[i] = new Movie(data, i);
-                print(upcomingMovie[i]);
+            for (let i = 0; i < 10; i++) {
+                upcomingMovie[i] = new Movie("search", data, i, "");
+                //print(upcomingMovie[i]);
             }
     
-            let x = 100;
-            let y = 600;
+            let x = 50;
+            let y = 850;
     
             for (let i = 0; i < upcomingMovie.length; i++) {
                 if (upcomingMovie[i] != null) {
                     upcomingMovie[i].HomeDisplay(x, y,);
-                    x += 180;
+                    x += 140;
                 }
             }
     
-            fill("black");
-            textSize(30);
-            text("Upcoming Movies", 50, 400);
+            
+        });
+    }
+}
+
+function displayTrending() {
+    fill("black");
+    textSize(30);
+    text("Trending Movies:", 50, 430);
+
+    let url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US" + "&api_key=" + TMDB_API_KEY;
+    
+    if (searchResult == null) {
+        loadJSON(url, function(data){
+            trendingMovies = Array(10);
+            for (let i = 0; i < 10; i++) {
+                trendingMovies[i] = new Movie("search", data, i, "");
+            }
+    
+            let x = 50;
+            let y = 550;
+            
+            for (let i = 0; i < trendingMovies.length; i++) {
+                if (trendingMovies[i] != null) {
+                    trendingMovies[i].displayHome(x, y);
+                    x += 140;
+                }
+            }
         });
     }

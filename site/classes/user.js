@@ -20,7 +20,10 @@ class User{
 
     display_profile_screen = () =>{
         removeElements();
-
+        let img = createElement("img");
+        img.attribute("src", this.favorite_movie.getImage());
+        img.position(300,300);
+        img.size(200,300);
         textSize(30)
         text(this.username, 300, 200);
         if (this.favorite_movie != null){

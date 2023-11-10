@@ -24,16 +24,39 @@ class Movie{
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
+        this.button.hide();
     }
 
     getImage = () =>{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
+
+    displayHome = (x, y) =>{
+        this.displayed_on_home = true;
+        this.image.position(x, y);
+        this.image.attribute("src", this.getImage());
+        this.image.size(120,180);
+        this.image.mouseClicked(this.buttonPressed);
+        fill("black");
+        textWrap(WORD);
+        if (this.imgPath == null){
+            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
+        }
+        textSize(12);
+        textStyle(BOLD);
+        text(this.name, x - 10, y + 105, x + 10);
+        text(12);
+        textStyle(NORMAL);
+        text(this.releaseDate, x - 10, y + 90, x + 10)
+    }   
     
     display = (x, y) =>{
+        this.displayed_on_home = false;
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
+        this.image.mouseClicked(this.buttonPressed);
+        this.button.show();
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
@@ -48,9 +71,11 @@ class Movie{
     }
     
     HomeDisplay(x,y){
+        this.displayed_on_home = true;
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,200);
+        this.image.mouseClicked(this.buttonPressed);
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
@@ -73,7 +98,7 @@ class Movie{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to search");
+        this.backButton = createButton("back");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
@@ -84,7 +109,6 @@ class Movie{
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
         }
-
 
         background("darkgray");
         textSize(40);
@@ -97,12 +121,15 @@ class Movie{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+        text("Release Date: " + this.releaseDate, 600, 500, 800);
     }
 
     goBack = () => {
         removeElements();
         setup();
-        //search_bar.input(this.search_val);
-        searchMovie(this.search_val);
+        if (this.displayed_on_home == false){
+            searchMovie(this.search_val);
+
+        }
     }
 }
