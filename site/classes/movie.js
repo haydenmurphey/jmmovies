@@ -41,9 +41,12 @@ class Movie{
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
-        textSize(20);
-        text(this.name, x, y + 100);
         textSize(12);
+        textStyle(BOLD);
+        text(this.name, x - 10, y + 105, x + 10);
+        text(12);
+        textStyle(NORMAL);
+        text(this.releaseDate, x - 10, y + 90, x + 10)
     }   
     
     display = (x, y) =>{

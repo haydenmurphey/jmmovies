@@ -315,15 +315,13 @@ function displayRecents() {
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
       let recentlyReleased = Array(10);
-      background('darkgray');
-
       for (let i = 0; i < 10; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
         //print(recentlyReleased[i]);
       }
 
       let x = 50;
-      let y = 125;
+      let y = 200;
 
       for (let i = 0; i < recentlyReleased.length; i++) {
         if (recentlyReleased[i] != null) {
@@ -364,7 +362,7 @@ function displayUpcoming() {
     
     fill("black");
     textSize(30);
-    text("Upcoming Movies", 50, 400);
+    text("Upcoming Movies:", 50, 730);
 
     if(searchResult == null){
     
@@ -377,7 +375,7 @@ function displayUpcoming() {
             }
     
             let x = 50;
-            let y = 700;
+            let y = 850;
     
             for (let i = 0; i < upcomingMovie.length; i++) {
                 if (upcomingMovie[i] != null) {
@@ -394,20 +392,19 @@ function displayUpcoming() {
 function displayTrending() {
     fill("black");
     textSize(30);
-    text("Trending Movies:", 50, 200);
+    text("Trending Movies:", 50, 430);
 
     let url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US" + "&api_key=" + TMDB_API_KEY;
     
     if (searchResult == null) {
         loadJSON(url, function(data){
             trendingMovies = Array(10);
-            background('darkgray');
             for (let i = 0; i < 10; i++) {
                 trendingMovies[i] = new Movie("search", data, i, "");
             }
     
             let x = 50;
-            let y = 400;
+            let y = 550;
             
             for (let i = 0; i < trendingMovies.length; i++) {
                 if (trendingMovies[i] != null) {
