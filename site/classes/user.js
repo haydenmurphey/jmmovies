@@ -14,4 +14,9 @@ class User{
         this.currently_watching;
         this.to_watch;
     }
+
+
+    display_profile_screen(){
+
+    }
 }
