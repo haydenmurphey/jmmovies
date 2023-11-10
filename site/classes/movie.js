@@ -54,7 +54,7 @@ class Movie{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to home");
+        this.backButton = createButton("back to search");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
