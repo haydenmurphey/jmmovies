@@ -18,13 +18,15 @@ class Movie{
             this.description = moviesJson.overview;
             this.reviewAverage = moviesJson.vote_average;
             this.popularity = moviesJson.popularity;
+            this.image = createElement("img");
+
         }
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
     }
 
-    getImage(){
+    getImage = () =>{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
 
@@ -58,6 +60,23 @@ class Movie{
         textSize(30);
         text(this.name, x + 200, y - 50);
         textSize(12);
+    }
+    
+    HomeDisplay(x,y){
+        this.image.position(x,y);
+        this.image.attribute("src", this.getImage());
+        this.image.size(120,200);
+        fill("black");
+        textWrap(WORD);
+        if (this.imgPath == null){
+            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
+        }
+        textSize(12);
+        textStyle(BOLD);
+        text(this.name, x - 10, y + 125, x + 10);
+        text(12);
+        textStyle(NORMAL);
+        text(this.releaseDate, x - 10, y + 110, x + 10)
     }
 
     buttonPressed = () =>{

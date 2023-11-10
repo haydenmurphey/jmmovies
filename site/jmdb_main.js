@@ -12,7 +12,8 @@ let user_json;
 let profile_button;
 let logout_button;
 let search_val = "";
-let to_favorite;
+let to_favorite;let upcomingMovie;
+
 
 function setup() {
     removeElements();
@@ -58,7 +59,6 @@ function setup() {
 
 
     displayRecents();
-    displayTrending();
 }
 
 function preload(){
@@ -177,7 +177,15 @@ function searchType(){
     if (searchResult != null){
         for (let i = 0; i < searchResult.length; i ++){
             searchResult[i].image.remove();
+            
         }
+    }
+    if(upcomingMovie != null){
+        for (let i = 0; i < upcomingMovie.length; i ++){
+            upcomingMovie[i].image.remove();
+            
+        }
+
     }
     if(search_bar.value() == ""){
         background("darkgray");
@@ -278,6 +286,57 @@ function displayRecents() {
    text("Recently Released Movies/Shows:", 50, 75);
 
    
+}
+
+function displayUpcoming() {
+    let date = new Date;
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let day_result = day.toString().padStart(2, '0');
+    let month_result = month.toString().padStart(2, '0');
+
+    let min_date = `${year}-${month_result}-${day_result}`;
+    let max_date;
+
+    if (day + 7 > 31) {
+        if (month + 1 > 12) {
+            max_date = `${year + 1}-${(month + 1) % 12}-${(day + 7) - 31}`;
+        } else {
+            max_date = `${year}-${month + 1}-${day + 7 - 31}`;
+        }
+    } else {
+        max_date = `${year}-${month_result}-${day + 7}`;
+    }
+    
+    let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=${min_date}&primary_release_date.lte=${max_date}&api_key=` + TMDB_API_KEY;
+    
+    if(searchResult == null){
+    
+        loadJSON(url, function (data) {
+            upcomingMovie = Array(9);
+            background('darkgray');
+    
+            for (let i = 0; i < 9; i++) {
+                upcomingMovie[i] = new Movie(data, i);
+                //print(upcomingMovie[i]);
+            }
+    
+            let x = 100;
+            let y = 600;
+    
+            for (let i = 0; i < upcomingMovie.length; i++) {
+                if (upcomingMovie[i] != null) {
+                    upcomingMovie[i].HomeDisplay(x, y,);
+                    x += 180;
+                }
+            }
+    
+            fill("black");
+            textSize(30);
+            text("Upcoming Movies", 50, 400);
+        });
+    }
 }
 
 function displayTrending() {
