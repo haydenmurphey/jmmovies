@@ -21,6 +21,7 @@ class TvShow{
         this.image.size(120,180);
         fill("black");
         textWrap(WORD);
+        textSize(15);
         if(this.description == ""){
             text("NO DESCRIPTION", x + 200, y, 1000);
         } else {
@@ -28,6 +29,6 @@ class TvShow{
         }
         textSize(30);
         text(this.name, x + 200, y - 50);
-        textSize(12);
+        
     }
 }

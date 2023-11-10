@@ -36,12 +36,12 @@ class Movie{
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
+        textSize(15)
         text(this.description, x + 200, y, 1000);
         textSize(30);
         text(this.name, x + 200, y - 50);
-        this.button.size(100, 20);
-        this.button.position(x + 200, y + 55);
-        textSize(12);
+        //this.button.size(100, 20);
+        //this.button.position(x + 200, y + 55);
     }
 
     buttonPressed(){
