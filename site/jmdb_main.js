@@ -11,14 +11,14 @@ let users;
 let user_json;
 let profile_button;
 let logout_button;
-
+let search_val = "";
 function setup() {
     getUsers();
     removeElements();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 
-    search_bar = createInput();
+    search_bar = createInput(search_val);
     search_bar.size(300);
     search_bar.position(windowWidth/2 - 150, 50);
     search_bar.class("search");
@@ -170,6 +170,7 @@ function getUsers(){
 }
 
 function searchType(){
+    search_val = search_bar.value();
     if (searchResult != null){
         for (let i = 0; i < searchResult.length; i ++){
             searchResult[i].image.remove();
@@ -203,7 +204,7 @@ function searchMovie(value){
     searchResult = Array(searchData.results.length);
     background('darkgray');
     for (let i = 0; i < searchData.results.length ; i++){
-        searchResult[i] = new Movie("search", searchData, i);
+        searchResult[i] = new Movie("search", searchData, i, search_bar.value());
         print(searchResult[i]);
       }
       let x = 100;
