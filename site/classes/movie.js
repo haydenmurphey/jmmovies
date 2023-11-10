@@ -121,12 +121,12 @@ class Movie{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+        text("Release Date: " + this.releaseDate, 600, 500, 800);
     }
 
     goBack = () => {
         removeElements();
         setup();
-        //search_bar.input(this.search_val);
         if (this.displayed_on_home == false){
             searchMovie(this.search_val);
 
