@@ -9,6 +9,7 @@ let login_input;
 let login_button;
 
 function setup() {
+    removeElements();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 

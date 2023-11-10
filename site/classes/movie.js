@@ -8,8 +8,11 @@ class Movie{
         this.reviewAverage = moviesJson.results[num].vote_average;
         this.popularity = moviesJson.results[num].popularity;
         this.image = createElement("img");
-    }
+        this.button = createButton("Go to page");
+        this.button.mouseClicked(this.buttonPressed);
+        
 
+    }
 
     getImage(){
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
@@ -27,8 +30,20 @@ class Movie{
         text(this.description, x + 200, y, 1000);
         textSize(30);
         text(this.name, x + 200, y - 50);
+        this.button.size(100, 20);
+        this.button.position(x + 200, y + 55);
         textSize(12);
-
     }
 
+    buttonPressed(){
+        removeElements();
+        background("darkgray");
+        console.log(this);
+        this.image.size(200,300);
+        this.image.position(200,200);
+        this.backButton = createButton("back to search");
+        this.backButton.size(150,20);
+        this.backButton.position(50,150);
+        this.backButton.mouseClicked(setup);
+    }
 }
