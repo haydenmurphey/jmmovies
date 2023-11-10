@@ -1,4 +1,3 @@
-
 let search_bar;
 let search_button;
 let search_dropdown;
@@ -11,6 +10,7 @@ let user = null;
 let users;
 let user_json;
 let profile_button;
+let logout_button;
 
 function setup() {
     getUsers();
@@ -41,14 +41,21 @@ function setup() {
     login_input.position(1700, search_bar.y);
     login_button.position(login_input.x - 50, search_bar.y);
     login_button.mousePressed(login);
-    //let saveButton = createButton("save");
-    //saveButton.position(1600,50);
-    //saveButton.mousePressed(saveUsers);
+    
+    logout_button = createButton("Logout");
+    logout_button.position(login_input.x + 10, search_bar.y);
+    logout_button.hide();
+    logout_button.mousePressed(logout);
+
     profile_button = createButton("Profile");
     profile_button.position(login_input.x - 50, search_bar.y);
     profile_button.hide();
     profile_button.mousePressed(displayUserProfile);
     
+    login();
+
+
+
     displayRecents();
 }
 
@@ -67,10 +74,14 @@ function preload(){
 
 
 function draw() {
-    if (user != null){
+    if (getItem('user') != null){
         login_button.hide();
         login_input.hide();
         profile_button.show();
+        textSize(15)
+        if (true){
+            text(user.username, profile_button.x-50, 50);
+        }
     }
 }
 
@@ -85,13 +96,23 @@ function login(){
             currently watching[] array of ids
             to_watch[] array of ids
     */
+    print(getItem('user'));
     let user_found = false;
-    if (login_input.value() === ""){
+    if (login_input.value() === "" && getItem('user') == null){
         return;
     }
-    if (users != null){
+    if (users != null && getItem('user') == null){
         for (let i = 0; i < users.length; i++){
             if (users[i].username === login_input.value()){
+                user = users[i];
+                user_found = true;
+                storeItem('user', user.username);
+            }
+        }
+    }
+    else if (getItem('user') != null){
+        for (let i = 0; i < users.length; i++){
+            if (users[i].username === getItem('user')){
                 user = users[i];
                 user_found = true;
             }
@@ -106,7 +127,20 @@ function login(){
     login_button.hide();
     login_input.hide();
     profile_button.show();
+    logout_button.show();
     saveUsers();
+}
+
+
+function logout(){
+    user = null;
+    login_button.show();
+    login_input.show();
+    logout_button.hide();
+    profile_button.hide();
+    storeItem('user', null);
+    login_input.value("");
+    
 }
 
 function saveUsers(){
