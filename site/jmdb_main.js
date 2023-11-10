@@ -10,10 +10,9 @@ let login_button;
 let user = null;
 let users;
 let user_json;
-let user_keyval = new Keyval(KEYVAL_API_KEY);
-
 
 function setup() {
+    getUsers();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 
@@ -42,13 +41,26 @@ function setup() {
     login_button.mousePressed(login);
     let saveButton = createButton("save");
     saveButton.position(800,300);
-    saveButton.mousePressed(saveUser);
-
+    saveButton.mousePressed(saveUsers);
     displayRecents();
 
 
 
 }
+
+function preload(){
+    let key = "users";
+
+    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
+    loadJSON(url, function(data){
+        user_json = data;
+        users = Array(user_json.users.length);
+        for (let i = 0; i < user_json.users.length; i++){
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
+        }
+    });
+}
+
 
 function draw() {
 
@@ -69,11 +81,16 @@ function login(){
     if (login_input.value() === ""){
         return;
     }
-    for (let i = 0; i < users.length; i++){
-        if (users[i].username === login_input.value()){
-            user = users[i];
-            user_found = true;
+    if (users != null){
+        for (let i = 0; i < users.length; i++){
+            if (users[i].username === login_input.value()){
+                user = users[i];
+                user_found = true;
+            }
         }
+    }
+    else {
+        users = Array(0);
     }
     if (!user_found){
         users.push(new User(login_input.value()));
@@ -81,23 +98,29 @@ function login(){
 }
 
 function saveUsers(){
-    let user_keyval = new Keyval(KEYVAL_API_KEY);
     let json = {};
-    json.username = user.username;
-    json.favorite = user.favorite_movie.id;
+    let json_string;
+    let user_keyval = new Keyval(KEYVAL_API_KEY);
+    let users_array_json = Array(users.length); 
+    for (let i = 0; i < users.length; i++){
+        users_array_json[i] = {};
+        users_array_json[i]["username"] = users[i].username;
+        users_array_json[i]["favorite_movie_id"] = users[i].favorite_movie_id;
+    }
+    json.users = users_array_json;
+    json_string = JSON.stringify(json);
+    print(json_string);
+    user_keyval.set("users", json_string, function(){
+        print("user save success");
+    },
+    function(){
+        print("user save failed")
+    });
+    
 }
 
 function getUsers(){
-    let key = "users";
-
-    url = "https://keyval.learnscrum.xyz/keystore/${key}?apikey=${KEYVAL_API_KEY}";
-    loadJSON(url, function(data){
-        user_json = data;
-        users = Array(user_json.users.length);
-        for (let i = 0; i < user_json.users.length; i++){
-            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
-        }
-    });
+    
 }
 
 function searchType(){
