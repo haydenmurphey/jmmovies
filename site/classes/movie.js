@@ -31,24 +31,27 @@ class Movie{
     }
 
     displayHome = (x, y) =>{
+        this.displayed_on_home = true;
         this.image.position(x, y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
+        this.image.mouseClicked(this.buttonPressed);
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
-        this.button.position(x, y + 100);
         textSize(20);
         text(this.name, x, y + 100);
         textSize(12);
     }   
     
     display = (x, y) =>{
+        this.displayed_on_home = false;
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
+        this.image.mouseClicked(this.buttonPressed);
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
@@ -63,9 +66,11 @@ class Movie{
     }
     
     HomeDisplay(x,y){
+        this.displayed_on_home = true;
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,200);
+        this.image.mouseClicked(this.buttonPressed);
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
@@ -88,7 +93,7 @@ class Movie{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to search");
+        this.backButton = createButton("back");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
@@ -99,7 +104,6 @@ class Movie{
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
         }
-
 
         background("darkgray");
         textSize(40);
@@ -118,6 +122,9 @@ class Movie{
         removeElements();
         setup();
         //search_bar.input(this.search_val);
-        searchMovie(this.search_val);
+        if (this.displayed_on_home == false){
+            searchMovie(this.search_val);
+
+        }
     }
 }

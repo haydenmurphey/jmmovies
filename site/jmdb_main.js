@@ -187,9 +187,7 @@ function searchType(){
             upcomingMovie[i].image.remove();
             
         }
-
     }
-
     if (trendingMovies != null) {
         for (let i = 0; i < trendingMovies.length; i ++) {
             trendingMovies[i].image.remove();
@@ -358,8 +356,8 @@ function displayTrending() {
     let url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US" + "&api_key=" + TMDB_API_KEY;
     
     if (searchResult == null) {
-        data = loadJSON(url, function(data){
-            let trendingMovies = Array(10);
+        loadJSON(url, function(data){
+            trendingMovies = Array(10);
             background('darkgray');
             for (let i = 0; i < 10; i++) {
                 trendingMovies[i] = new Movie("search", data, i, "");
