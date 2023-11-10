@@ -8,3 +8,10 @@ body {
 .title h1:hover {
     background-color: gray;
 }
+
+.search {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 50px; 
+    outline: none;
+}

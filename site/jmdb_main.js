@@ -1,4 +1,3 @@
-
 let search_bar;
 let search_button;
 let search_dropdown;
@@ -7,17 +6,24 @@ let searchDiv;
 let searchResult;
 let login_input;
 let login_button;
-let user;
-let upcomingMovie;
+let user = null;
+let users;
+let user_json;
+let profile_button;
+let logout_button;
+let search_val = "";
+let to_favorite;let upcomingMovie;
 
 
 function setup() {
+    removeElements();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 
-    search_bar = createInput();
+    search_bar = createInput(search_val);
     search_bar.size(300);
     search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.class("search");
 
     search_dropdown = createSelect();
     search_dropdown.position(search_bar.x - 76,search_bar.y);
@@ -34,47 +40,136 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1300, search_bar.y);
+    login_input.position(1700, search_bar.y);
     login_button.position(login_input.x - 50, search_bar.y);
     login_button.mousePressed(login);
-    let saveButton = createButton("save");
-    saveButton.position(800,300);
-    saveButton.mousePressed(saveUser);
+    
+    logout_button = createButton("Logout");
+    logout_button.position(login_input.x + 10, search_bar.y);
+    logout_button.hide();
+    logout_button.mousePressed(logout);
+
+    profile_button = createButton("Profile");
+    profile_button.position(login_input.x - 50, search_bar.y);
+    profile_button.hide();
+    profile_button.mousePressed(displayUserProfile);
+    
+    login();
+
+
 
     displayRecents();
-    displayUpcoming();
 
-
-    keyval = new Keyval(KEYVAL_API_KEY);
+    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
+    loadJSON(url, function(data){
+        user_json = data;
+        users = Array(user_json.users.length);
+        for (let i = 0; i < user_json.users.length; i++){
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
+        }
+    });
 }
 
-function draw() {
 
+function draw() {
+    if (getItem('user') != null){
+        login_button.hide();
+        login_input.hide();
+        profile_button.show();
+        textSize(15)
+        if (true){
+            text(user.username, profile_button.x-50, 50);
+        }
+    }
 }
 
 function login(){
-    let user_keyval = new Keyval(KEYVAL_API_KEY);
+    /*
+    ideas:
+        store all users in a json file
+        json structure
+        array of users
+            user_name
+            favorite movie id 
+            currently watching[] array of ids
+            to_watch[] array of ids
+    */
+    print(getItem('user'));
+    let user_found = false;
+    if (login_input.value() === "" && getItem('user') == null){
+        return;
+    }
+    if (users != null && getItem('user') == null){
+        for (let i = 0; i < users.length; i++){
+            if (users[i].username === login_input.value()){
+                user = users[i];
+                user_found = true;
+                storeItem('user', user.username);
+            }
+        }
+    }
+    else if (getItem('user') != null){
+        for (let i = 0; i < users.length; i++){
+            if (users[i].username === getItem('user')){
+                user = users[i];
+                user_found = true;
+            }
+        }
+    }
+    else {
+        users = Array(0);
+    }
+    if (!user_found){
+        users.push(new User(login_input.value()));
+    }
+    login_button.hide();
+    login_input.hide();
+    profile_button.show();
+    logout_button.show();
+    saveUsers();
+}
 
-    user_keyval.get(login_input.value(), function(data){
-        test = data;
-        print(test);
-    }, 
+
+function logout(){
+    user = null;
+    login_button.show();
+    login_input.show();
+    logout_button.hide();
+    profile_button.hide();
+    storeItem('user', null);
+    login_input.value("");
+    background('darkgray');
+}
+
+function saveUsers(){
+    let json = {};
+    let json_string;
+    let user_keyval = new Keyval(KEYVAL_API_KEY);
+    let users_array_json = Array(users.length); 
+    for (let i = 0; i < users.length; i++){
+        users_array_json[i] = {};
+        users_array_json[i]["username"] = users[i].username;
+        users_array_json[i]["favorite_movie_id"] = users[i].favorite_movie_id;
+    }
+    json.users = users_array_json;
+    json_string = JSON.stringify(json);
+    print(json_string);
+    user_keyval.set("users", json_string, function(){
+        print("user save success");
+    },
     function(){
-        print("error");
+        print("user save failed")
     });
+    
 }
 
-function saveUser(){
-    let user_keyval = new Keyval(KEYVAL_API_KEY);
-
-    user_keyval.set(login_input.value(), function(data){
-        print(data);
-    });
-
+function makeFavorite(){
+    user.favorite_movie_id = to_favorite;
+    saveUsers();
 }
-
 
 function searchType(){
+    search_val = search_bar.value();
     if (searchResult != null){
         for (let i = 0; i < searchResult.length; i ++){
             searchResult[i].image.remove();
@@ -113,10 +208,10 @@ function searchMovie(value){
     loadJSON(url, function(inp){
     
     searchData = inp;
-    searchResult = Array(20);
+    searchResult = Array(searchData.results.length);
     background('darkgray');
-    for (let i = 0; i < 20 ; i++){
-        searchResult[i] = new Movie(searchData, i);
+    for (let i = 0; i < searchData.results.length ; i++){
+        searchResult[i] = new Movie("search", searchData, i, search_bar.value());
         print(searchResult[i]);
       }
       let x = 100;
@@ -140,7 +235,7 @@ function searchTV(value){
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
-          searchResult[i] = new TvShow(searchData, i);
+          searchResult[i] = new TvShow(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
@@ -158,7 +253,7 @@ function searchActor(value){
         x = 100;
         y = 100;
         for (let i = 0; i < 20; i++){
-          searchResult[i] = new Person(searchData, i);
+          searchResult[i] = new Person(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
@@ -170,12 +265,15 @@ function searchUser(value){
 
 }
 
-function fetchData() {
-    keyval.set("test", input.value(), function (data) {
-        keyval.get("test", function (data) {
-            console.log(data);
-        });
-    });
+function displayUserProfile(){
+    background('darkgray');
+    if (searchResult != null){
+        for (let i = 0; i < searchResult.length; i++){
+            searchResult[i].image.remove();
+            searchResult[i].button.remove();   
+        }
+    }
+    user.display_profile_screen();
 }
 
 function displayRecents() {
