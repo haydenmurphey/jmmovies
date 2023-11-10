@@ -12,7 +12,8 @@ let user_json;
 let profile_button;
 let logout_button;
 let search_val = "";
-let to_favorite;let upcomingMovie;
+let to_favorite;
+let upcomingMovie;
 
 
 function setup() {
@@ -59,6 +60,7 @@ function setup() {
 
 
     displayRecents();
+    displayUpcoming();
 
     url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
     loadJSON(url, function(data){
@@ -306,8 +308,7 @@ function displayUpcoming() {
     }
     
     let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=${min_date}&primary_release_date.lte=${max_date}&api_key=` + TMDB_API_KEY;
-    
-    if(searchResult == null){
+
     
         loadJSON(url, function (data) {
             upcomingMovie = Array(9);
@@ -315,7 +316,7 @@ function displayUpcoming() {
     
             for (let i = 0; i < 9; i++) {
                 upcomingMovie[i] = new Movie(data, i);
-                //print(upcomingMovie[i]);
+                print(upcomingMovie[i]);
             }
     
             let x = 100;
@@ -333,4 +334,3 @@ function displayUpcoming() {
             text("Upcoming Movies", 50, 400);
         });
     }
-}
