@@ -18,13 +18,15 @@ class Movie{
             this.description = moviesJson.overview;
             this.reviewAverage = moviesJson.vote_average;
             this.popularity = moviesJson.popularity;
+            this.image = createElement("img");
+
         }
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
     }
 
-    getImage(){
+    getImage = () =>{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
     
