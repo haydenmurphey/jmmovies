@@ -1,5 +1,5 @@
 class Movie{
-    constructor(type, moviesJson, num=0){
+    constructor(type, moviesJson, num=0, search_val){
         if (type === "search"){
             this.name = moviesJson.results[num].title;
             this.imgPath = moviesJson.results[num].poster_path;
@@ -19,6 +19,7 @@ class Movie{
             this.reviewAverage = moviesJson.vote_average;
             this.popularity = moviesJson.popularity;
         }
+        this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
     }
@@ -56,7 +57,7 @@ class Movie{
         this.backButton = createButton("back to home");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
-        this.backButton.mouseClicked(setup);
+        this.backButton.mouseClicked(this.goBack);
         background("darkgray");
         textSize(40);
         textWrap(WORD);
@@ -68,5 +69,12 @@ class Movie{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+    }
+
+    goBack = () => {
+        removeElements();
+        setup();
+        //search_bar.input(this.search_val);
+        searchMovie(this.search_val);
     }
 }
