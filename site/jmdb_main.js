@@ -7,6 +7,11 @@ let searchDiv;
 let searchResult;
 let login_input;
 let login_button;
+let user = null;
+let users;
+let user_json;
+let user_keyval = new Keyval(KEYVAL_API_KEY);
+
 
 function setup() {
     removeElements();
@@ -16,6 +21,7 @@ function setup() {
     search_bar = createInput();
     search_bar.size(300);
     search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.class("search");
 
     search_dropdown = createSelect();
     search_dropdown.position(search_bar.x - 76,search_bar.y);
@@ -32,9 +38,14 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_button.position(1200, search_bar.y);
+    login_input.position(1300, search_bar.y);
+    login_button.position(login_input.x - 50, search_bar.y);
+    login_button.mousePressed(login);
+    let saveButton = createButton("save");
+    saveButton.position(800,300);
+    saveButton.mousePressed(saveUser);
 
-    keyval = new Keyval(KEYVAL_API_KEY);
+    displayRecents();
 
 
 
@@ -42,6 +53,52 @@ function setup() {
 
 function draw() {
 
+}
+
+function login(){
+    /*
+    ideas:
+        store all users in a json file
+        json structure
+        array of users
+            user_name
+            favorite movie id 
+            currently watching[] array of ids
+            to_watch[] array of ids
+    */
+    let user_found = false;
+    if (login_input.value() === ""){
+        return;
+    }
+    for (let i = 0; i < users.length; i++){
+        if (users[i].username === login_input.value()){
+            user = users[i];
+            user_found = true;
+        }
+    }
+    if (!user_found){
+        users.push(new User(login_input.value()));
+    }   
+}
+
+function saveUsers(){
+    let user_keyval = new Keyval(KEYVAL_API_KEY);
+    let json = {};
+    json.username = user.username;
+    json.favorite = user.favorite_movie.id;
+}
+
+function getUsers(){
+    let key = "users";
+
+    url = "https://keyval.learnscrum.xyz/keystore/${key}?apikey=${KEYVAL_API_KEY}";
+    loadJSON(url, function(data){
+        user_json = data;
+        users = Array(user_json.users.length);
+        for (let i = 0; i < user_json.users.length; i++){
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
+        }
+    });
 }
 
 function searchType(){
@@ -75,10 +132,10 @@ function searchMovie(value){
     loadJSON(url, function(inp){
     
     searchData = inp;
-    searchResult = Array(20);
+    searchResult = Array(searchData.results.length);
     background('darkgray');
-    for (let i = 0; i < 20 ; i++){
-        searchResult[i] = new Movie(searchData, i);
+    for (let i = 0; i < searchData.results.length ; i++){
+        searchResult[i] = new Movie("search", searchData, i);
         print(searchResult[i]);
       }
       let x = 100;
@@ -132,12 +189,18 @@ function searchUser(value){
 
 }
 
-
-
 function fetchData() {
     keyval.set("test", input.value(), function (data) {
         keyval.get("test", function (data) {
             console.log(data);
         });
     });
+}
+
+function displayRecents() {
+   fill("black");
+   textSize(30);
+   text("Recently Released Movies/Shows:", 50, 75);
+
+   
 }
