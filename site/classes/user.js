@@ -14,4 +14,16 @@ class User{
         this.currently_watching;
         this.to_watch;
     }
+
+
+    display_profile_screen = () =>{
+        removeElements();
+        if (this.favorite_movie != null){
+            this.favorite_movie.display(300,300);
+        }
+        else{
+            textSize(30);
+            text("No favorite movie", 300, 300)
+        }
+    }
 }

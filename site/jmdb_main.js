@@ -10,6 +10,7 @@ let login_button;
 let user = null;
 let users;
 let user_json;
+let profile_button;
 
 function setup() {
     getUsers();
@@ -37,16 +38,18 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1300, search_bar.y);
+    login_input.position(1700, search_bar.y);
     login_button.position(login_input.x - 50, search_bar.y);
     login_button.mousePressed(login);
-    let saveButton = createButton("save");
-    saveButton.position(800,300);
-    saveButton.mousePressed(saveUsers);
+    //let saveButton = createButton("save");
+    //saveButton.position(1600,50);
+    //saveButton.mousePressed(saveUsers);
+    profile_button = createButton("Profile");
+    profile_button.position(login_input.x - 50, search_bar.y);
+    profile_button.hide();
+    profile_button.mousePressed(displayUserProfile);
+    
     displayRecents();
-
-
-
 }
 
 function preload(){
@@ -64,7 +67,11 @@ function preload(){
 
 
 function draw() {
-
+    if (user != null){
+        login_button.hide();
+        login_input.hide();
+        profile_button.show();
+    }
 }
 
 function login(){
@@ -95,7 +102,11 @@ function login(){
     }
     if (!user_found){
         users.push(new User(login_input.value()));
-    }   
+    }
+    login_button.hide();
+    login_input.hide();
+    profile_button.show();
+    saveUsers();
 }
 
 function saveUsers(){
@@ -212,12 +223,15 @@ function searchUser(value){
 
 }
 
-function fetchData() {
-    keyval.set("test", input.value(), function (data) {
-        keyval.get("test", function (data) {
-            console.log(data);
-        });
-    });
+function displayUserProfile(){
+    background('darkgray');
+    if (searchResult != null){
+        for (let i = 0; i < searchResult.length; i++){
+            searchResult[i].image.remove();
+            searchResult[i].button.remove();   
+        }
+    }
+    user.display_profile_screen();
 }
 
 function displayRecents() {
