@@ -27,7 +27,7 @@ class Movie{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
     
-    display(x, y){
+    display = (x, y) =>{
         this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
@@ -44,17 +44,29 @@ class Movie{
         textSize(12);
     }
 
-    buttonPressed(){
+    buttonPressed = () =>{
         removeElements();
         this.image = createElement("img");
-        //this.image.attribute("src", getImage());
-        background("darkgray");
-        console.log(this);
-        this.image.size(200,300);
-        this.image.position(200,200);
+        this.image.attribute("src", this.getImage());
+        if (this.imgPath == null){
+            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
+        }  
+        this.image.size(400,600);
+        this.image.position(100,200);
         this.backButton = createButton("back to home");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(setup);
+        background("darkgray");
+        textSize(40);
+        textWrap(WORD);
+        text(this.name, 600, 200, 600);
+        text("Popularity Rating: " + this.popularity, 100, 800);
+        if(this.reviewAverage == null){
+            this.reviewAverage = "Not enough votes";
+        }
+        text("Average Review Rating: " + this.reviewAverage, 100, 900);
+        textSize(20);
+        text(this.description, 600, 350, 800);
     }
 }
