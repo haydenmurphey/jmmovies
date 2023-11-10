@@ -13,6 +13,7 @@ let user_json;
 
 function setup() {
     getUsers();
+    removeElements();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
 
