@@ -326,7 +326,6 @@ function displayUpcoming() {
     
         loadJSON(url, function (data) {
             upcomingMovie = Array(10);
-            background('darkgray');
     
             for (let i = 0; i < 10; i++) {
                 upcomingMovie[i] = new Movie("search", data, i, "");
@@ -373,5 +372,4 @@ function displayTrending() {
             }
         });
     }
-    
 }
