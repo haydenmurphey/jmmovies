@@ -290,10 +290,54 @@ function displayUserProfile(){
 function displayRecents() {
    fill("black");
    textSize(30);
-   text("Recently Released Movies/Shows:", 50, 75);
+   text("Recently Released Movies:", 50, 75);
+
+   let date = new Date;
+   let year = date.getFullYear();
+   let month = date.getMonth() + 1;
+   let day = date.getDate();
+   
+   let min_date;
+   let max_date = year + "-" + month + "-" + day;
+
+   if (month - 1 < 1) {
+     min_date = year - 1 + "-12-" + date;
+   } else {
+    min_date = year + "-" + (month - 1) + "-" + day;
+   }
+
+   let url1 = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=";
+   url1 = url1 + min_date;
+   url2 = "&primary_release_date.lte=";
+   url2 = url2 + max_date +  "&api_key=" + TMDB_API_KEY;
+   let finalUrl = url1 + url2;
+
+   if (searchResult == null) {
+   loadJSON(finalUrl, function (data) {
+      let recentlyReleased = Array(10);
+      background('darkgray');
+
+      for (let i = 0; i < 10; i++) {
+        recentlyReleased[i] = new Movie("search", data, i, "");
+        //print(recentlyReleased[i]);
+      }
+
+      let x = 50;
+      let y = 125;
+
+      for (let i = 0; i < recentlyReleased.length; i++) {
+        if (recentlyReleased[i] != null) {
+            recentlyReleased[i].HomeDisplay(x, y);
+            x += 140;
+        }
+      }
+
+      
+   });  
+}
+}
 
    
-}
 
 function displayUpcoming() {
     let date = new Date;
@@ -358,6 +402,7 @@ function displayTrending() {
     if (searchResult == null) {
         loadJSON(url, function(data){
             trendingMovies = Array(10);
+            background('darkgray');
             for (let i = 0; i < 10; i++) {
                 trendingMovies[i] = new Movie("search", data, i, "");
             }
