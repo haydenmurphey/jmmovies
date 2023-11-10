@@ -103,7 +103,9 @@ function login(){
     if (!user_found){
         users.push(new User(login_input.value()));
     }
-    
+    login_button.hide();
+    login_input.hide();
+    profile_button.show();
     saveUsers();
 }
 
@@ -222,7 +224,14 @@ function searchUser(value){
 }
 
 function displayUserProfile(){
-    
+    background('darkgray');
+    if (searchResult != null){
+        for (let i = 0; i < searchResult.length; i++){
+            searchResult[i].image.remove();
+            searchResult[i].button.remove();   
+        }
+    }
+    user.display_profile_screen();
 }
 
 function displayRecents() {
