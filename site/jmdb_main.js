@@ -12,6 +12,7 @@ let user_json;
 let profile_button;
 let logout_button;
 let search_val = "";
+
 function setup() {
     getUsers();
     removeElements();
