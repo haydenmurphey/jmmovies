@@ -24,6 +24,7 @@ class Movie{
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
+        this.button.hide();
     }
 
     getImage = () =>{
@@ -52,6 +53,7 @@ class Movie{
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
         this.image.mouseClicked(this.buttonPressed);
+        this.button.show();
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
