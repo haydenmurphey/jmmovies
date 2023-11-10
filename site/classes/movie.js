@@ -19,9 +19,9 @@ class Movie{
             this.reviewAverage = moviesJson.vote_average;
             this.popularity = moviesJson.popularity;
         }
+        this.button = createButton("go to page");
+        this.button.mouseClicked(this.buttonPressed);
     }
-
-    
 
     getImage(){
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
@@ -35,22 +35,24 @@ class Movie{
         textWrap(WORD);
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
-        }
-        textSize(15)
+        }  
+        this.button.position(x + 200, y + 50);
+        textSize(12);   
         text(this.description, x + 200, y, 1000);
         textSize(30);
         text(this.name, x + 200, y - 50);
-        //this.button.size(100, 20);
-        //this.button.position(x + 200, y + 55);
+        textSize(12);
     }
 
     buttonPressed(){
         removeElements();
+        this.image = createElement("img");
+        //this.image.attribute("src", getImage());
         background("darkgray");
         console.log(this);
         this.image.size(200,300);
         this.image.position(200,200);
-        this.backButton = createButton("back to search");
+        this.backButton = createButton("back to home");
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(setup);
