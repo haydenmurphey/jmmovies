@@ -18,12 +18,21 @@ class User{
 
     display_profile_screen = () =>{
         removeElements();
+
+        textSize(30)
+        text(this.username, 300, 200);
         if (this.favorite_movie != null){
             this.favorite_movie.display(300,300);
         }
         else{
-            textSize(30);
             text("No favorite movie", 300, 300)
         }
     }
+
+/*
+username in top right
+favorite movie button/implementation
+*/
 }
+
+
