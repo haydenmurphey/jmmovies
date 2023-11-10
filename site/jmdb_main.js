@@ -12,9 +12,9 @@ let user_json;
 let profile_button;
 let logout_button;
 let search_val = "";
+let to_favorite;
 
 function setup() {
-    getUsers();
     removeElements();
     createCanvas(windowWidth, 5000);
     searchDiv = createDiv();
@@ -141,7 +141,7 @@ function logout(){
     profile_button.hide();
     storeItem('user', null);
     login_input.value("");
-    
+    background('darkgray');
 }
 
 function saveUsers(){
@@ -166,8 +166,9 @@ function saveUsers(){
     
 }
 
-function getUsers(){
-    
+function makeFavorite(){
+    user.favorite_movie_id = to_favorite;
+    saveUsers();
 }
 
 function searchType(){

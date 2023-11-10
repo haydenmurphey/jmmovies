@@ -58,6 +58,15 @@ class Movie{
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
+
+        if (getItem('user') != null){
+            this.favorite_button = createButton("Make favorite");
+            this.favorite_button.position(250, 150);
+            to_favorite = this.id;
+            this.favorite_button.mousePressed(makeFavorite);
+        }
+
+
         background("darkgray");
         textSize(40);
         textWrap(WORD);
