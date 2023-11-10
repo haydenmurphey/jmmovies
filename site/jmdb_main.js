@@ -358,7 +358,6 @@ function displayTrending() {
     if (searchResult == null) {
         loadJSON(url, function(data){
             trendingMovies = Array(10);
-            background('darkgray');
             for (let i = 0; i < 10; i++) {
                 trendingMovies[i] = new Movie("search", data, i, "");
             }
