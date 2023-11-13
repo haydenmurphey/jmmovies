@@ -15,7 +15,6 @@ let search_val = "";
 let to_favorite;
 let upcomingMovie;
 let trendingMovies;
-let recentlyReleased;
 
 
 function setup() {
@@ -194,11 +193,6 @@ function searchType(){
             trendingMovies[i].image.remove();
         }
     }
-    if (recentlyReleased != null){
-        for (let i = 0; i < recentlyReleased.length; i++){
-            recentlyReleased[i].image.remove();
-        }
-    }
 
     if(search_bar.value() == ""){
         background("darkgray");
@@ -320,10 +314,9 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
-      recentlyReleased = Array(10);
+      let recentlyReleased = Array(10);
       for (let i = 0; i < 10; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
-        //print(recentlyReleased[i]);
       }
 
       let x = 50;
@@ -335,8 +328,6 @@ function displayRecents() {
             x += 140;
         }
       }
-
-      
    });  
 }
 }
@@ -370,7 +361,7 @@ function displayUpcoming() {
     textSize(30);
     text("Upcoming Movies:", 50, 730);
 
-    if(searchResult == null){
+    if(searchResult == null) {
     
         loadJSON(url, function (data) {
             upcomingMovie = Array(10);
@@ -414,11 +405,10 @@ function displayTrending() {
             
             for (let i = 0; i < trendingMovies.length; i++) {
                 if (trendingMovies[i] != null) {
-                    trendingMovies[i].displayHome(x, y);
+                    trendingMovies[i].HomeDisplay(x, y);
                     x += 140;
                 }
             }
         });
     }
-
 }
