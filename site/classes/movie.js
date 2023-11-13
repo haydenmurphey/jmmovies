@@ -1,5 +1,6 @@
 class Movie{
     constructor(type, moviesJson, num=0, search_val){
+        let review_url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
         if (type === "search"){
             this.name = moviesJson.results[num].title;
             this.imgPath = moviesJson.results[num].poster_path;
@@ -21,10 +22,12 @@ class Movie{
             this.image = createElement("img");
 
         }
+        //loadJSON();
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
+
     }
 
     getImage = () =>{

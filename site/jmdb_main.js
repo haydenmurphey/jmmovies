@@ -43,7 +43,7 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1700, search_bar.y);
+    login_input.position(1200, search_bar.y);
     login_button.position(login_input.x - 50, search_bar.y);
     login_button.mousePressed(login);
     
@@ -67,7 +67,7 @@ function setup() {
 function preload(){
     let key = "users";
 
-    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
+    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
     loadJSON(url, function(data){
         user_json = data;
         users = Array(user_json.users.length);
@@ -83,10 +83,6 @@ function draw() {
         login_button.hide();
         login_input.hide();
         profile_button.show();
-        textSize(15)
-        if (true){
-            text(user.username, profile_button.x-50, 50);
-        }
     }
 }
 
@@ -128,6 +124,8 @@ function login(){
     }
     if (!user_found){
         users.push(new User(login_input.value()));
+        user = users[users.length - 1];
+        storeItem('user', user.username);
     }
     login_button.hide();
     login_input.hide();
@@ -145,7 +143,6 @@ function logout(){
     profile_button.hide();
     storeItem('user', null);
     login_input.value("");
-    background('darkgray');
 }
 
 function saveUsers(){
@@ -172,6 +169,7 @@ function saveUsers(){
 
 function makeFavorite(){
     user.favorite_movie_id = to_favorite;
+    user.update_movie();
     saveUsers();
 }
 
@@ -335,13 +333,9 @@ function displayRecents() {
             x += 140;
         }
       }
-
-      
    });  
 }
 }
-
-   
 
 function displayUpcoming() {
     let date = new Date;
