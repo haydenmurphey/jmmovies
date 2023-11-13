@@ -24,21 +24,23 @@ function setup() {
 
     search_bar = createInput(search_val);
     search_bar.size(300);
-    search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.position(windowWidth/2 - 150, 35);
     search_bar.class("search");
 
     search_dropdown = createSelect();
-    search_dropdown.position(search_bar.x - 76,search_bar.y);
-    search_dropdown.size(75);
+    search_dropdown.position(search_bar.x - 95,search_bar.y);
+    search_dropdown.size(90);
     search_dropdown.option("Movie");
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
+    search_dropdown.class("search-dropdown");
     //search_dropdown.option("User");
     
     search_button = createButton("Search");
-    search_button.position(search_bar.x + 307, search_bar.y);
+    search_button.position(search_bar.x + 328, search_bar.y);
     search_button.size(75);
     search_button.mousePressed(searchType);
+    search_button.class("search-button");
 
     login_button = createButton("Login");
     login_input = createInput();
