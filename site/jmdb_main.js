@@ -15,7 +15,6 @@ let search_val = "";
 let to_favorite;
 let upcomingMovie;
 let trendingMovies;
-let recentlyReleased;
 
 
 function setup() {
@@ -25,21 +24,23 @@ function setup() {
 
     search_bar = createInput(search_val);
     search_bar.size(300);
-    search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.position(windowWidth/2 - 150, 35);
     search_bar.class("search");
 
     search_dropdown = createSelect();
-    search_dropdown.position(search_bar.x - 76,search_bar.y);
-    search_dropdown.size(75);
+    search_dropdown.position(search_bar.x - 95,search_bar.y);
+    search_dropdown.size(90);
     search_dropdown.option("Movie");
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
+    search_dropdown.class("search-dropdown");
     //search_dropdown.option("User");
     
     search_button = createButton("Search");
-    search_button.position(search_bar.x + 307, search_bar.y);
+    search_button.position(search_bar.x + 328, search_bar.y);
     search_button.size(75);
     search_button.mousePressed(searchType);
+    search_button.class("search-button");
 
     login_button = createButton("Login");
     login_input = createInput();
@@ -192,11 +193,6 @@ function searchType(){
             trendingMovies[i].image.remove();
         }
     }
-    if (recentlyReleased != null){
-        for (let i = 0; i < recentlyReleased.length; i++){
-            recentlyReleased[i].image.remove();
-        }
-    }
 
     if(search_bar.value() == ""){
         background("darkgray");
@@ -318,10 +314,9 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
-      recentlyReleased = Array(10);
+      let recentlyReleased = Array(10);
       for (let i = 0; i < 10; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
-        //print(recentlyReleased[i]);
       }
 
       let x = 50;
@@ -364,7 +359,7 @@ function displayUpcoming() {
     textSize(30);
     text("Upcoming Movies:", 50, 730);
 
-    if(searchResult == null){
+    if(searchResult == null) {
     
         loadJSON(url, function (data) {
             upcomingMovie = Array(10);
@@ -408,11 +403,10 @@ function displayTrending() {
             
             for (let i = 0; i < trendingMovies.length; i++) {
                 if (trendingMovies[i] != null) {
-                    trendingMovies[i].displayHome(x, y);
+                    trendingMovies[i].HomeDisplay(x, y);
                     x += 140;
                 }
             }
         });
     }
-
 }
