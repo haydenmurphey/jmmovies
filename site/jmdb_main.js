@@ -15,6 +15,7 @@ let search_val = "";
 let to_favorite;
 let upcomingMovie;
 let trendingMovies;
+let recentlyReleased;
 
 
 function setup() {
@@ -193,6 +194,11 @@ function searchType(){
             trendingMovies[i].image.remove();
         }
     }
+    if (recentlyReleased != null){
+        for (let i = 0; i < recentlyReleased.length; i++){
+            recentlyReleased[i].image.remove();
+        }
+    }
 
     if(search_bar.value() == ""){
         background("darkgray");
@@ -314,7 +320,7 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
-      let recentlyReleased = Array(10);
+      recentlyReleased = Array(10);
       for (let i = 0; i < 10; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
       }

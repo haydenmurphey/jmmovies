@@ -1,6 +1,5 @@
 class Movie{
     constructor(type, moviesJson, num=0, search_val){
-        let review_url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
         if (type === "search"){
             this.name = moviesJson.results[num].title;
             this.imgPath = moviesJson.results[num].poster_path;
@@ -22,37 +21,17 @@ class Movie{
             this.image = createElement("img");
 
         }
-        //loadJSON();
         this.search_val = search_val;
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
-
+        this.getReviews();
     }
 
     getImage = () =>{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
-
-    displayHome = (x, y) =>{
-        this.displayed_on_home = true;
-        this.image.position(x, y);
-        this.image.attribute("src", this.getImage());
-        this.image.size(120,180);
-        this.image.mouseClicked(this.buttonPressed);
-        fill("black");
-        textWrap(WORD);
-        if (this.imgPath == null){
-            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
-        }
-        textSize(12);
-        textStyle(BOLD);
-        text(this.name, x - 10, y + 105, x + 10);
-        text(12);
-        textStyle(NORMAL);
-        text(this.releaseDate, x - 10, y + 90, x + 10)
-    }   
-    
+ 
     display = (x, y) =>{
         this.displayed_on_home = false;
         this.image.position(x,y);
@@ -86,10 +65,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 10, y + 125, 125);
+        text(this.name, x - 10, y + 125, x + 10);
         text(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 10, y + 110, x + 10);
+        text(this.releaseDate, x - 10, y + 110, x + 10)
     }
 
     buttonPressed = () =>{
@@ -134,5 +113,11 @@ class Movie{
             searchMovie(this.search_val);
 
         }
+    }
+
+    getReviews = () => {
+        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "?apikey=" + KEYVAL_API_KEY;
+        //loadJSON(review_url, );
+        
     }
 }
