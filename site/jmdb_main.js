@@ -47,19 +47,23 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1200, search_bar.y);
-    login_button.position(login_input.x - 50, search_bar.y);
+    login_input.position(1265, search_bar.y + 6);
+    login_button.position(login_input.x + 180, search_bar.y);
     login_button.mousePressed(login);
+    login_button.class("login");
+    login_input.class("login-input");
     
     logout_button = createButton("Logout");
-    logout_button.position(login_input.x + 10, search_bar.y);
+    logout_button.position(login_input.x + 170, search_bar.y);
     logout_button.hide();
     logout_button.mousePressed(logout);
+    logout_button.class("logout");
 
     profile_button = createButton("Profile");
-    profile_button.position(login_input.x - 50, search_bar.y);
+    profile_button.position(logout_button.x - 65, search_bar.y);
     profile_button.hide();
     profile_button.mousePressed(displayUserProfile);
+    profile_button.class("profile");
     
     login();
 
