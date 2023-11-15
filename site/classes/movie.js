@@ -25,31 +25,14 @@ class Movie{
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
+
+        this.getReviews();
     }
 
     getImage = () =>{
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
-
-    displayHome = (x, y) =>{
-        this.displayed_on_home = true;
-        this.image.position(x, y);
-        this.image.attribute("src", this.getImage());
-        this.image.size(120,180);
-        this.image.mouseClicked(this.buttonPressed);
-        fill("black");
-        textWrap(WORD);
-        if (this.imgPath == null){
-            this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
-        }
-        textSize(12);
-        textStyle(BOLD);
-        text(this.name, x - 10, y + 105, x + 10);
-        text(12);
-        textStyle(NORMAL);
-        text(this.releaseDate, x - 10, y + 90, x + 10)
-    }   
-    
+ 
     display = (x, y) =>{
         this.displayed_on_home = false;
         this.image.position(x,y);
@@ -108,6 +91,18 @@ class Movie{
             this.favorite_button.position(250, 150);
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
+
+
+            let add_to_list_button = createButton("Add to List");
+            add_to_list_button.mouseClicked(addMovieToList);
+    
+            let list_selector = createSelect();
+            list_selector.option("Plan to Watch");
+            list_selector.option("Currently Watching");
+            list_selector.option("Completed");
+
+            to_add_list = this.id;
+            list_type = list_selector.value();
         }
 
         background("darkgray");
@@ -131,5 +126,27 @@ class Movie{
             searchMovie(this.search_val);
 
         }
+    }
+
+    getReviews = () => {
+
+        /* 
+        JSON file structure 
+
+        num_reviews
+        review_total_rating
+        reviews[]
+            username
+            rating
+            review
+        */
+
+
+        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "?apikey=" + KEYVAL_API_KEY;
+        //loadJSON(review_url, );
+        
+
+
+
     }
 }

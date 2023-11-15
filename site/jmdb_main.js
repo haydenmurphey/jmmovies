@@ -16,6 +16,8 @@ let to_favorite;
 let upcomingMovie;
 let trendingMovies;
 let recentlyReleased;
+let to_add_list;
+let list_type;
 
 
 function setup() {
@@ -25,25 +27,27 @@ function setup() {
 
     search_bar = createInput(search_val);
     search_bar.size(300);
-    search_bar.position(windowWidth/2 - 150, 50);
+    search_bar.position(windowWidth/2 - 150, 35);
     search_bar.class("search");
 
     search_dropdown = createSelect();
-    search_dropdown.position(search_bar.x - 76,search_bar.y);
-    search_dropdown.size(75);
+    search_dropdown.position(search_bar.x - 95,search_bar.y);
+    search_dropdown.size(90);
     search_dropdown.option("Movie");
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
+    search_dropdown.class("search-dropdown");
     //search_dropdown.option("User");
     
     search_button = createButton("Search");
-    search_button.position(search_bar.x + 307, search_bar.y);
+    search_button.position(search_bar.x + 328, search_bar.y);
     search_button.size(75);
     search_button.mousePressed(searchType);
+    search_button.class("search-button");
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1700, search_bar.y);
+    login_input.position(1200, search_bar.y);
     login_button.position(login_input.x - 50, search_bar.y);
     login_button.mousePressed(login);
     
@@ -66,13 +70,12 @@ function setup() {
 
 function preload(){
     let key = "users";
-
-    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=YOUR_KEYVAL_API_KEY";
+    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
     loadJSON(url, function(data){
         user_json = data;
         users = Array(user_json.users.length);
         for (let i = 0; i < user_json.users.length; i++){
-            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id, user_json.users[i].currently_watching_movies, user_json.users[i].plan_to_watch_movies, user_json.users[i].completed_movies, user_json.users[i].currently_watching_tv, user_json.users[i].plan_to_watch_tv, user_json.users[i].completed_tv);
         }
     });
 }
@@ -83,23 +86,18 @@ function draw() {
         login_button.hide();
         login_input.hide();
         profile_button.show();
-        textSize(15)
-        if (true){
-            text(user.username, profile_button.x-50, 50);
-        }
     }
 }
 
 function login(){
     /*
-    ideas:
-        store all users in a json file
-        json structure
-        array of users
-            user_name
-            favorite movie id 
-            currently watching[] array of ids
-            to_watch[] array of ids
+    JSON file structure
+    array of users
+        user_name
+        favorite movie id 
+        currently watching[] array of ids
+        plan_to_watch[] array of ids
+        completed[] array of ids
     */
     print(getItem('user'));
     let user_found = false;
@@ -128,6 +126,8 @@ function login(){
     }
     if (!user_found){
         users.push(new User(login_input.value()));
+        user = users[users.length - 1];
+        storeItem('user', user.username);
     }
     login_button.hide();
     login_input.hide();
@@ -145,10 +145,17 @@ function logout(){
     profile_button.hide();
     storeItem('user', null);
     login_input.value("");
-    background('darkgray');
 }
 
 function saveUsers(){
+    /*JSON file structure
+    array of users
+        user_name
+        favorite movie id 
+        currently watching[] array of ids
+        plan_to_watch[] array of ids
+        completed[] array of ids
+    */
     let json = {};
     let json_string;
     let user_keyval = new Keyval(KEYVAL_API_KEY);
@@ -157,6 +164,12 @@ function saveUsers(){
         users_array_json[i] = {};
         users_array_json[i]["username"] = users[i].username;
         users_array_json[i]["favorite_movie_id"] = users[i].favorite_movie_id;
+        users_array_json[i]["currently_watching_movies"] = users[i].currently_watching_movies_ids;
+        users_array_json[i]["plan_to_watch_movies"] = users[i].plan_to_watch_movies_ids;
+        users_array_json[i]["completed_movies"] = users[i].completed_movies_ids;
+        users_array_json[i]["currently_watching_tv"] = users[i].currently_watching_movies_ids;
+        users_array_json[i]["plan_to_watch_tv"] = users[i].plan_to_watch_tv_ids;
+        users_array_json[i]["completed_tv"] = users[i].completed_tv_ids;
     }
     json.users = users_array_json;
     json_string = JSON.stringify(json);
@@ -170,10 +183,7 @@ function saveUsers(){
     
 }
 
-function makeFavorite(){
-    user.favorite_movie_id = to_favorite;
-    saveUsers();
-}
+
 
 function searchType(){
     search_val = search_bar.value();
@@ -323,7 +333,6 @@ function displayRecents() {
       recentlyReleased = Array(10);
       for (let i = 0; i < 10; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
-        //print(recentlyReleased[i]);
       }
 
       let x = 50;
@@ -335,13 +344,9 @@ function displayRecents() {
             x += 140;
         }
       }
-
-      
    });  
 }
 }
-
-   
 
 function displayUpcoming() {
     let date = new Date;
@@ -370,7 +375,7 @@ function displayUpcoming() {
     textSize(30);
     text("Upcoming Movies:", 50, 730);
 
-    if(searchResult == null){
+    if(searchResult == null) {
     
         loadJSON(url, function (data) {
             upcomingMovie = Array(10);
@@ -414,7 +419,7 @@ function displayTrending() {
             
             for (let i = 0; i < trendingMovies.length; i++) {
                 if (trendingMovies[i] != null) {
-                    trendingMovies[i].displayHome(x, y);
+                    trendingMovies[i].HomeDisplay(x, y);
                     x += 140;
                 }
             }
