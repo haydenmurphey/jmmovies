@@ -85,6 +85,7 @@ class Movie{
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
+        this.getCast();
 
         if (getItem('user') != null){
             this.favorite_button = createButton("Make favorite");
@@ -114,6 +115,7 @@ class Movie{
             this.reviewAverage = "Not enough votes";
         }
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
+        text("Cast List:", 200, 1000, 600);
         textSize(20);
         text(this.description, 600, 350, 800);
         text("Release Date: " + this.releaseDate, 600, 500, 800);
@@ -126,6 +128,32 @@ class Movie{
             searchMovie(this.search_val);
 
         }
+    }
+
+    getCast = () => {
+        let cast;
+        let data;
+        let y = 1200;
+        let x = 200;
+        let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
+        loadJSON(url, function(inp){
+            data = inp;
+            print('TEST');
+            print(data);
+            cast = Array(data.cast.length);
+            for (let i = 0; i < cast.length; i++){
+                cast[i] = new Person(data, i, "", "cast");
+                cast[i].display(x,y, "cast");
+                cast[i].image.size(100,150);
+                if (x < 1000){
+                    x += 200;
+                } else{
+                    y += 200
+                    x = 200
+                }
+            }
+            
+        });
     }
 
     getReviews = () => {
