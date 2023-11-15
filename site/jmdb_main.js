@@ -256,13 +256,13 @@ function searchTV(value){
     let url = "https://api.themoviedb.org/3/search/tv?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
-        searchResult = Array(20);
+        searchResult = Array(searchData.results.length);
         background('darkgray');
 
         x = 100;
         y = 100;
-        for (let i = 0; i < 20; i++){
-          searchResult[i] = new TvShow(searchData, i, search_bar.value());
+        for (let i = 0; i < searchData.results.length; i++){
+          searchResult[i] = new TvShow("search",searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
@@ -274,12 +274,12 @@ function searchActor(value){
     let url = "https://api.themoviedb.org/3/search/person?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
-        searchResult = new Array(20);
+        searchResult = new Array(searchData.results.length);
         background('darkgray');
 
         x = 100;
         y = 100;
-        for (let i = 0; i < 20; i++){
+        for (let i = 0; i < searchData.results.length; i++){
           searchResult[i] = new Person(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;

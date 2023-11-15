@@ -31,8 +31,12 @@ class TvShow{
     }
 
     display(x, y){
+        
         this.image.position(x, y);
-        this.image.attribute("src", this.getImage());
+        if (this.imgPath != null){
+            this.image.attribute("src", this.getImage());
+        }
+            
         this.image.size(120,180);
         fill("black");
         this.button.position(x + 200, y + 50);
