@@ -43,10 +43,10 @@ class User{
         this.plan_to_watch_movies = Array(this.plan_to_watch_movies_ids.length);
         this.completed_movies = Array(this.completed_movies_ids.length);
         this.currently_watching_tv = Array(this.currently_watching_tv_ids.length);
-        this.plan_to_watch_tv = Array(this.plan_to_watch_tv_ids);
+        this.plan_to_watch_tv = Array(this.plan_to_watch_tv_ids.length);
         this.completed_tv = Array(this.completed_tv_ids.length);
         
-        this.update_list();
+        this.make_lists();
     }
     
     
@@ -74,31 +74,75 @@ class User{
             });
     }
 
-    update_list = () =>{
-        
-        for (let i = 0; i < this.currently_watching_movies.length; i++){
-
-        }
-        for (let i = 0; i < this.plan_to_watch_movies.length; i++){
-            
-        }
-        for (let i = 0; i < this.completed_movies.length; i++){
-            
-        }
-        for (let i = 0; i < this.currently_watching_tv.length; i++){
-
-        }
-        for (let i = 0; i < this.plan_to_watch_tv.length; i++){
-            
-        }
-        for (let i = 0; i < this.completed_tv.length; i++){
-            
-        }
-
-
-
+    make_lists = () =>{
+        print("making lists");
+        this.make_watching_movies();
+        this.make_to_watch_movies();
+        this.make_completed_movies();
+        this.make_watching_tv();
+        this.make_to_watch_tv();
+        this.make_completed_tv();
     }
 
+    make_watching_movies = () =>{
+        let create_movie;
+        for (let i = 0; i < this.currently_watching_movies.length; i++){
+            let url = "https://api.themoviedb.org/3/movie/" + this.currently_watching_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_movie = (data) => {
+                this.currently_watching_movies[i] = new Movie("id", data);
+            });
+        }
+    }
+
+    make_to_watch_movies = () => {
+        let create_movie;
+        for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+            let url = "https://api.themoviedb.org/3/movie/" + this.plan_to_watch_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_movie = (data) => {
+                this.plan_to_watch_movies[i] = new Movie("id", data);
+            });
+        }
+    }
+
+    make_completed_movies = () =>{
+        let create_movie;
+        for (let i = 0; i < this.completed_movies.length; i++){
+            let url = "https://api.themoviedb.org/3/movie/" + this.completed_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_movie = (data) => {
+                this.completed_movies[i] = new Movie("id", data);
+            });
+        }
+    }
+    
+    make_watching_tv = () =>{
+        let create_tv;
+        for (let i = 0; i < this.currently_watching_tv.length; i++){
+            let url = "https://api.themoviedb.org/3/tv/" + this.currently_watching_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_tv = (data) => {
+                this.currently_watching_tv[i] = new TvShow("id", data);
+            });
+        }
+    }
+    
+    make_to_watch_tv = () =>{
+        let create_tv;
+        for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+            let url = "https://api.themoviedb.org/3/tv/" + this.plan_to_watch_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_tv = (data) => {
+                this.plan_to_watch_tv[i] = new TvShow("id", data);
+            });
+        }
+    }
+
+    make_completed_tv = () =>{
+        let create_tv;
+        for (let i = 0; i < this.completed_tv.length; i++){
+            let url = "https://api.themoviedb.org/3/tv/" + this.completed_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, create_tv = (data) => {
+                this.completed_tv[i] = new TvShow("id", data);
+            });
+        }
+    }
 
 }
 
@@ -118,6 +162,8 @@ function addMovieToList(){
     else if (list_type === "Completed"){
         user.completed_movies_ids.push(to_add_list);
     }
+    user.make_lists();
+    saveUsers();
 }
 
 function addTvToList(){
@@ -130,4 +176,6 @@ function addTvToList(){
     else if (list_type === "Completed"){
         user.completed_tv_ids.push(to_add_list);
     }
+    user.make_lists();
+    saveUsers();
 }

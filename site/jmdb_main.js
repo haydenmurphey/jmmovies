@@ -47,19 +47,23 @@ function setup() {
 
     login_button = createButton("Login");
     login_input = createInput();
-    login_input.position(1200, search_bar.y);
-    login_button.position(login_input.x - 50, search_bar.y);
+    login_input.position(1265, search_bar.y + 6);
+    login_button.position(login_input.x + 180, search_bar.y);
     login_button.mousePressed(login);
+    login_button.class("login");
+    login_input.class("login-input");
     
     logout_button = createButton("Logout");
-    logout_button.position(login_input.x + 10, search_bar.y);
+    logout_button.position(login_input.x + 170, search_bar.y);
     logout_button.hide();
     logout_button.mousePressed(logout);
+    logout_button.class("logout");
 
     profile_button = createButton("Profile");
-    profile_button.position(login_input.x - 50, search_bar.y);
+    profile_button.position(logout_button.x - 65, search_bar.y);
     profile_button.hide();
     profile_button.mousePressed(displayUserProfile);
+    profile_button.class("profile");
     
     login();
 
@@ -256,13 +260,13 @@ function searchTV(value){
     let url = "https://api.themoviedb.org/3/search/tv?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
-        searchResult = Array(20);
+        searchResult = Array(searchData.results.length);
         background('darkgray');
 
         x = 100;
         y = 100;
-        for (let i = 0; i < 20; i++){
-          searchResult[i] = new TvShow(searchData, i, search_bar.value());
+        for (let i = 0; i < searchData.results.length; i++){
+          searchResult[i] = new TvShow("search",searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;
           print(searchResult[i]);
@@ -274,12 +278,12 @@ function searchActor(value){
     let url = "https://api.themoviedb.org/3/search/person?query=" + value + "&include_adult=false&language=en-US&page=1&api_key=" + TMDB_API_KEY;
     loadJSON(url, function(inp){
         searchData = inp;
-        searchResult = new Array(20);
+        searchResult = new Array(searchData.results.length);
         background('darkgray');
 
         x = 100;
         y = 100;
-        for (let i = 0; i < 20; i++){
+        for (let i = 0; i < searchData.results.length; i++){
           searchResult[i] = new Person(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
           y += 200;

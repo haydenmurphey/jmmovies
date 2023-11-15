@@ -25,6 +25,7 @@ class Movie{
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
+        this.image.class("image");
 
         this.getReviews();
     }
@@ -66,10 +67,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 10, y + 125, x + 10);
+        text(this.name, x - 5, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 10, y + 110, x + 10)
+        text(this.releaseDate, x - 5, y + 110, x + 10)
     }
 
     buttonPressed = () =>{
@@ -81,23 +82,26 @@ class Movie{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back");
-        this.backButton.size(150,20);
-        this.backButton.position(50,150);
+        this.backButton = createButton("Go Back");
+        //this.backButton.size(150,20);
+        this.backButton.position(100,150);
         this.backButton.mouseClicked(this.goBack);
         this.getCast();
+        this.backButton.class("back");
 
         if (getItem('user') != null){
             this.favorite_button = createButton("Make favorite");
-            this.favorite_button.position(250, 150);
+            this.favorite_button.position(180, 150);
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
-
+            this.favorite_button.class("favorite");
 
             let add_to_list_button = createButton("Add to List");
+            add_to_list_button.position(800, 150);
             add_to_list_button.mouseClicked(addMovieToList);
     
             let list_selector = createSelect();
+            list_selector.position(600, 150);
             list_selector.option("Plan to Watch");
             list_selector.option("Currently Watching");
             list_selector.option("Completed");
