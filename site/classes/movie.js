@@ -1,5 +1,5 @@
 class Movie{
-    constructor(type, moviesJson, num=0, search_val){
+    constructor(type, moviesJson, num=0, search_val =""){
         if (type === "search"){
             this.name = moviesJson.results[num].title;
             this.imgPath = moviesJson.results[num].poster_path;
