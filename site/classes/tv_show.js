@@ -1,13 +1,25 @@
 class TvShow{
-    constructor(tvJson, num, search_val){
-        this.name = tvJson.results[num].name;
-        this.imgPath = tvJson.results[num].poster_path;
-        this.releaseDate = tvJson.results[num].first_air_date;
-        this.id = tvJson.results[num].id;
-        this.description = tvJson.results[num].overview;
-        this.reviewAverage = tvJson.results[num].vote_average;
-        this.voteCount = tvJson.results[num].vote_count;
-        this.popularity = tvJson.results[num].popularity;
+    constructor(type, tvJson, num=0, search_val=""){
+        if(type === "search"){
+            this.name = tvJson.results[num].name;
+            this.imgPath = tvJson.results[num].poster_path;
+            this.releaseDate = tvJson.results[num].first_air_date;
+            this.id = tvJson.results[num].id;
+            this.description = tvJson.results[num].overview;
+            this.reviewAverage = tvJson.results[num].vote_average;
+            this.voteCount = tvJson.results[num].vote_count;
+            this.popularity = tvJson.results[num].popularity;
+        }
+        if(type === "id"){
+            this.name = tvJson.name;
+            this.imgPath = tvJson.poster_path;
+            this.releaseDate = tvJson.first_air_date;
+            this.id = tvJson.id;
+            this.description = tvJson.overview;
+            this.reviewAverage = tvJson.vote_average;
+            this.voteCount = tvJson.vote_count;
+            this.popularity = tvJson.popularity;
+        }
         this.image = createElement("img");
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);

@@ -1,12 +1,14 @@
 class Person{
-    constructor(actorJson, num, search_val){
+    constructor(actorJson, num, search_val =""){
         this.name = actorJson.results[num].name;
         this.id = actorJson.results[num].id;
         this.imgPath = actorJson.results[num].profile_path;
         this.image = createElement("img");
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
-        this.search_var = search_val;
+        this.search_val = search_val;
+        this.appearsIn = actorJson.results[num].known_for;
+        this.movies = Array(this.appearsIn.length);
     }
 
     getImage(){
@@ -47,8 +49,33 @@ class Person{
         textSize(40);
         textWrap(WORD);
         text(this.name, 600, 200, 600);
+        text("Appears in:", 100, 750, 600);
         textSize(20);
-        text(this.description, 600, 350, 800);
+        this.getMovies();
+    }
+
+    getMovies = () => {
+        let test;
+        let appeared;
+        let start_url = "https://api.themoviedb.org/3/movie/";
+        let type = 0;
+        let y = 1000;
+        for (let i = 0; i < this.movies.length; i++){
+            if(this.appearsIn[i].media_type === "movie"){
+                start_url = "https://api.themoviedb.org/3/movie/";
+                type = 1;
+            } else {
+                start_url = "https://api.themoviedb.org/3/tvshow/";
+            }
+            let url = start_url + this.appearsIn[i].id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
+            loadJSON(url, test = (data) => {
+                appeared = new Movie("id", data);
+                this.movies[i] = appeared;
+                textWrap(WORD);
+                appeared.display(200, y);
+                y += 300;
+            });
+          }
     }
 
     goBack = () => {
