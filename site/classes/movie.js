@@ -95,11 +95,12 @@ class Movie{
             this.favorite_button.mousePressed(makeFavorite);
             this.favorite_button.class("favorite");
 
-
             let add_to_list_button = createButton("Add to List");
+            add_to_list_button.position(800, 150);
             add_to_list_button.mouseClicked(addMovieToList);
     
             let list_selector = createSelect();
+            list_selector.position(600, 150);
             list_selector.option("Plan to Watch");
             list_selector.option("Currently Watching");
             list_selector.option("Completed");
