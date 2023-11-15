@@ -25,6 +25,7 @@ class Movie{
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
+
         this.getReviews();
     }
 
@@ -90,6 +91,18 @@ class Movie{
             this.favorite_button.position(250, 150);
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
+
+
+            let add_to_list_button = createButton("Add to List");
+            add_to_list_button.mouseClicked(addMovieToList);
+    
+            let list_selector = createSelect();
+            list_selector.option("Plan to Watch");
+            list_selector.option("Currently Watching");
+            list_selector.option("Completed");
+
+            to_add_list = this.id;
+            list_type = list_selector.value();
         }
 
         background("darkgray");
@@ -116,8 +129,24 @@ class Movie{
     }
 
     getReviews = () => {
+
+        /* 
+        JSON file structure 
+
+        num_reviews
+        review_total_rating
+        reviews[]
+            username
+            rating
+            review
+        */
+
+
         let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "?apikey=" + KEYVAL_API_KEY;
         //loadJSON(review_url, );
         
+
+
+
     }
 }

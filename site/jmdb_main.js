@@ -16,6 +16,8 @@ let to_favorite;
 let upcomingMovie;
 let trendingMovies;
 let recentlyReleased;
+let to_add_list;
+let list_type;
 
 
 function setup() {
@@ -68,13 +70,12 @@ function setup() {
 
 function preload(){
     let key = "users";
-
     url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
     loadJSON(url, function(data){
         user_json = data;
         users = Array(user_json.users.length);
         for (let i = 0; i < user_json.users.length; i++){
-            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id);
+            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id, user_json.users[i].currently_watching_movies, user_json.users[i].plan_to_watch_movies, user_json.users[i].completed_movies, user_json.users[i].currently_watching_tv, user_json.users[i].plan_to_watch_tv, user_json.users[i].completed_tv);
         }
     });
 }
@@ -90,14 +91,13 @@ function draw() {
 
 function login(){
     /*
-    ideas:
-        store all users in a json file
-        json structure
-        array of users
-            user_name
-            favorite movie id 
-            currently watching[] array of ids
-            to_watch[] array of ids
+    JSON file structure
+    array of users
+        user_name
+        favorite movie id 
+        currently watching[] array of ids
+        plan_to_watch[] array of ids
+        completed[] array of ids
     */
     print(getItem('user'));
     let user_found = false;
@@ -148,6 +148,14 @@ function logout(){
 }
 
 function saveUsers(){
+    /*JSON file structure
+    array of users
+        user_name
+        favorite movie id 
+        currently watching[] array of ids
+        plan_to_watch[] array of ids
+        completed[] array of ids
+    */
     let json = {};
     let json_string;
     let user_keyval = new Keyval(KEYVAL_API_KEY);
@@ -156,6 +164,12 @@ function saveUsers(){
         users_array_json[i] = {};
         users_array_json[i]["username"] = users[i].username;
         users_array_json[i]["favorite_movie_id"] = users[i].favorite_movie_id;
+        users_array_json[i]["currently_watching_movies"] = users[i].currently_watching_movies_ids;
+        users_array_json[i]["plan_to_watch_movies"] = users[i].plan_to_watch_movies_ids;
+        users_array_json[i]["completed_movies"] = users[i].completed_movies_ids;
+        users_array_json[i]["currently_watching_tv"] = users[i].currently_watching_movies_ids;
+        users_array_json[i]["plan_to_watch_tv"] = users[i].plan_to_watch_tv_ids;
+        users_array_json[i]["completed_tv"] = users[i].completed_tv_ids;
     }
     json.users = users_array_json;
     json_string = JSON.stringify(json);
@@ -169,11 +183,7 @@ function saveUsers(){
     
 }
 
-function makeFavorite(){
-    user.favorite_movie_id = to_favorite;
-    user.update_movie();
-    saveUsers();
-}
+
 
 function searchType(){
     search_val = search_bar.value();
