@@ -137,7 +137,7 @@ class Movie{
         }
 
         let submitButton = createButton("Submit Review");
-        submitButton.position(100,1500);
+        submitButton.position(700,800);
 
     }
 
