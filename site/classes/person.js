@@ -22,6 +22,7 @@ class Person{
             this.movies = Array(this.appearsIn.length);
         }
         this.image.mouseClicked(this.buttonPressed);
+        this.image.class("actor");
     }
 
     getImage(){
