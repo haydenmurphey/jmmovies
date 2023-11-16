@@ -174,7 +174,7 @@ class Movie{
         */
 
 
-        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "?apikey=" + KEYVAL_API_KEY;
+        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "movie?apikey=" + KEYVAL_API_KEY;
         //loadJSON(review_url, );
         
 
