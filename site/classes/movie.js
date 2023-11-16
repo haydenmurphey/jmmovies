@@ -125,13 +125,13 @@ class Movie{
         text("Release Date: " + this.releaseDate, 600, 500, 800);
         
         //LEAVE A REVIEW SECTION
-        text("Leave a review", 100, 1200);
+        text("Leave a review", 600, 600);
         let area = createElement('textarea');
-        area.position(100, 1350);
+        area.position(600, 700);
 
-        text("Leave a rating", 300, 1200);
+        text("Leave a rating", 800, 600);
         let ratingScore = createSelect();
-        ratingScore.position(400, 1300);
+        ratingScore.position(800, 700);
         for(let i = 0; i < 10; i++){
             ratingScore.option(i +1);
         }
