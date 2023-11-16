@@ -1,13 +1,25 @@
 class TvShow{
-    constructor(tvJson, num, search_val){
-        this.name = tvJson.results[num].name;
-        this.imgPath = tvJson.results[num].poster_path;
-        this.releaseDate = tvJson.results[num].first_air_date;
-        this.id = tvJson.results[num].id;
-        this.description = tvJson.results[num].overview;
-        this.reviewAverage = tvJson.results[num].vote_average;
-        this.voteCount = tvJson.results[num].vote_count;
-        this.popularity = tvJson.results[num].popularity;
+    constructor(type, tvJson, num=0, search_val=""){
+        if(type === "search"){
+            this.name = tvJson.results[num].name;
+            this.imgPath = tvJson.results[num].poster_path;
+            this.releaseDate = tvJson.results[num].first_air_date;
+            this.id = tvJson.results[num].id;
+            this.description = tvJson.results[num].overview;
+            this.reviewAverage = tvJson.results[num].vote_average;
+            this.voteCount = tvJson.results[num].vote_count;
+            this.popularity = tvJson.results[num].popularity;
+        }
+        if(type === "id"){
+            this.name = tvJson.name;
+            this.imgPath = tvJson.poster_path;
+            this.releaseDate = tvJson.first_air_date;
+            this.id = tvJson.id;
+            this.description = tvJson.overview;
+            this.reviewAverage = tvJson.vote_average;
+            this.voteCount = tvJson.vote_count;
+            this.popularity = tvJson.popularity;
+        }
         this.image = createElement("img");
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
@@ -19,13 +31,18 @@ class TvShow{
     }
 
     display(x, y){
+        
         this.image.position(x, y);
-        this.image.attribute("src", this.getImage());
+        if (this.imgPath != null){
+            this.image.attribute("src", this.getImage());
+        }
+            
         this.image.size(120,180);
         fill("black");
         this.button.position(x + 200, y + 50);
         textWrap(WORD);
         textSize(15);
+        this.image.mouseClicked(this.buttonPressed);
         if(this.description == ""){
             text("NO DESCRIPTION", x + 200, y, 1000);
         } else {
@@ -60,6 +77,20 @@ class TvShow{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+        if (getItem('user') != null){
+            let add_to_list_button = createButton("Add to List");
+            add_to_list_button.position(800, 150);
+            add_to_list_button.mouseClicked(this.callAdd);
+    
+            this.list_selector = createSelect();
+            this.list_selector.position(600, 150);
+            this.list_selector.option("Plan to Watch");
+            this.list_selector.option("Currently Watching");
+            this.list_selector.option("Completed");
+
+            to_add_list = this.id;
+            list_type = this.list_selector.value();
+        }
     }
 
     goBack = () => {
@@ -67,5 +98,10 @@ class TvShow{
         setup();
         //search_bar.input(this.search_val);
         searchTV(this.search_val);
+    }
+
+    callAdd = () =>{
+        list_type = this.list_selector.value();
+        addTvToList();
     }
 }
