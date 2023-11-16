@@ -80,7 +80,7 @@ class TvShow{
         if (getItem('user') != null){
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
-            add_to_list_button.mouseClicked(this.callAdd);
+            add_to_list_button.mouseClicked(this.callAddTv);
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
@@ -88,7 +88,6 @@ class TvShow{
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
 
-            to_add_list = this.id;
             list_type = this.list_selector.value();
         }
     }
@@ -100,7 +99,8 @@ class TvShow{
         searchTV(this.search_val);
     }
 
-    callAdd = () =>{
+    callAddTv = () =>{
+        to_add_list = this.id;
         list_type = this.list_selector.value();
         addTvToList();
     }

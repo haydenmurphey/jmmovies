@@ -171,7 +171,7 @@ function saveUsers(){
         users_array_json[i]["currently_watching_movies"] = users[i].currently_watching_movies_ids;
         users_array_json[i]["plan_to_watch_movies"] = users[i].plan_to_watch_movies_ids;
         users_array_json[i]["completed_movies"] = users[i].completed_movies_ids;
-        users_array_json[i]["currently_watching_tv"] = users[i].currently_watching_movies_ids;
+        users_array_json[i]["currently_watching_tv"] = users[i].currently_watching_tv_ids;
         users_array_json[i]["plan_to_watch_tv"] = users[i].plan_to_watch_tv_ids;
         users_array_json[i]["completed_tv"] = users[i].completed_tv_ids;
     }

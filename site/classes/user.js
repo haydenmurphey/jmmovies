@@ -54,16 +54,26 @@ class User{
         removeElements();
         let img = createElement("img");
         img.attribute("src", this.favorite_movie.getImage());
-        img.position(300,300);
+        img.position(100,150);
         img.size(200,300);
         textSize(30);
-        text(this.username, 300, 200);
+        text(this.username, 100, 50);
         if (this.favorite_movie != null){
-            this.favorite_movie.display(300,300);
-        }
-        else{
+            this.favorite_movie.display(100,125);
+        }else{
             text("No favorite movie", 300, 300);
         }
+
+        let x = 500;
+        let y = 500;
+        for (let i = 0; i < this.currently_watching_movies.length; i++){
+            this.currently_watching_movies[i].displayForWatchlist(x,y);
+            y += 150;
+        }
+
+
+
+        
     }
 
     update_favorite_movie = () =>{

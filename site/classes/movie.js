@@ -98,7 +98,7 @@ class Movie{
 
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
-            add_to_list_button.mouseClicked(this.callAdd);
+            add_to_list_button.mouseClicked(this.callAddMovie);
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
@@ -106,8 +106,6 @@ class Movie{
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
 
-            to_add_list = this.id;
-            list_type = list_selector.value();
         }
 
         background("darkgray");
@@ -140,6 +138,13 @@ class Movie{
         submitButton.position(700,800);
 
     }
+
+    displayForWatchlist = (x, y) =>{
+        this.image.position(x, y);
+        this.titleDisplay = createP(this.name);
+        this.titleDisplay.position(x + 50,y);
+    }
+
 
     goBack = () => {
         removeElements();
@@ -176,7 +181,8 @@ class Movie{
         });
     }
 
-    callAdd = () =>{
+    callAddMovie = () =>{
+        to_add_list = this.id;
         list_type = this.list_selector.value();
         addMovieToList();
     }
