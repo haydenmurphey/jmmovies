@@ -107,6 +107,7 @@ class Movie{
             this.list_selector.option("Completed");
 
             to_add_list = this.id;
+            list_type = list_selector.value();
         }
 
         background("darkgray");
@@ -163,6 +164,8 @@ class Movie{
         list_type = this.list_selector.value();
         addMovieToList();
     }
+
+
 
 
     getReviews = () => {

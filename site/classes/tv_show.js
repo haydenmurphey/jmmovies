@@ -80,16 +80,16 @@ class TvShow{
         if (getItem('user') != null){
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
-            add_to_list_button.mouseClicked(addTvToList);
+            add_to_list_button.mouseClicked(this.callAdd);
     
-            let list_selector = createSelect();
-            list_selector.position(600, 150);
-            list_selector.option("Plan to Watch");
-            list_selector.option("Currently Watching");
-            list_selector.option("Completed");
+            this.list_selector = createSelect();
+            this.list_selector.position(600, 150);
+            this.list_selector.option("Plan to Watch");
+            this.list_selector.option("Currently Watching");
+            this.list_selector.option("Completed");
 
             to_add_list = this.id;
-            list_type = list_selector.value();
+            list_type = this.list_selector.value();
         }
     }
 
@@ -98,5 +98,10 @@ class TvShow{
         setup();
         //search_bar.input(this.search_val);
         searchTV(this.search_val);
+    }
+
+    callAdd = () =>{
+        list_type = this.list_selector.value();
+        addTvToList();
     }
 }
