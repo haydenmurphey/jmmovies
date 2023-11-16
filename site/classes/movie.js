@@ -25,6 +25,7 @@ class Movie{
         this.button = createButton("go to page");
         this.button.mouseClicked(this.buttonPressed);
         this.button.hide();
+        this.image.class("image");
 
         this.getReviews();
     }
@@ -66,10 +67,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 10, y + 125, 130);
+        text(this.name, x - 5, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 10, y + 110, x + 10)
+        text(this.releaseDate, x - 5, y + 110, x + 10)
     }
 
     buttonPressed = () =>{
@@ -81,16 +82,19 @@ class Movie{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back");
-        this.backButton.size(150,20);
-        this.backButton.position(50,150);
+        this.backButton = createButton("Go Back");
+        //this.backButton.size(150,20);
+        this.backButton.position(100,150);
         this.backButton.mouseClicked(this.goBack);
+        this.getCast();
+        this.backButton.class("back");
 
         if (getItem('user') != null){
             this.favorite_button = createButton("Make favorite");
-            this.favorite_button.position(250, 150);
+            this.favorite_button.position(180, 150);
             to_favorite = this.id;
             this.favorite_button.mousePressed(makeFavorite);
+            this.favorite_button.class("favorite");
 
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
@@ -114,6 +118,7 @@ class Movie{
             this.reviewAverage = "Not enough votes";
         }
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
+        text("Cast List:", 200, 1000, 600);
         textSize(20);
         text(this.description, 600, 350, 800);
         text("Release Date: " + this.releaseDate, 600, 500, 800);
@@ -126,6 +131,32 @@ class Movie{
             searchMovie(this.search_val);
 
         }
+    }
+
+    getCast = () => {
+        let cast;
+        let data;
+        let y = 1200;
+        let x = 200;
+        let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
+        loadJSON(url, function(inp){
+            data = inp;
+            print('TEST');
+            print(data);
+            cast = Array(data.cast.length);
+            for (let i = 0; i < cast.length; i++){
+                cast[i] = new Person(data, i, "", "cast");
+                cast[i].display(x,y, "cast");
+                cast[i].image.size(100,150);
+                if (x < 1000){
+                    x += 200;
+                } else{
+                    y += 200
+                    x = 200
+                }
+            }
+            
+        });
     }
 
     callAdd = () =>{

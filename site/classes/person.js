@@ -1,21 +1,34 @@
 class Person{
-    constructor(actorJson, num, search_val =""){
-        this.name = actorJson.results[num].name;
-        this.id = actorJson.results[num].id;
-        this.imgPath = actorJson.results[num].profile_path;
-        this.image = createElement("img");
-        this.button = createButton("go to page");
-        this.button.mouseClicked(this.buttonPressed);
-        this.search_val = search_val;
-        this.appearsIn = actorJson.results[num].known_for;
-        this.movies = Array(this.appearsIn.length);
+    constructor(actorJson, num, search_val ="", type =""){
+        if(type === "cast"){
+            this.name = actorJson.cast[num].name;
+            this.id = actorJson.cast[num].id;
+            this.imgPath = actorJson.cast[num].profile_path;
+            this.image = createElement("img");
+            this.button = createButton("go to page");
+            this.button.mouseClicked(this.buttonPressed);
+            this.search_val = search_val;
+            this.appearsIn = null;
+            this.movies = null;
+        } else {
+            this.name = actorJson.results[num].name;
+            this.id = actorJson.results[num].id;
+            this.imgPath = actorJson.results[num].profile_path;
+            this.image = createElement("img");
+            this.button = createButton("go to page");
+            this.button.mouseClicked(this.buttonPressed);
+            this.search_val = search_val;
+            this.appearsIn = actorJson.results[num].known_for;
+            this.movies = Array(this.appearsIn.length);
+        }
+        this.image.mouseClicked(this.buttonPressed);
     }
 
     getImage(){
         return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + this.imgPath; 
     }
 
-    display(x, y){
+    display(x, y, type = ""){
         this.image.position(x, y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
@@ -26,8 +39,10 @@ class Person{
         fill("black");
         textSize(30);
         textWrap(WORD);
-        if(this.name == ""){
-            text("NO NAME FOUND", x + 200, y, 1000);
+        if (type === "cast"){
+            this.button.hide();
+            textSize(15);
+            text(this.name, x, y + 60, 60);
         } else {
             text(this.name, x + 200, y, 1000);
         }
