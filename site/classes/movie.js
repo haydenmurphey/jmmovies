@@ -98,12 +98,14 @@ class Movie{
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
             add_to_list_button.mouseClicked(addMovieToList);
+            add_to_list_button.class("add-to-list");
     
             let list_selector = createSelect();
             list_selector.position(600, 150);
             list_selector.option("Plan to Watch");
             list_selector.option("Currently Watching");
             list_selector.option("Completed");
+            list_selector.class("list-selector");
 
             to_add_list = this.id;
             list_type = list_selector.value();
