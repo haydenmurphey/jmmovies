@@ -86,6 +86,7 @@ class Movie{
         //this.backButton.size(150,20);
         this.backButton.position(100,150);
         this.backButton.mouseClicked(this.goBack);
+        this.getCast();
         this.backButton.class("back");
 
         if (getItem('user') != null){
@@ -97,15 +98,15 @@ class Movie{
 
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
-            add_to_list_button.mouseClicked(addMovieToList);
+            add_to_list_button.mouseClicked(this.callAdd);
             add_to_list_button.class("add-to-list");
     
-            let list_selector = createSelect();
-            list_selector.position(600, 150);
-            list_selector.option("Plan to Watch");
-            list_selector.option("Currently Watching");
-            list_selector.option("Completed");
-            list_selector.class("list-selector");
+            this.list_selector = createSelect();
+            this.list_selector.position(600, 150);
+            this.list_selector.option("Plan to Watch");
+            this.list_selector.option("Currently Watching");
+            this.list_selector.option("Completed");
+            this.list_selector.class("list-selector");
 
             to_add_list = this.id;
             list_type = list_selector.value();
@@ -120,9 +121,26 @@ class Movie{
             this.reviewAverage = "Not enough votes";
         }
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
+        text("Cast List:", 200, 1000, 600);
         textSize(20);
         text(this.description, 600, 350, 800);
         text("Release Date: " + this.releaseDate, 600, 500, 800);
+        
+        //LEAVE A REVIEW SECTION
+        text("Leave a review", 100, 1200);
+        let area = createElement('textarea');
+        area.position(100, 1350);
+
+        text("Leave a rating", 300, 1200);
+        let ratingScore = createSelect();
+        ratingScore.position(400, 1300);
+        for(let i = 0; i < 10; i++){
+            ratingScore.option(i +1);
+        }
+
+        let submitButton = createButton("Submit Review");
+        submitButton.position(100,1500);
+
     }
 
     goBack = () => {
@@ -133,6 +151,40 @@ class Movie{
 
         }
     }
+
+    getCast = () => {
+        let cast;
+        let data;
+        let y = 1200;
+        let x = 200;
+        let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
+        loadJSON(url, function(inp){
+            data = inp;
+            print('TEST');
+            print(data);
+            cast = Array(data.cast.length);
+            for (let i = 0; i < cast.length; i++){
+                cast[i] = new Person(data, i, "", "cast");
+                cast[i].display(x,y, "cast");
+                cast[i].image.size(100,150);
+                if (x < 1000){
+                    x += 200;
+                } else{
+                    y += 200
+                    x = 200
+                }
+            }
+            
+        });
+    }
+
+    callAdd = () =>{
+        list_type = this.list_selector.value();
+        addMovieToList();
+    }
+
+
+
 
     getReviews = () => {
 
@@ -148,7 +200,7 @@ class Movie{
         */
 
 
-        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "?apikey=" + KEYVAL_API_KEY;
+        let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "movie?apikey=" + KEYVAL_API_KEY;
         //loadJSON(review_url, );
         
 
