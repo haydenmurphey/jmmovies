@@ -122,6 +122,22 @@ class Movie{
         textSize(20);
         text(this.description, 600, 350, 800);
         text("Release Date: " + this.releaseDate, 600, 500, 800);
+        
+        //LEAVE A REVIEW SECTION
+        text("Leave a review", 100, 1200);
+        let area = createElement('textarea');
+        area.position(100, 1350);
+
+        text("Leave a rating", 300, 1200);
+        let ratingScore = createSelect();
+        ratingScore.position(400, 1300);
+        for(let i = 0; i < 10; i++){
+            ratingScore.option(i +1);
+        }
+
+        let submitButton = createButton("Submit Review");
+        submitButton.position(100,1500);
+
     }
 
     goBack = () => {
