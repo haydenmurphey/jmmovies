@@ -142,9 +142,11 @@ class Movie{
     }
 
     displayForWatchlist = (x, y) =>{
-        this.image.position(x, y);
+        this.image.attribute("src", this.getImage());
+        this.image.position(500, 500);
+        this.image.size(120,200);
         this.titleDisplay = createP(this.name);
-        this.titleDisplay.position(x + 50,y);
+        this.titleDisplay.position(x,y);
     }
 
 

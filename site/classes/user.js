@@ -53,23 +53,52 @@ class User{
     display_profile_screen = () =>{
         removeElements();
         let img = createElement("img");
-        img.attribute("src", this.favorite_movie.getImage());
+        if (this.favorite_movie != null){
+            img.attribute("src", this.favorite_movie.getImage());
+        }
         img.position(100,150);
         img.size(200,300);
-        textSize(30);
-        text(this.username, 100, 50);
+        let usernameP = createP(this.username);
+        usernameP.position(100,100);
+        usernameP.style('font-size', '23px');
         if (this.favorite_movie != null){
             this.favorite_movie.display(100,125);
         }else{
             text("No favorite movie", 300, 300);
         }
+        let currentlyWatchingP = createP("Currently Watching:");
+        currentlyWatchingP.position(550, 450);
+        
+        let toWatchP = createP("Plan to Watch:");
+        toWatchP.position(100, 450);
 
-        let x = 500;
+        let completedP = createP("Completed:");
+        completedP.position(1000, 450);
+
+        let x = 100;
         let y = 500;
+
+        for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+            this.plan_to_watch_movies[i].displayForWatchlist(x,y);
+            y += 25;
+        }
+
+        x = 550;
+        y = 500;
+         
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             this.currently_watching_movies[i].displayForWatchlist(x,y);
-            y += 150;
+            y += 25;
         }
+        
+        x = 1000;
+        y = 500;
+
+        for (let i = 0; i < this.completed_movies.length; i++){
+            this.completed_movies[i].displayForWatchlist(x,y);
+            y += 25;
+        }
+        
 
 
 
