@@ -177,7 +177,6 @@ function saveUsers(){
     }
     json.users = users_array_json;
     json_string = JSON.stringify(json);
-    print(json_string);
     user_keyval.set("users", json_string, function(){
         print("user save success");
     },
