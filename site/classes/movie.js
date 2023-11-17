@@ -126,19 +126,19 @@ class Movie{
         
         //LEAVE A REVIEW SECTION
         text("Leave a review", 600, 600);
-        let area = createElement('textarea');
-        area.position(600, 700);
+        this.area = createElement('textarea');
+        this.area.position(600, 700);
 
         text("Leave a rating", 800, 600);
-        let ratingScore = createSelect();
-        ratingScore.position(800, 700);
+        this.ratingScore = createSelect();
+        this.ratingScore.position(800, 700);
         for(let i = 0; i < 10; i++){
-            ratingScore.option(i +1);
+            this.ratingScore.option(i +1);
         }
 
-        let submitButton = createButton("Submit Review");
-        submitButton.mousePressed();
-        submitButton.position(700,800);
+        this.submitButton = createButton("Submit Review");
+        this.submitButton.mousePressed(this.submitReview);
+        this.submitButton.position(700,800);
 
     }
 
@@ -182,7 +182,6 @@ class Movie{
                     x = 200
                 }
             }
-            
         });
     }
 
@@ -192,28 +191,88 @@ class Movie{
         addMovieToList();
     }
 
-
-    
-
-    getReviews = () => {
-
-        /* 
+    saveReviews = () => {
+         /* 
         JSON file structure 
 
-        num_reviews
         review_total_rating
         reviews[]
             username
             rating
             review
         */
+        let movieKeyval = new Keyval(KEYVAL_API_KEY);
+        let reviews_json = {};
+        reviews_json.review_total_rating = this.totalReviewScore;
+        let reviewsArray = Array(this.reviews.length);
+        for (let i = 0; i < this.reviews.length; i++){
+            reviewsArray[i] = {};
+            reviewsArray[i]["username"] = this.reviewUsernames[i];
+            reviewsArray[i]["rating"] = this.reviewRatings[i];
+            reviewsArray[i]["review"] = this.reviews[i];
+        }
+        reviews_json.reviews = reviewsArray;
+        let json_string = JSON.stringify(reviews_json);
+        movieKeyval.set(this.id + "movie", json_string);
 
+    }
 
+    getReviews = () => {
+
+        /* 
+        JSON file structure 
+
+        review_total_rating
+        reviews[]
+            username
+            rating
+            review
+        */
+        let data_found = true;
         let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "movie?apikey=" + KEYVAL_API_KEY;
-        //loadJSON(review_url, );
+        let test;
+        let test1;
+        let test2;
+        let blah = fetch(review_url).then(test1 = (response) =>{
+            if (response.status == 200){
+                loadJSON(review_url, test = (data) =>{
+                    this.reviews = Array(data.reviews.length);
+                    this.reviewUsernames = Array(data.reviews.length);
+                    this.reviewRatings = Array(data.reviews.length);
+                    this.totalReviewScore = data.review_total_rating;
+                    this.reviewAverage = this.totalReviewScore / data.reviews.length;
         
+                    for (let i = 0; i < this.reviews.length; i++){
+                        this.reviews[i] = data.reviews[i].review;
+                        this.reviewUsernames[i] = data.reviews[i].username;
+                        this.reviewRatings[i] = data.reviews[i].rating;
+                    }
+                },
+                    test2 = () =>{
+                    print("no reviews");
+                            
+                    
+        
+                });
+    
+            }
+            else{
+                this.reviews = Array();
+                    this.reviewUsernames = Array();
+                    this.reviewRatings = Array();
+                    this.totalReviewScore = 0;
+                    this.reviewAverage = 0;
+            }
+        })
+    }
 
-
-
+    submitReview = () => {
+        this.reviews.push(this.area.value());
+        this.reviewUsernames.push(user.username);
+        this.reviewRatings.push(parseInt(this.ratingScore.value()));
+        this.totalReviewScore += parseInt(this.ratingScore.value());
+        this.reviewAverage = this.totalReviewScore / this.reviews.length;
+        this.buttonPressed();
+        this.saveReviews();
     }
 }
