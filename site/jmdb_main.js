@@ -381,9 +381,14 @@ function displayUpcoming() {
     if(searchResult == null) {
     
         loadJSON(url, function (data) {
-            upcomingMovie = Array(10);
+            if (data.results.length < 10){
+                upcomingMovie = Array(data.results.length);
+            }
+            else{
+                upcomingMovie = Array(10);
+            }
     
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < upcomingMovie.length; i++) {
                 upcomingMovie[i] = new Movie("search", data, i, "");
                 //print(upcomingMovie[i]);
             }
@@ -393,12 +398,10 @@ function displayUpcoming() {
     
             for (let i = 0; i < upcomingMovie.length; i++) {
                 if (upcomingMovie[i] != null) {
-                    upcomingMovie[i].HomeDisplay(x, y,);
+                    upcomingMovie[i].HomeDisplay(x, y);
                     x += 140;
                 }
             }
-    
-            
         });
     }
 }

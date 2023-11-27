@@ -1,7 +1,12 @@
 class Movie{
     constructor(type, moviesJson, num=0, search_val =""){
         if (type === "search"){
-            this.name = moviesJson.results[num].title;
+            if (moviesJson.results[num].title == null){
+                this.name = "unknown title";
+            }
+            else{
+                this.name = moviesJson.results[num].title;
+            }
             this.imgPath = moviesJson.results[num].poster_path;
             this.releaseDate = moviesJson.results[num].release_date;
             this.id = moviesJson.results[num].id;
@@ -127,11 +132,11 @@ class Movie{
         //LEAVE A REVIEW SECTION
         text("Leave a review", 600, 600);
         this.area = createElement('textarea');
-        this.area.position(600, 700);
+        this.area.position(600, 740);
 
         text("Leave a rating", 800, 600);
         this.ratingScore = createSelect();
-        this.ratingScore.position(800, 700);
+        this.ratingScore.position(800, 740);
         for(let i = 0; i < 10; i++){
             this.ratingScore.option(i +1);
         }
@@ -162,11 +167,12 @@ class Movie{
 
     getCast = () => {
         let cast;
+        let getCastJson;
         let data;
         let y = 1200;
         let x = 200;
         let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
-        loadJSON(url, function(inp){
+        loadJSON(url, getCastJson = (inp) =>{
             data = inp;
             print('TEST');
             print(data);
@@ -182,6 +188,10 @@ class Movie{
                     x = 200
                 }
             }
+            this.review_y = y;
+            print(this.review_y);
+            this.displayReviews();
+    
         });
     }
 
@@ -274,5 +284,17 @@ class Movie{
         this.reviewAverage = this.totalReviewScore / this.reviews.length;
         this.buttonPressed();
         this.saveReviews();
+    }
+
+
+    displayReviews = () => {
+        for (let i = 0; i < this.reviews.length; i++){
+            let reviwer = createP("Username: " + this.reviewUsernames[i]);
+            let review_text = createP(this.reviews[i]);
+            let review_rating = createP("Rating: " + this.reviewRatings[i]);
+            reviwer.position(50, this.review_y + 100 + (100 * i));
+            review_text.position(50, this.review_y + 125 + (100 * i));
+            review_rating.position(250, this.review_y + 100 + (100 * i));
+        }
     }
 }
