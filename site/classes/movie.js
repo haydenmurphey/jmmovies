@@ -184,8 +184,8 @@ class Movie{
                 if (x < 1000){
                     x += 200;
                 } else{
-                    y += 200
-                    x = 200
+                    y += 225;
+                    x = 200;
                 }
             }
             this.review_y = y;
