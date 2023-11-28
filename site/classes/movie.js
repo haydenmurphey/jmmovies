@@ -133,17 +133,20 @@ class Movie{
         text("Leave a review", 600, 600);
         this.area = createElement('textarea');
         this.area.position(600, 740);
+        this.area.class("review-box");
 
         text("Leave a rating", 800, 600);
         this.ratingScore = createSelect();
         this.ratingScore.position(800, 740);
+        this.ratingScore.class("rating-score");
         for(let i = 0; i < 10; i++){
             this.ratingScore.option(i +1);
         }
 
         this.submitButton = createButton("Submit Review");
         this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(700,800);
+        this.submitButton.position(950, 740);
+        this.submitButton.class("submit-button");
 
     }
 
