@@ -191,7 +191,7 @@ class Movie{
                     x = 200;
                 }
             }
-            this.review_y = y;
+            this.review_y = y + 125;
             print(this.review_y);
             this.displayReviews();
     
@@ -291,13 +291,24 @@ class Movie{
 
 
     displayReviews = () => {
-        for (let i = 0; i < this.reviews.length; i++){
+        let totalReviews = createP("Reviews: ");
+        totalReviews.addClass('total-review-text');
+        totalReviews.position(50, this.review_y + 75);
+        for (let i = 0; i < this.reviews.length; i++) {
             let reviwer = createP("Username: " + this.reviewUsernames[i]);
-            let review_text = createP(this.reviews[i]);
             let review_rating = createP("Rating: " + this.reviewRatings[i]);
-            reviwer.position(50, this.review_y + 100 + (100 * i));
-            review_text.position(50, this.review_y + 125 + (100 * i));
-            review_rating.position(250, this.review_y + 100 + (100 * i));
+            let review_text = createP(this.reviews[i]);
+
+            // Style for Reviews
+            let reviewContainer = createDiv();
+            reviewContainer.addClass('review-container');
+            reviwer.addClass('submitted-review');
+            review_rating.addClass('submitted-review');
+            review_text.addClass('submitted-review');
+            reviwer.parent(reviewContainer);
+            review_rating.parent(reviewContainer);
+            review_text.parent(reviewContainer);
+            reviewContainer.position(50, this.review_y + 150 + (150 * i));
         }
     }
 }
