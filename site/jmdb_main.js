@@ -193,7 +193,6 @@ function searchType(){
     if (searchResult != null){
         for (let i = 0; i < searchResult.length; i ++){
             searchResult[i].image.remove();
-            
         }
     }
     if(upcomingMovie != null){
