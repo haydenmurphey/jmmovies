@@ -45,18 +45,18 @@ class Movie{
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
         this.image.mouseClicked(this.buttonPressed);
-        this.button.show();
+        //this.button.show();
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }  
-        this.button.position(x + 200, y + 50);
-        textSize(12);   
-        text(this.description, x + 200, y, 1000);
-        textSize(30);
-        text(this.name, x + 200, y - 50);
+        //this.button.position(x + 200, y + 50);
+        //textSize(12);   
+        //text(this.description, x + 200, y, 1000);
         textSize(12);
+        text(this.name, x, y + 100, 100);
+        //textSize(12);
     }
     
     HomeDisplay(x,y){
@@ -72,10 +72,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 5, y + 125, 130);
+        text(this.name, x + 2, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 5, y + 110, x + 10)
+        text(this.releaseDate, x + 2, y + 110, x + 10)
     }
 
     buttonPressed = () =>{
@@ -108,11 +108,13 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            print(user.contained_in_watchlist_movie(this.id));
+            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
-
         }
 
         background("darkgray");
@@ -133,26 +135,28 @@ class Movie{
         text("Leave a review", 600, 600);
         this.area = createElement('textarea');
         this.area.position(600, 740);
+        this.area.class("review-box");
 
         text("Leave a rating", 800, 600);
         this.ratingScore = createSelect();
         this.ratingScore.position(800, 740);
+        this.ratingScore.class("rating-score");
         for(let i = 0; i < 10; i++){
             this.ratingScore.option(i +1);
         }
 
         this.submitButton = createButton("Submit Review");
         this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(700,800);
+        this.submitButton.position(950, 740);
+        this.submitButton.class("submit-button");
 
     }
 
     displayForWatchlist = (x, y) =>{
-        this.image.attribute("src", this.getImage());
-        this.image.position(500, 500);
-        this.image.size(120,200);
         this.titleDisplay = createP(this.name);
         this.titleDisplay.position(x,y);
+        this.titleDisplay.mousePressed(this.buttonPressed);
+        this.titleDisplay.addClass("watchlist-item");
     }
 
 
@@ -188,7 +192,7 @@ class Movie{
                     x = 200;
                 }
             }
-            this.review_y = y;
+            this.review_y = y + 125;
             print(this.review_y);
             this.displayReviews();
     
@@ -198,7 +202,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList();
+        addMovieToList(this.id);
     }
 
     saveReviews = () => {
@@ -288,13 +292,24 @@ class Movie{
 
 
     displayReviews = () => {
-        for (let i = 0; i < this.reviews.length; i++){
+        let totalReviews = createP("Reviews: ");
+        totalReviews.addClass('total-review-text');
+        totalReviews.position(50, this.review_y + 75);
+        for (let i = 0; i < this.reviews.length; i++) {
             let reviwer = createP("Username: " + this.reviewUsernames[i]);
-            let review_text = createP(this.reviews[i]);
             let review_rating = createP("Rating: " + this.reviewRatings[i]);
-            reviwer.position(50, this.review_y + 100 + (100 * i));
-            review_text.position(50, this.review_y + 125 + (100 * i));
-            review_rating.position(250, this.review_y + 100 + (100 * i));
+            let review_text = createP(this.reviews[i]);
+
+            // Style for Reviews
+            let reviewContainer = createDiv();
+            reviewContainer.addClass('review-container');
+            reviwer.addClass('submitted-review');
+            review_rating.addClass('submitted-review');
+            review_text.addClass('submitted-review');
+            reviwer.parent(reviewContainer);
+            review_rating.parent(reviewContainer);
+            review_text.parent(reviewContainer);
+            reviewContainer.position(50, this.review_y + 150 + (150 * i));
         }
     }
 }

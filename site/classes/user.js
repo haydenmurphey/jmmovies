@@ -183,6 +183,32 @@ class User{
         }
     }
 
+    contained_in_watchlist_movie(id){
+        if (this.plan_to_watch_movies_ids.includes(id)){
+            return "Plan to Watch";
+        }
+        else if (this.currently_watching_movies_ids.includes(id)){
+            return "Currently Watching";
+        }
+        else if (this.completed_movies_ids.includes(id)){
+            return "Completed";
+        }
+    }
+    contained_in_watchlist_tv(id){
+        if (this.plan_to_watch_tv_ids.includes(id)){
+            return "Plan to Watch";
+        }
+        else if (this.currently_watching_tv_ids.includes(id)){
+            return "Currently Watching";
+        }
+        else if (this.completed_tv_ids.includes(id)){
+            return "Completed";
+        }
+        else{
+            return "None";
+        }
+    }
+
 }
 
 function makeFavorite(){
@@ -191,7 +217,25 @@ function makeFavorite(){
     saveUsers();
 }
 
-function addMovieToList(){
+function addMovieToList(id){
+
+    let index = user.currently_watching_movies_ids.indexOf(id);
+    if (index > -1) { // only splice array when item is found
+        user.currently_watching_movies.splice(index, 1); // 2nd parameter means remove one item only
+        user.currently_watching_movies.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    index = user.plan_to_watch_movies_ids.indexOf(id);
+    if (index > -1) { // only splice array when item is found
+        user.plan_to_watch_movies.splice(index, 1); // 2nd parameter means remove one item only
+        user.plan_to_watch_movies.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    index = user.completed_movies_ids.indexOf(id);
+    if (index > -1) { // only splice array when item is found
+        user.completed_movies_ids.splice(index, 1); // 2nd parameter means remove one item only
+        user.completed_movies.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
+
     if (list_type === "Plan to Watch"){
         user.plan_to_watch_movies_ids.push(to_add_list);
     }
