@@ -31,8 +31,8 @@ function setup() {
     search_bar.class("search");
 
     search_dropdown = createSelect();
-    search_dropdown.position(search_bar.x - 95,search_bar.y);
-    search_dropdown.size(90);
+    search_dropdown.position(search_bar.x - 105,search_bar.y);
+    search_dropdown.size(100);
     search_dropdown.option("Movie");
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
