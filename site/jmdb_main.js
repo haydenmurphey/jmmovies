@@ -245,11 +245,16 @@ function searchMovie(value){
         print(searchResult[i]);
       }
       let x = 100;
-      let y = 100;
+      let y = 150;
       for (let i = 0; i < searchResult.length; i++){
         if (searchResult[i] != null){
             searchResult[i].display(x, y);
-            y += 200;
+            if(x < 1200){
+                x += 200;
+            } else{
+                y += 300;
+                x = 100;
+            }
         } 
       }
     });
@@ -263,11 +268,16 @@ function searchTV(value){
         background('darkgray');
 
         x = 100;
-        y = 100;
+        y = 150;
         for (let i = 0; i < searchData.results.length; i++){
           searchResult[i] = new TvShow("search",searchData, i, search_bar.value());
           searchResult[i].display(x,y);
-          y += 200;
+          if(x < 1200){
+            x += 200;
+        } else{
+            y += 300;
+            x = 100;
+        }
           print(searchResult[i]);
         }
     });
@@ -281,11 +291,16 @@ function searchActor(value){
         background('darkgray');
 
         x = 100;
-        y = 100;
+        y = 150;
         for (let i = 0; i < searchData.results.length; i++){
           searchResult[i] = new Person(searchData, i, search_bar.value());
           searchResult[i].display(x,y);
-          y += 200;
+          if(x < 1200){
+            x += 200;
+        } else{
+            y += 300;
+            x = 100;
+        }
           print(searchResult[i]);
         }
     });

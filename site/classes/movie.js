@@ -45,18 +45,18 @@ class Movie{
         this.image.attribute("src", this.getImage());
         this.image.size(120,180);
         this.image.mouseClicked(this.buttonPressed);
-        this.button.show();
+        //this.button.show();
         fill("black");
         textWrap(WORD);
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }  
-        this.button.position(x + 200, y + 50);
-        textSize(12);   
-        text(this.description, x + 200, y, 1000);
-        textSize(30);
-        text(this.name, x + 200, y - 50);
+        //this.button.position(x + 200, y + 50);
+        //textSize(12);   
+        //text(this.description, x + 200, y, 1000);
         textSize(12);
+        text(this.name, x, y + 100, 100);
+        //textSize(12);
     }
     
     HomeDisplay(x,y){

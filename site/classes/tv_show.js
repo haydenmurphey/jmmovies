@@ -21,8 +21,6 @@ class TvShow{
             this.popularity = tvJson.popularity;
         }
         this.image = createElement("img");
-        this.button = createButton("go to page");
-        this.button.mouseClicked(this.buttonPressed);
         this.search_val = search_val;
     }
     
@@ -39,17 +37,11 @@ class TvShow{
             
         this.image.size(120,180);
         fill("black");
-        this.button.position(x + 200, y + 50);
         textWrap(WORD);
         textSize(15);
         this.image.mouseClicked(this.buttonPressed);
-        if(this.description == ""){
-            text("NO DESCRIPTION", x + 200, y, 1000);
-        } else {
-            text(this.description, x + 200, y, 1000);
-        }
-        textSize(30);
-        text(this.name, x + 200, y - 50);
+        textSize(12);
+        text(this.name, x, y + 100, 100);
         
     }
 
