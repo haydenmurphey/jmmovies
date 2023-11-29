@@ -358,20 +358,25 @@ function displayUpcoming() {
     let day = date.getDate();
     let day_result = day.toString().padStart(2, '0');
     let month_result = month.toString().padStart(2, '0');
+    let days_in_month = daysInMonth(month, year);
 
     let min_date = `${year}-${month_result}-${day_result}`;
     let max_date;
 
-    if (day + 7 > 31) {
-        if (month + 1 > 12) {
-            max_date = `${year + 1}-${(month + 1) % 12}-${(day + 7) - 31}`;
+    if (day + 7 > days_in_month) {
+        month++;
+        let new_day =(day + 7) - days_in_month;
+        let new_day_result = new_day.toString().padStart(2, '0');
+        if (month > 12) {
+            max_date = `${year + 1}-${(month) % 12}-${new_day_result}`;
         } else {
-            max_date = `${year}-${month + 1}-${day + 7 - 31}`;
+            max_date = `${year}-${month}-${new_day_result}`;
         }
     } else {
         max_date = `${year}-${month_result}-${day + 7}`;
     }
     
+
     let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=${min_date}&primary_release_date.lte=${max_date}&api_key=` + TMDB_API_KEY;
     
     fill("black");
@@ -431,4 +436,9 @@ function displayTrending() {
             }
         });
     }
+
+}
+
+function daysInMonth (month, year) {
+    return new Date(year, month, 0).getDate();
 }
