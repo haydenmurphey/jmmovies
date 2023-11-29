@@ -317,6 +317,7 @@ function displayUserProfile(){
             searchResult[i].button.remove();   
         }
     }
+    
     user.display_profile_screen();
 }
 
