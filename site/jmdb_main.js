@@ -317,6 +317,7 @@ function displayUserProfile(){
             searchResult[i].button.remove();   
         }
     }
+    
     user.display_profile_screen();
 }
 
@@ -362,8 +363,8 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
-      recentlyReleased = Array(10);
-      for (let i = 0; i < 10; i++) {
+      recentlyReleased = Array(data.results.length);
+      for (let i = 0; i < recentlyReleased.length; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
       }
 

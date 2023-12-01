@@ -72,10 +72,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x + 2, y + 125, 130);
+        text(this.name, x - 5, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x + 2, y + 110, x + 10)
+        text(this.releaseDate, x - 5, y + 110, x + 10)
     }
 
     buttonPressed = () =>{
@@ -108,13 +108,11 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
-            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
-            print(user.contained_in_watchlist_movie(this.id));
-            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
+
         }
 
         background("darkgray");
@@ -153,10 +151,11 @@ class Movie{
     }
 
     displayForWatchlist = (x, y) =>{
+        this.image.attribute("src", this.getImage());
+        this.image.position(500, 500);
+        this.image.size(120,200);
         this.titleDisplay = createP(this.name);
         this.titleDisplay.position(x,y);
-        this.titleDisplay.mousePressed(this.buttonPressed);
-        this.titleDisplay.addClass("watchlist-item");
     }
 
 
@@ -202,7 +201,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList(this.id);
+        addMovieToList();
     }
 
     saveReviews = () => {

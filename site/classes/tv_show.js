@@ -20,7 +20,9 @@ class TvShow{
             this.voteCount = tvJson.vote_count;
             this.popularity = tvJson.popularity;
         }
+        this.getReviews();
         this.image = createElement("img");
+        this.image.class("image");
         this.search_val = search_val;
     }
     
@@ -54,10 +56,10 @@ class TvShow{
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to search");
-        this.backButton.size(150,20);
+        this.backButton = createButton("Go Back");
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
+        this.backButton.class("back");
         background("darkgray");
         textSize(40);
         textWrap(WORD);
@@ -73,14 +75,138 @@ class TvShow{
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
             add_to_list_button.mouseClicked(this.callAddTv);
+            add_to_list_button.class("add-to-list");
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.class("list-selector");
 
             list_type = this.list_selector.value();
+        }
+        text("Leave a review", 600, 600);
+        this.area = createElement('textarea');
+        this.area.position(600, 740);
+        this.area.class("review-box");
+
+        text("Leave a rating", 800, 600);
+        this.ratingScore = createSelect();
+        this.ratingScore.position(800, 740);
+        this.ratingScore.class("rating-score");
+        for(let i = 0; i < 10; i++){
+            this.ratingScore.option(i +1);
+        }
+
+        this.submitButton = createButton("Submit Review");
+        this.submitButton.mousePressed(this.submitReview);
+        this.submitButton.position(950, 740);
+        this.submitButton.class("submit-button");
+    }
+
+    saveReviews = () => {
+        /* 
+       JSON file structure 
+
+       review_total_rating
+       reviews[]
+           username
+           rating
+           review
+       */
+       let movieKeyval = new Keyval(KEYVAL_API_KEY);
+       let reviews_json = {};
+       reviews_json.review_total_rating = this.totalReviewScore;
+       let reviewsArray = Array(this.reviews.length);
+       for (let i = 0; i < this.reviews.length; i++){
+           reviewsArray[i] = {};
+           reviewsArray[i]["username"] = this.reviewUsernames[i];
+           reviewsArray[i]["rating"] = this.reviewRatings[i];
+           reviewsArray[i]["review"] = this.reviews[i];
+       }
+       reviews_json.reviews = reviewsArray;
+       let json_string = JSON.stringify(reviews_json);
+       movieKeyval.set(this.id + "tv", json_string);
+
+   }
+
+   getReviews = () => {
+
+    /* 
+    JSON file structure 
+
+    review_total_rating
+    reviews[]
+        username
+        rating
+        review
+    */
+    let data_found = true;
+    let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "tv?apikey=" + KEYVAL_API_KEY;
+    let test;
+    let test1;
+    let test2;
+    let blah = fetch(review_url).then(test1 = (response) =>{
+        if (response.status == 200){
+            loadJSON(review_url, test = (data) =>{
+                this.reviews = Array(data.reviews.length);
+                this.reviewUsernames = Array(data.reviews.length);
+                this.reviewRatings = Array(data.reviews.length);
+                this.totalReviewScore = data.review_total_rating;
+                this.reviewAverage = this.totalReviewScore / data.reviews.length;
+    
+                for (let i = 0; i < this.reviews.length; i++){
+                    this.reviews[i] = data.reviews[i].review;
+                    this.reviewUsernames[i] = data.reviews[i].username;
+                    this.reviewRatings[i] = data.reviews[i].rating;
+                }
+            },
+                test2 = () =>{
+                print("no reviews");
+            });
+
+        }
+        else{
+            this.reviews = Array();
+                this.reviewUsernames = Array();
+                this.reviewRatings = Array();
+                this.totalReviewScore = 0;
+                this.reviewAverage = 0;
+        }
+    })
+    }
+
+    submitReview = () => {
+        this.reviews.push(this.area.value());
+        this.reviewUsernames.push(user.username);
+        this.reviewRatings.push(parseInt(this.ratingScore.value()));
+        this.totalReviewScore += parseInt(this.ratingScore.value());
+        this.reviewAverage = this.totalReviewScore / this.reviews.length;
+        this.buttonPressed();
+        this.saveReviews();
+    }
+
+    displayReviews = () => {
+        this.review_y = 500
+        let totalReviews = createP("Reviews: ");
+        totalReviews.addClass('total-review-text');
+        totalReviews.position(50, this.review_y + 75);
+        for (let i = 0; i < this.reviews.length; i++) {
+            let reviwer = createP("Username: " + this.reviewUsernames[i]);
+            let review_rating = createP("Rating: " + this.reviewRatings[i]);
+            let review_text = createP(this.reviews[i]);
+
+            // Style for Reviews
+            let reviewContainer = createDiv();
+            reviewContainer.addClass('review-container');
+            reviwer.addClass('submitted-review');
+            review_rating.addClass('submitted-review');
+            review_text.addClass('submitted-review');
+            reviwer.parent(reviewContainer);
+            review_rating.parent(reviewContainer);
+            review_text.parent(reviewContainer);
+            reviewContainer.position(50, this.review_y + 150 + (150 * i));
         }
     }
 
