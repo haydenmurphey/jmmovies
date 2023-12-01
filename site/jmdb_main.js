@@ -329,15 +329,30 @@ function displayRecents() {
    let year = date.getFullYear();
    let month = date.getMonth() + 1;
    let day = date.getDate();
+   let paddedDay = day.toString().padStart(2, '0');
+   let paddedMonth = month.toString().padStart(2, '0');
+   let days_in_month = daysInMonth(month - 1, year);
+   let new_day =(days_in_month - (day + 7));
+   let new_day_result = new_day.toString().padStart(2, '0');
+
+
+
    
    let min_date;
-   let max_date = year + "-" + month + "-" + day;
+   let max_date = year + "-" + paddedMonth + "-" + paddedDay;
 
-   if (month - 1 < 1) {
-     min_date = year - 1 + "-12-" + date;
-   } else {
-    min_date = year + "-" + (month - 1) + "-" + day;
-   }
+   if (day - 7 < 1) {
+    month--;
+    if (month < 1) {
+        min_date = `${year - 1}-${12}-${new_day_result}`;
+    } else {
+        min_date = `${year}-${month}-${new_day_result}`;
+    }
+} else {
+    let new_day =(day - 7);
+    let new_day_result = new_day.toString().padStart(2, '0');
+    max_date = `${year}-${month_result}-${new_day_result}`;
+}
 
    let url1 = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=";
    url1 = url1 + min_date;
@@ -373,21 +388,23 @@ function displayUpcoming() {
     let day_result = day.toString().padStart(2, '0');
     let month_result = month.toString().padStart(2, '0');
     let days_in_month = daysInMonth(month, year);
+    let new_day =(day + 7) - days_in_month;
+    let new_day_result = new_day.toString().padStart(2, '0')
 
     let min_date = `${year}-${month_result}-${day_result}`;
     let max_date;
 
     if (day + 7 > days_in_month) {
         month++;
-        let new_day =(day + 7) - days_in_month;
-        let new_day_result = new_day.toString().padStart(2, '0');
         if (month > 12) {
             max_date = `${year + 1}-${(month) % 12}-${new_day_result}`;
         } else {
             max_date = `${year}-${month}-${new_day_result}`;
         }
     } else {
-        max_date = `${year}-${month_result}-${day + 7}`;
+        let new_day =(day + 7);
+        let new_day_result = new_day.toString().padStart(2, '0');
+        max_date = `${year}-${month_result}-${new_day_result}`;
     }
     
 
