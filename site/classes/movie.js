@@ -54,7 +54,7 @@ class Movie{
         //this.button.position(x + 200, y + 50);
         //textSize(12);   
         //text(this.description, x + 200, y, 1000);
-        textSize(12);
+        textSize(15);
         text(this.name, x, y + 100, 100);
         //textSize(12);
     }
@@ -75,7 +75,7 @@ class Movie{
         text(this.name, x - 5, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 5, y + 110, x + 10)
+        text(this.releaseDate, x - 5, y + 150, x + 10)
     }
 
     buttonPressed = () =>{
@@ -181,7 +181,7 @@ class Movie{
             print(data);
             cast = Array(data.cast.length);
             for (let i = 0; i < cast.length; i++){
-                cast[i] = new Person(data, i, "", "cast");
+                cast[i] = new Person(data, i, "", "cast", this.search_val, this);
                 cast[i].display(x,y, "cast");
                 cast[i].image.size(100,150);
                 if (x < 1000){
