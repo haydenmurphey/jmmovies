@@ -61,10 +61,12 @@ class TvShow{
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
         this.backButton.class("back");
+        this.getCast();
         background("darkgray");
         textSize(40);
         textWrap(WORD);
         text(this.name, 600, 200, 600);
+        text("Cast List: ", 100, 975, 600);
         text("Popularity Rating: " + this.popularity, 100, 800);
         if(this.reviewAverage == null){
             this.reviewAverage = "Not enough votes";
@@ -104,6 +106,35 @@ class TvShow{
         this.submitButton.mousePressed(this.submitReview);
         this.submitButton.position(950, 740);
         this.submitButton.class("submit-button");
+    }
+
+    getCast = () => {
+        let cast;
+        let getCastJson;
+        let data;
+        let y = 1200;
+        let x = 200;
+        let url ="https://api.themoviedb.org/3/tv/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
+        loadJSON(url, getCastJson = (inp) =>{
+            data = inp;
+            print(data);
+            cast = Array(data.cast.length);
+            for (let i = 0; i < cast.length; i++){
+                cast[i] = new Person(data, i, this.search_val, "cast", this);
+                cast[i].display(x,y, "cast");
+                cast[i].image.size(100,150);
+                if (x < 1000){
+                    x += 200;
+                } else{
+                    y += 225;
+                    x = 200;
+                }
+            }
+            this.review_y = y + 125;
+            print(this.review_y);
+            this.displayReviews();
+    
+        });
     }
 
     /*

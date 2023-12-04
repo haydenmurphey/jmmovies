@@ -192,11 +192,9 @@ class Movie{
         let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
         loadJSON(url, getCastJson = (inp) =>{
             data = inp;
-            print('TEST');
-            print(data);
             cast = Array(data.cast.length);
             for (let i = 0; i < cast.length; i++){
-                cast[i] = new Person(data, i, "", "cast", this.search_val, this);
+                cast[i] = new Person(data, i,this.search_val, "cast", this);
                 cast[i].display(x,y, "cast");
                 cast[i].image.size(100,150);
                 if (x < 1000){
