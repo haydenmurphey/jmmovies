@@ -82,12 +82,11 @@ class Person {
         this.backButton.size(150,40);
         this.backButton.position(100,150);
         if(this.type === "cast"){
-            this.backButton = createButton("Back to title");
-        } else{
-            this.backButton = createButton("back to search");
+            this.backButton = createButton("Back to Title");
         }
-        this.backButton.size(150,20);
-        this.backButton.position(50,150);
+        this.backButton.addClass('person-back-button');
+        this.backButton.size(150,40);
+        this.backButton.position(100,150);
         this.backButton.mouseClicked(this.goBack);
         background("darkgray");
         textSize(40);
