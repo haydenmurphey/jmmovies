@@ -1,24 +1,50 @@
 class Person {
-    constructor(actorJson, num, search_val ="", type =""){
+    constructor(actorJson, num, search_val ="", type ="", movie = null){
         if(type === "cast"){
             this.name = actorJson.cast[num].name;
             this.id = actorJson.cast[num].id;
             this.imgPath = actorJson.cast[num].profile_path;
             this.image = createElement("img");
             this.search_val = search_val;
-            this.appearsIn = null;
-            this.movies = null;
+            this.movie = movie;
+            this.type = "cast";
+            //this.appearsIn = data.results[num].known_for;
+            //this.movies = Array(this.appearsIn.length);
         } else {
             this.name = actorJson.results[num].name;
             this.id = actorJson.results[num].id;
             this.imgPath = actorJson.results[num].profile_path;
             this.image = createElement("img");
             this.search_val = search_val;
-            this.appearsIn = actorJson.results[num].known_for;
-            this.movies = Array(this.appearsIn.length);
+            this.type = "";
+            this.movie = null;
+            //this.appearsIn = actorJson.results[num].known_for;
+            //this.movies = Array(this.appearsIn.length);
         }
         this.image.mouseClicked(this.buttonPressed);
         this.image.class("actor");
+        this.backButton;
+        let test;
+        let url = "https://api.themoviedb.org/3/person/" + this.id + "?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, test = (data) =>{
+                print(data);
+                this.bio = data.biography;
+                this.birthday = data.birthday;
+                this.bornIn = data.place_of_birth;
+                this.popularity = data.popularity;
+            });
+            
+            url = "https://api.themoviedb.org/3/person/" + this.id + "/movie_credits?language=en-US&api_key=" + TMDB_API_KEY;
+            loadJSON(url, test = (data) =>{
+            print(data);
+            this.movies = Array(data.cast.length);
+            for(let i = 0; i < this.movies.length; i++){
+                this.appearsIn = data.cast[i];
+                this.movies[i] = this.appearsIn;
+            }
+            
+            });
+        
     }
 
     getImage(){
@@ -36,7 +62,7 @@ class Person {
         textSize(30);
         textWrap(WORD);
         if (type === "cast"){
-            textSize(15);
+            textSize(12);
             text(this.name, x, y + 60, 60);
         } else {
             text(this.name, x, y + 100, 100);
@@ -51,7 +77,11 @@ class Person {
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to search");
+        if(this.type === "cast"){
+            this.backButton = createButton("Back to movie");
+        } else{
+            this.backButton = createButton("back to search");
+        }
         this.backButton.size(150,20);
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
@@ -59,8 +89,13 @@ class Person {
         textSize(40);
         textWrap(WORD);
         text(this.name, 600, 200, 600);
-        text("Appears in:", 100, 750, 600);
+        text("Appears in:", 100, 1200, 600);
+        textSize(14);
+        text(this.bio, 100, 750, 1000);
         textSize(20);
+        text("Born in: " + this.bornIn, 600, 300, 600);
+        text("Birthday: " + this.birthday, 600, 350, 600);
+        text("Popularity rating: " + this.popularity, 600, 400, 600);
         this.getMovies();
     }
 
@@ -69,21 +104,27 @@ class Person {
         let appeared;
         let start_url = "https://api.themoviedb.org/3/movie/";
         let type = 0;
-        let x = 200;
+        let x = 0;
+        let y = 1500
         for (let i = 0; i < this.movies.length; i++){
-            if(this.appearsIn[i].media_type === "movie"){
-                start_url = "https://api.themoviedb.org/3/movie/";
-                type = 1;
-            } else {
-                start_url = "https://api.themoviedb.org/3/tvshow/";
-            }
-            let url = start_url + this.appearsIn[i].id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
+            //if(this.appearsIn[i].media_type === "movie"){
+                //start_url = "https://api.themoviedb.org/3/movie/";
+                //type = 1;
+            //} else {
+                //start_url = "https://api.themoviedb.org/3/tvshow/";
+            //}
+            let url = start_url + this.movies[i].id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
             loadJSON(url, test = (data) => {
                 appeared = new Movie("id", data);
                 this.movies[i] = appeared;
                 textWrap(WORD);
-                appeared.display(x, 1000);
-                x += 200;
+                if(x <= 1000){
+                    x += 200
+                } else{
+                x = 200;
+                y += 300;
+                }
+                appeared.display(x, y);
             });
           }
     }
@@ -92,6 +133,13 @@ class Person {
         removeElements();
         setup();
         //search_bar.input(this.search_val);
-        searchActor(this.search_val);
+        if(this.type === "cast"){
+            print("AAAAAAAAAAAA");
+            print(this.movie);
+            this.movie.buttonPressed();
+        } else if(this.search_val != ""){
+            searchActor(this.search_val);
+        }
     }
+
 }
