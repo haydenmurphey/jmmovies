@@ -51,6 +51,7 @@ class User{
     
     
     display_profile_screen = () =>{
+        console.log("Displaying Profile");
         removeElements();
         let img = createElement("img");
         if (this.favorite_movie != null){
@@ -133,6 +134,7 @@ class User{
             this.completed_movies_display[i].addClass('movie-title');
             this.completed_movies_display[i].parent(completedContainer);
             y += 25;
+<<<<<<< Updated upstream
         }
         
         //display tv
@@ -170,6 +172,9 @@ class User{
         }
 
         
+=======
+        }   
+>>>>>>> Stashed changes
     }
 
     toggleWatchlist = () =>{
@@ -254,31 +259,38 @@ class User{
     }
 
     make_watching_movies = () =>{
-        let create_movie;
+        print("making watching movies")
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.currently_watching_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.currently_watching_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
             });
         }
     }
 
     make_to_watch_movies = () => {
+        print("making to watch movies");
         let create_movie;
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.plan_to_watch_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.plan_to_watch_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
+
             });
         }
     }
 
     make_completed_movies = () =>{
+        print("making completed movies");
         let create_movie;
         for (let i = 0; i < this.completed_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.completed_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.completed_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
+
             });
         }
     }
@@ -374,7 +386,6 @@ function makeFavorite(){
 }
 
 function addMovieToList(id){
-
     user.remove_repeat_from_list(id);
 
     if (list_type === "Plan to Watch"){
@@ -388,7 +399,7 @@ function addMovieToList(id){
     }
     user.make_lists();
     //not waiting on all lists to be made before saving idk how to fix
-    saveUsers();
+    saveUsers();    
 }
 
 function addTvToList(){

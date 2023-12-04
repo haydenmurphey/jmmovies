@@ -363,6 +363,7 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
+<<<<<<< Updated upstream
     if (data.results.length < 10){
         recentlyReleased = Array(data.results.length);
     }
@@ -370,6 +371,10 @@ function displayRecents() {
         recentlyReleased = Array(10);
     }
       for (let i = 0; i < recentlyReleased.length; i++) {
+=======
+      recentlyReleased = Array(data.results.length);
+      for (let i = 0; i < recentlyReleased.le; i++) {
+>>>>>>> Stashed changes
         recentlyReleased[i] = new Movie("search", data, i, "");
       }
 

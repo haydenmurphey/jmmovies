@@ -108,9 +108,11 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
 
         }
@@ -130,6 +132,7 @@ class Movie{
         text("Release Date: " + this.releaseDate, 600, 500, 800);
         
         //LEAVE A REVIEW SECTION
+<<<<<<< Updated upstream
         let date = new Date;
         let date_as_int = Date.parse(date);
         let release_date_as_int = Date.parse(this.releaseDate);
@@ -155,6 +158,28 @@ class Movie{
         this.submitButton.class("submit-button");
     }
 
+=======
+        if (!this.reviewUsernames.includes(user.username)){
+            text("Leave a review", 600, 600);
+            this.area = createElement('textarea');
+            this.area.position(600, 740);
+            this.area.class("review-box");
+    
+            text("Leave a rating", 800, 600);
+            this.ratingScore = createSelect();
+            this.ratingScore.position(800, 740);
+            this.ratingScore.class("rating-score");
+            for(let i = 0; i < 10; i++){
+                this.ratingScore.option(i +1);
+            }
+    
+            this.submitButton = createButton("Submit Review");
+            this.submitButton.mousePressed(this.submitReview);
+            this.submitButton.position(950, 740);
+            this.submitButton.class("submit-button");
+        }
+
+>>>>>>> Stashed changes
     }
 
     displayForWatchlist = (x, y) =>{
@@ -163,6 +188,7 @@ class Movie{
         this.image.size(120,200);
         this.titleDisplay = createP(this.name);
         this.titleDisplay.position(x,y);
+<<<<<<< Updated upstream
     }    
 
     showWatchlist = () =>{
@@ -171,6 +197,10 @@ class Movie{
 
     hideWatchlist = () => {
         this.titleDisplay.hide();
+=======
+        this.titleDisplay.mousePressed(this.buttonPressed);
+        this.titleDisplay.addClass("watchlist-item");
+>>>>>>> Stashed changes
     }
 
 
@@ -214,7 +244,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList();
+        addMovieToList(this.id);
     }
 
     saveReviews = () => {
