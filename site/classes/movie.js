@@ -54,7 +54,7 @@ class Movie{
         //this.button.position(x + 200, y + 50);
         //textSize(12);   
         //text(this.description, x + 200, y, 1000);
-        textSize(12);
+        textSize(15);
         text(this.name, x, y + 100, 100);
         //textSize(12);
     }
@@ -75,7 +75,7 @@ class Movie{
         text(this.name, x - 5, y + 125, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 5, y + 110, x + 10)
+        text(this.releaseDate, x - 5, y + 150, x + 10)
     }
 
     buttonPressed = () =>{
@@ -108,9 +108,11 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
 
         }
@@ -135,36 +137,30 @@ class Movie{
         let release_date_as_int = Date.parse(this.releaseDate);
         print(date_as_int, release_date_as_int);
         
-        if (release_date_as_int < date_as_int){
-        text("Leave a review", 600, 600);
-        this.area = createElement('textarea');
-        this.area.position(600, 740);
-        this.area.class("review-box");
-
-        text("Leave a rating", 800, 600);
-        this.ratingScore = createSelect();
-        this.ratingScore.position(800, 740);
-        this.ratingScore.class("rating-score");
-        for(let i = 0; i < 10; i++){
-            this.ratingScore.option(i +1);
+        
+        if ((!this.reviewUsernames.includes(user.username)) && (release_date_as_int < date_as_int)){
+            text("Leave a review", 600, 600);
+            this.area = createElement('textarea');
+            this.area.position(600, 740);
+            this.area.class("review-box");
+    
+            text("Leave a rating", 800, 600);
+            this.ratingScore = createSelect();
+            this.ratingScore.position(800, 740);
+            this.ratingScore.class("rating-score");
+            for(let i = 0; i < 10; i++){
+                this.ratingScore.option(i +1);
+            }
+    
+            this.submitButton = createButton("Submit Review");
+            this.submitButton.mousePressed(this.submitReview);
+            this.submitButton.position(950, 740);
+            this.submitButton.class("submit-button");
         }
 
-        this.submitButton = createButton("Submit Review");
-        this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(950, 740);
-        this.submitButton.class("submit-button");
     }
 
-    }
-
-    displayForWatchlist = (x, y) =>{
-        this.image.attribute("src", this.getImage());
-        this.image.position(500, 500);
-        this.image.size(120,200);
-        this.titleDisplay = createP(this.name);
-        this.titleDisplay.position(x,y);
-    }    
-
+   
     goBack = () => {
         removeElements();
         setup();
@@ -183,11 +179,9 @@ class Movie{
         let url ="https://api.themoviedb.org/3/movie/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
         loadJSON(url, getCastJson = (inp) =>{
             data = inp;
-            print('TEST');
-            print(data);
             cast = Array(data.cast.length);
             for (let i = 0; i < cast.length; i++){
-                cast[i] = new Person(data, i, "", "cast");
+                cast[i] = new Person(data, i,this.search_val, "cast", this);
                 cast[i].display(x,y, "cast");
                 cast[i].image.size(100,150);
                 if (x < 1000){
@@ -207,7 +201,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList();
+        addMovieToList(this.id);
     }
 
     saveReviews = () => {

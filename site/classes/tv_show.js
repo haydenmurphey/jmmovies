@@ -24,6 +24,7 @@ class TvShow{
         this.image = createElement("img");
         this.image.class("image");
         this.search_val = search_val;
+        this.titleDisplay;
     }
     
     getImage(){
@@ -60,10 +61,12 @@ class TvShow{
         this.backButton.position(50,150);
         this.backButton.mouseClicked(this.goBack);
         this.backButton.class("back");
+        this.getCast();
         background("darkgray");
         textSize(40);
         textWrap(WORD);
         text(this.name, 600, 200, 600);
+        text("Cast List: ", 100, 975, 600);
         text("Popularity Rating: " + this.popularity, 100, 800);
         if(this.reviewAverage == null){
             this.reviewAverage = "Not enough votes";
@@ -86,24 +89,76 @@ class TvShow{
 
             list_type = this.list_selector.value();
         }
-        text("Leave a review", 600, 600);
-        this.area = createElement('textarea');
-        this.area.position(600, 740);
-        this.area.class("review-box");
 
-        text("Leave a rating", 800, 600);
-        this.ratingScore = createSelect();
-        this.ratingScore.position(800, 740);
-        this.ratingScore.class("rating-score");
-        for(let i = 0; i < 10; i++){
-            this.ratingScore.option(i +1);
+        if (!this.reviewUsernames.includes(user.username)){
+            text("Leave a review", 600, 600);
+            this.area = createElement('textarea');
+            this.area.position(600, 740);
+            this.area.class("review-box");
+    
+            text("Leave a rating", 800, 600);
+            this.ratingScore = createSelect();
+            this.ratingScore.position(800, 740);
+            this.ratingScore.class("rating-score");
+            for(let i = 0; i < 10; i++){
+                this.ratingScore.option(i +1);
+            }
+    
+            this.submitButton = createButton("Submit Review");
+            this.submitButton.mousePressed(this.submitReview);
+            this.submitButton.position(950, 740);
+            this.submitButton.class("submit-button");
         }
 
-        this.submitButton = createButton("Submit Review");
-        this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(950, 740);
-        this.submitButton.class("submit-button");
     }
+
+    getCast = () => {
+        let cast;
+        let getCastJson;
+        let data;
+        let y = 1200;
+        let x = 200;
+        let url ="https://api.themoviedb.org/3/tv/" + this.id + "/credits?language=en-US&api_key=" + TMDB_API_KEY;
+        loadJSON(url, getCastJson = (inp) =>{
+            data = inp;
+            print(data);
+            cast = Array(data.cast.length);
+            for (let i = 0; i < cast.length; i++){
+                cast[i] = new Person(data, i, this.search_val, "cast", this);
+                cast[i].display(x,y, "cast");
+                cast[i].image.size(100,150);
+                if (x < 1000){
+                    x += 200;
+                } else{
+                    y += 225;
+                    x = 200;
+                }
+            }
+            this.review_y = y + 125;
+            print(this.review_y);
+            this.displayReviews();
+    
+        });
+    }
+
+    /*
+    displayForWatchlist = (x, y) =>{
+        //this.titleDisplay = createP(this.name);
+        //this.titleDisplay.position(x,y);
+        //this.titleDisplay.hide();
+    }
+
+    showWatchlist = () =>{
+        this.titleDisplay.show();
+    }
+
+    hideWatchlist = () => {
+        this.titleDisplay.hide();
+    }
+
+    */
+
+
 
     saveReviews = () => {
         /* 
@@ -188,7 +243,6 @@ class TvShow{
     }
 
     displayReviews = () => {
-        this.review_y = 500
         let totalReviews = createP("Reviews: ");
         totalReviews.addClass('total-review-text');
         totalReviews.position(50, this.review_y + 75);

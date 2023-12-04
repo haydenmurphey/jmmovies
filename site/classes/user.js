@@ -51,6 +51,7 @@ class User{
     
     
     display_profile_screen = () =>{
+        console.log("Displaying Profile");
         removeElements();
         let img = createElement("img");
         if (this.favorite_movie != null){
@@ -89,13 +90,31 @@ class User{
         completedP.addClass('completed');
         completedP.parent(completedContainer);
 
+        let toggleButton = createButton("Show Tv");
+        toggleButton.position(700, 500);
+        toggleButton.mousePressed(this.toggleWatchlist);
+
+        this.showMovie = true;
+
         let x = 100;
         let y = 500;
 
+        this.plan_to_watch_movies_display = Array(this.plan_to_watch_movies.length);
+        this.currently_watching_movies_display = Array(this.currently_watching_movies.length);
+        this.completed_movies_display = Array(this.completed_movies.length);
+        this.plan_to_watch_tv_display = Array(this.plan_to_watch_tv.length);
+        this.currently_watching_tv_display = Array(this.currently_watching_tv.length);
+        this.completed_tv_display = Array(this.completed_tv.length);
+
+
+
+
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
-            let title = createP(this.plan_to_watch_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(planningContainer);          
+            this.plan_to_watch_movies_display[i] = createP(this.plan_to_watch_movies[i].name);
+            this.plan_to_watch_movies_display[i].mouseClicked(this.plan_to_watch_movies[i].buttonPressed);
+            this.plan_to_watch_movies_display[i].addClass('watchlist-item');
+            this.plan_to_watch_movies_display[i].addClass('movie-title');
+            this.plan_to_watch_movies_display[i].parent(planningContainer);          
             y += 25;
         }
         
@@ -103,9 +122,11 @@ class User{
         y = 500;
          
         for (let i = 0; i < this.currently_watching_movies.length; i++){
-            let title = createP(this.currently_watching_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(currentlyContainer);
+            this.currently_watching_movies_display[i] = createP(this.currently_watching_movies[i].name);
+            this.currently_watching_movies_display[i].mouseClicked(this.currently_watching_movies[i].buttonPressed);
+            this.currently_watching_movies_display[i].addClass('watchlist-item');
+            this.currently_watching_movies_display[i].addClass('movie-title');
+            this.currently_watching_movies_display[i].parent(currentlyContainer);
             y += 25;
         }
         
@@ -113,13 +134,119 @@ class User{
         y = 500;
 
         for (let i = 0; i < this.completed_movies.length; i++){
-            let title = createP(this.completed_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(completedContainer);
+            this.completed_movies_display[i] = createP(this.completed_movies[i].name);
+            this.completed_movies_display[i].mouseClicked(this.completed_movies[i].buttonPressed);
+            this.completed_movies_display[i].addClass('watchlist-item');
+            this.completed_movies_display[i].addClass('movie-title');
+            this.completed_movies_display[i].parent(completedContainer);
             y += 25;
         }
         
+        //display tv
+        x = 100;
+        y = 500;
+
+        for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+            this.plan_to_watch_tv_display[i] = createP(this.plan_to_watch_tv[i].name);
+            this.plan_to_watch_tv_display[i].mouseClicked(this.plan_to_watch_tv[i].buttonPressed);
+            this.plan_to_watch_tv_display[i].addClass('watchlist-item');
+            this.plan_to_watch_tv_display[i].addClass('movie-title');
+            this.plan_to_watch_tv_display[i].parent(planningContainer);
+            this.plan_to_watch_tv_display[i].hide();
+            y += 25;
+        }
+
+        x = 550;
+        y = 500;
+         
+        for (let i = 0; i < this.currently_watching_tv.length; i++){
+            this.currently_watching_tv_display[i] = createP(this.currently_watching_tv[i].name);
+            this.currently_watching_tv_display[i].mouseClicked(this.currently_watching_tv[i].buttonPressed);
+            this.currently_watching_tv_display[i].addClass('watchlist-item');
+            this.currently_watching_tv_display[i].addClass('movie-title');
+            this.currently_watching_tv_display[i].parent(currentlyContainer);
+            this.currently_watching_tv_display[i].hide();
+            y += 25;
+        }
+        
+        x = 1000;
+        y = 500;
+
+        for (let i = 0; i < this.completed_tv.length; i++){
+            this.completed_tv_display[i] = createP(this.completed_tv[i].name);
+            this.completed_tv_display[i].mouseClicked(this.completed_tv[i].buttonPressed);
+            this.completed_tv_display[i].addClass('watchlist-item');
+            this.completed_tv_display[i].addClass('movie-title');
+            this.completed_tv_display[i].parent(completedContainer);
+            this.completed_tv_display[i].hide();
+            y += 25;
+        }
+
+        
     }
+
+    toggleWatchlist = () =>{
+        
+
+
+        this.showMovie = !this.showMovie;
+        if (this.showMovie){
+            for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+                this.plan_to_watch_movies_display[i].show();    
+            }
+             
+            for (let i = 0; i < this.currently_watching_movies.length; i++){
+                this.currently_watching_movies_display[i].show();
+            }
+    
+            for (let i = 0; i < this.completed_movies.length; i++){
+                this.completed_movies_display[i].show();
+            }
+
+            for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+                this.plan_to_watch_tv_display[i].hide();
+            }
+             
+            for (let i = 0; i < this.currently_watching_tv.length; i++){
+                this.currently_watching_tv_display[i].hide();
+            }
+    
+            for (let i = 0; i < this.completed_tv.length; i++){
+                this.completed_tv_display[i].hide();
+            }
+        }
+
+        else{
+            for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+                this.plan_to_watch_movies_display[i].hide();    
+            }
+             
+            for (let i = 0; i < this.currently_watching_movies.length; i++){
+                this.currently_watching_movies_display[i].hide();
+            }
+    
+            for (let i = 0; i < this.completed_movies.length; i++){
+                this.completed_movies_display[i].hide();
+            }
+
+            for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+                this.plan_to_watch_tv_display[i].show();
+            }
+             
+            for (let i = 0; i < this.currently_watching_tv.length; i++){
+                this.currently_watching_tv_display[i].show();
+            }
+    
+            for (let i = 0; i < this.completed_tv.length; i++){
+                this.completed_tv_display[i].show();
+            }
+        }
+    }
+
+
+
+
+
 
     update_favorite_movie = () =>{
         let test;
@@ -140,31 +267,38 @@ class User{
     }
 
     make_watching_movies = () =>{
-        let create_movie;
+        print("making watching movies")
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.currently_watching_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.currently_watching_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
             });
         }
     }
 
     make_to_watch_movies = () => {
+        print("making to watch movies");
         let create_movie;
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.plan_to_watch_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.plan_to_watch_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
+
             });
         }
     }
 
     make_completed_movies = () =>{
+        print("making completed movies");
         let create_movie;
         for (let i = 0; i < this.completed_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.completed_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
-            loadJSON(url, create_movie = (data) => {
+            loadJSON(url, (data) => {
                 this.completed_movies[i] = new Movie("id", data);
+                console.log("Movie loaded"); 
+
             });
         }
     }
@@ -260,7 +394,6 @@ function makeFavorite(){
 }
 
 function addMovieToList(id){
-
     user.remove_repeat_from_list(id);
 
     if (list_type === "Plan to Watch"){
@@ -274,7 +407,7 @@ function addMovieToList(id){
     }
     user.make_lists();
     //not waiting on all lists to be made before saving idk how to fix
-    saveUsers();
+    saveUsers();    
 }
 
 function addTvToList(){
