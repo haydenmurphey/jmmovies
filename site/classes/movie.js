@@ -156,8 +156,7 @@ class Movie{
         this.image.size(120,200);
         this.titleDisplay = createP(this.name);
         this.titleDisplay.position(x,y);
-    }
-
+    }    
 
     goBack = () => {
         removeElements();

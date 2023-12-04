@@ -59,6 +59,7 @@ class User{
         img.position(100,150);
         img.size(200,300);
         let usernameP = createP(this.username);
+        usernameP.class("profile-username");
         usernameP.position(100,100);
         usernameP.style('font-size', '23px');
         if (this.favorite_movie != null){
@@ -66,28 +67,45 @@ class User{
         }else{
             text("No favorite movie", 300, 300);
         }
-        let currentlyWatchingP = createP("Currently Watching:");
-        currentlyWatchingP.position(550, 450);
-        
-        let toWatchP = createP("Plan to Watch:");
-        toWatchP.position(100, 450);
 
+        let currentlyContainer = createDiv();
+        currentlyContainer.addClass('currently-container');
+        currentlyContainer.position(550, 500);
+        let currentlyWatchingP = createP("Currently Watching:");
+        currentlyWatchingP.addClass('currently');
+        currentlyWatchingP.parent(currentlyContainer);
+
+        let planningContainer = createDiv();
+        planningContainer.addClass('planning-container');
+        planningContainer.position(100, 500)
+        let toWatchP = createP("Planning:");
+        toWatchP.addClass('toWatch');
+        toWatchP.parent(planningContainer);
+        
+        let completedContainer = createDiv();
+        completedContainer.addClass('completed-container');
+        completedContainer.position(1000, 500);
         let completedP = createP("Completed:");
-        completedP.position(1000, 450);
+        completedP.addClass('completed');
+        completedP.parent(completedContainer);
 
         let x = 100;
         let y = 500;
 
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
-            this.plan_to_watch_movies[i].displayForWatchlist(x,y);
+            let title = createP(this.plan_to_watch_movies[i].name);
+            title.addClass('movie-title');
+            title.parent(planningContainer);          
             y += 25;
         }
-
+        
         x = 550;
         y = 500;
          
         for (let i = 0; i < this.currently_watching_movies.length; i++){
-            this.currently_watching_movies[i].displayForWatchlist(x,y);
+            let title = createP(this.currently_watching_movies[i].name);
+            title.addClass('movie-title');
+            title.parent(currentlyContainer);
             y += 25;
         }
         
@@ -95,13 +113,11 @@ class User{
         y = 500;
 
         for (let i = 0; i < this.completed_movies.length; i++){
-            this.completed_movies[i].displayForWatchlist(x,y);
+            let title = createP(this.completed_movies[i].name);
+            title.addClass('movie-title');
+            title.parent(completedContainer);
             y += 25;
         }
-        
-
-
-
         
     }
 
