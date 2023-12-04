@@ -363,7 +363,12 @@ function displayRecents() {
 
    if (searchResult == null) {
    loadJSON(finalUrl, function (data) {
-      recentlyReleased = Array(data.results.length);
+    if (data.results.length < 10){
+        recentlyReleased = Array(data.results.length);
+    }
+    else{
+        recentlyReleased = Array(10);
+    }
       for (let i = 0; i < recentlyReleased.length; i++) {
         recentlyReleased[i] = new Movie("search", data, i, "");
       }

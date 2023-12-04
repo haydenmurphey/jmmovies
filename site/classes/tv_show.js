@@ -24,6 +24,7 @@ class TvShow{
         this.image = createElement("img");
         this.image.class("image");
         this.search_val = search_val;
+        this.titleDisplay;
     }
     
     getImage(){
@@ -104,6 +105,25 @@ class TvShow{
         this.submitButton.position(950, 740);
         this.submitButton.class("submit-button");
     }
+
+    /*
+    displayForWatchlist = (x, y) =>{
+        //this.titleDisplay = createP(this.name);
+        //this.titleDisplay.position(x,y);
+        //this.titleDisplay.hide();
+    }
+
+    showWatchlist = () =>{
+        this.titleDisplay.show();
+    }
+
+    hideWatchlist = () => {
+        this.titleDisplay.hide();
+    }
+
+    */
+
+
 
     saveReviews = () => {
         /* 

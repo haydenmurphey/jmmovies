@@ -165,6 +165,15 @@ class Movie{
         this.titleDisplay.position(x,y);
     }    
 
+    showWatchlist = () =>{
+        this.titleDisplay.show();
+    }
+
+    hideWatchlist = () => {
+        this.titleDisplay.hide();
+    }
+
+
     goBack = () => {
         removeElements();
         setup();

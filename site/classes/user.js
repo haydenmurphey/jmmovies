@@ -89,13 +89,29 @@ class User{
         completedP.addClass('completed');
         completedP.parent(completedContainer);
 
+        let toggleButton = createButton("Show Tv");
+        toggleButton.position(700, 500);
+        toggleButton.mousePressed(this.toggleWatchlist);
+
+        this.showMovie = true;
+
         let x = 100;
         let y = 500;
 
+        this.plan_to_watch_movies_display = Array(this.plan_to_watch_movies.length);
+        this.currently_watching_movies_display = Array(this.currently_watching_movies.length);
+        this.completed_movies_display = Array(this.completed_movies.length);
+        this.plan_to_watch_tv_display = Array(this.plan_to_watch_tv.length);
+        this.currently_watching_tv_display = Array(this.currently_watching_tv.length);
+        this.completed_tv_display = Array(this.completed_tv.length);
+
+
+
+
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
-            let title = createP(this.plan_to_watch_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(planningContainer);          
+            this.plan_to_watch_movies_display[i] = createP(this.plan_to_watch_movies[i].name);
+            this.plan_to_watch_movies_display[i].addClass('movie-title');
+            this.plan_to_watch_movies_display[i].parent(planningContainer);          
             y += 25;
         }
         
@@ -103,9 +119,9 @@ class User{
         y = 500;
          
         for (let i = 0; i < this.currently_watching_movies.length; i++){
-            let title = createP(this.currently_watching_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(currentlyContainer);
+            this.currently_watching_movies_display[i] = createP(this.currently_watching_movies[i].name);
+            this.currently_watching_movies_display[i].addClass('movie-title');
+            this.currently_watching_movies_display[i].parent(currentlyContainer);
             y += 25;
         }
         
@@ -113,13 +129,111 @@ class User{
         y = 500;
 
         for (let i = 0; i < this.completed_movies.length; i++){
-            let title = createP(this.completed_movies[i].name);
-            title.addClass('movie-title');
-            title.parent(completedContainer);
+            this.completed_movies_display[i] = createP(this.completed_movies[i].name);
+            this.completed_movies_display[i].addClass('movie-title');
+            this.completed_movies_display[i].parent(completedContainer);
             y += 25;
         }
         
+        //display tv
+        x = 100;
+        y = 500;
+
+        for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+            this.plan_to_watch_tv_display[i] = createP(this.plan_to_watch_tv[i].name);
+            this.plan_to_watch_tv_display[i].addClass('movie-title');
+            this.plan_to_watch_tv_display[i].parent(planningContainer);
+            this.plan_to_watch_tv_display[i].hide();
+            y += 25;
+        }
+
+        x = 550;
+        y = 500;
+         
+        for (let i = 0; i < this.currently_watching_tv.length; i++){
+            this.currently_watching_tv_display[i] = createP(this.currently_watching_tv[i].name);
+            this.currently_watching_tv_display[i].addClass('movie-title');
+            this.currently_watching_tv_display[i].parent(currentlyContainer);
+            this.currently_watching_tv_display[i].hide();
+            y += 25;
+        }
+        
+        x = 1000;
+        y = 500;
+
+        for (let i = 0; i < this.completed_tv.length; i++){
+            this.completed_tv_display[i] = createP(this.completed_tv[i].name);
+            this.completed_tv_display[i].addClass('movie-title');
+            this.completed_tv_display[i].parent(completedContainer);
+            this.completed_tv_display[i].hide();
+            y += 25;
+        }
+
+        
     }
+
+    toggleWatchlist = () =>{
+        
+
+
+        this.showMovie = !this.showMovie;
+        if (this.showMovie){
+            for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+                this.plan_to_watch_movies_display[i].show();    
+            }
+             
+            for (let i = 0; i < this.currently_watching_movies.length; i++){
+                this.currently_watching_movies_display[i].show();
+            }
+    
+            for (let i = 0; i < this.completed_movies.length; i++){
+                this.completed_movies_display[i].show();
+            }
+
+            for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+                this.plan_to_watch_tv_display[i].hide();
+            }
+             
+            for (let i = 0; i < this.currently_watching_tv.length; i++){
+                this.currently_watching_tv_display[i].hide();
+            }
+    
+            for (let i = 0; i < this.completed_tv.length; i++){
+                this.completed_tv_display[i].hide();
+            }
+        }
+
+        else{
+            for (let i = 0; i < this.plan_to_watch_movies.length; i++){
+                this.plan_to_watch_movies_display[i].hide();    
+            }
+             
+            for (let i = 0; i < this.currently_watching_movies.length; i++){
+                this.currently_watching_movies_display[i].hide();
+            }
+    
+            for (let i = 0; i < this.completed_movies.length; i++){
+                this.completed_movies_display[i].hide();
+            }
+
+            for (let i = 0; i < this.plan_to_watch_tv.length; i++){
+                this.plan_to_watch_tv_display[i].show();
+            }
+             
+            for (let i = 0; i < this.currently_watching_tv.length; i++){
+                this.currently_watching_tv_display[i].show();
+            }
+    
+            for (let i = 0; i < this.completed_tv.length; i++){
+                this.completed_tv_display[i].show();
+            }
+        }
+    }
+
+
+
+
+
 
     update_favorite_movie = () =>{
         let test;
