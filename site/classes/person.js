@@ -115,7 +115,7 @@ class Person {
             //}
             let url = start_url + this.movies[i].id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
             loadJSON(url, test = (data) => {
-                appeared = new Movie("id", data);
+                appeared = new Movie("id", data, 0, "", this);
                 this.movies[i] = appeared;
                 textWrap(WORD);
                 if(x <= 1000){
