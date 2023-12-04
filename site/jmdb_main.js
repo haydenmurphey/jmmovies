@@ -418,7 +418,7 @@ function displayUpcoming() {
     
     fill("black");
     textSize(30);
-    text("Upcoming Movies:", 50, 730);
+    text("Upcoming Movies:", 50, 770);
 
     if(searchResult == null) {
     
@@ -436,7 +436,7 @@ function displayUpcoming() {
             }
     
             let x = 50;
-            let y = 850;
+            let y = 890;
     
             for (let i = 0; i < upcomingMovie.length; i++) {
                 if (upcomingMovie[i] != null) {
