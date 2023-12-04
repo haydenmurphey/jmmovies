@@ -51,9 +51,10 @@ class Person {
         }  
         this.image.size(400,600);
         this.image.position(100,200);
-        this.backButton = createButton("back to search");
-        this.backButton.size(150,20);
-        this.backButton.position(50,150);
+        this.backButton = createButton("Back to Search");
+        this.backButton.class("person-back-button");
+        this.backButton.size(150,40);
+        this.backButton.position(100,150);
         this.backButton.mouseClicked(this.goBack);
         background("darkgray");
         textSize(40);
