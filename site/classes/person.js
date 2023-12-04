@@ -27,7 +27,7 @@ class Person {
         let test;
         let url = "https://api.themoviedb.org/3/person/" + this.id + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, test = (data) =>{
-                print(data);
+                //print(data);
                 this.bio = data.biography;
                 this.birthday = data.birthday;
                 this.bornIn = data.place_of_birth;
@@ -36,7 +36,7 @@ class Person {
             
             url = "https://api.themoviedb.org/3/person/" + this.id + "/movie_credits?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, test = (data) =>{
-            print(data);
+            //print(data);
             this.movies = Array(data.cast.length);
             for(let i = 0; i < this.movies.length; i++){
                 this.appearsIn = data.cast[i];
@@ -78,7 +78,7 @@ class Person {
         this.image.size(400,600);
         this.image.position(100,200);
         if(this.type === "cast"){
-            this.backButton = createButton("Back to movie");
+            this.backButton = createButton("Back to title");
         } else{
             this.backButton = createButton("back to search");
         }
@@ -131,13 +131,12 @@ class Person {
 
     goBack = () => {
         removeElements();
-        setup();
         //search_bar.input(this.search_val);
         if(this.type === "cast"){
-            print("AAAAAAAAAAAA");
-            print(this.movie);
+            //print(this.movie);
             this.movie.buttonPressed();
         } else if(this.search_val != ""){
+            setup();
             searchActor(this.search_val);
         }
     }

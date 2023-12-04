@@ -65,6 +65,7 @@ class TvShow{
         textSize(40);
         textWrap(WORD);
         text(this.name, 600, 200, 600);
+        text("Cast List: ", 100, 975, 600);
         text("Popularity Rating: " + this.popularity, 100, 800);
         if(this.reviewAverage == null){
             this.reviewAverage = "Not enough votes";
@@ -118,7 +119,7 @@ class TvShow{
             print(data);
             cast = Array(data.cast.length);
             for (let i = 0; i < cast.length; i++){
-                cast[i] = new Person(data, i, "", "cast", this.search_val, this);
+                cast[i] = new Person(data, i, this.search_val, "cast", this);
                 cast[i].display(x,y, "cast");
                 cast[i].image.size(100,150);
                 if (x < 1000){
