@@ -130,6 +130,12 @@ class Movie{
         text("Release Date: " + this.releaseDate, 600, 500, 800);
         
         //LEAVE A REVIEW SECTION
+        let date = new Date;
+        let year = date.getFullYear;
+        let month = date.getMonth;
+        let day = date.getDay;
+        
+        //if (this.releaseDate < date){
         text("Leave a review", 600, 600);
         this.area = createElement('textarea');
         this.area.position(600, 740);
@@ -147,6 +153,7 @@ class Movie{
         this.submitButton.mousePressed(this.submitReview);
         this.submitButton.position(950, 740);
         this.submitButton.class("submit-button");
+    //}
 
     }
 
@@ -311,4 +318,5 @@ class Movie{
             reviewContainer.position(50, this.review_y + 150 + (150 * i));
         }
     }
+    
 }
