@@ -132,34 +132,13 @@ class Movie{
         text("Release Date: " + this.releaseDate, 600, 500, 800);
         
         //LEAVE A REVIEW SECTION
-<<<<<<< Updated upstream
         let date = new Date;
         let date_as_int = Date.parse(date);
         let release_date_as_int = Date.parse(this.releaseDate);
         print(date_as_int, release_date_as_int);
         
-        if (release_date_as_int < date_as_int){
-        text("Leave a review", 600, 600);
-        this.area = createElement('textarea');
-        this.area.position(600, 740);
-        this.area.class("review-box");
-
-        text("Leave a rating", 800, 600);
-        this.ratingScore = createSelect();
-        this.ratingScore.position(800, 740);
-        this.ratingScore.class("rating-score");
-        for(let i = 0; i < 10; i++){
-            this.ratingScore.option(i +1);
-        }
-
-        this.submitButton = createButton("Submit Review");
-        this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(950, 740);
-        this.submitButton.class("submit-button");
-    }
-
-=======
-        if (!this.reviewUsernames.includes(user.username)){
+        
+        if ((!this.reviewUsernames.includes(user.username)) && (release_date_as_int < date_as_int)){
             text("Leave a review", 600, 600);
             this.area = createElement('textarea');
             this.area.position(600, 740);
@@ -179,31 +158,9 @@ class Movie{
             this.submitButton.class("submit-button");
         }
 
->>>>>>> Stashed changes
     }
 
-    displayForWatchlist = (x, y) =>{
-        this.image.attribute("src", this.getImage());
-        this.image.position(500, 500);
-        this.image.size(120,200);
-        this.titleDisplay = createP(this.name);
-        this.titleDisplay.position(x,y);
-<<<<<<< Updated upstream
-    }    
-
-    showWatchlist = () =>{
-        this.titleDisplay.show();
-    }
-
-    hideWatchlist = () => {
-        this.titleDisplay.hide();
-=======
-        this.titleDisplay.mousePressed(this.buttonPressed);
-        this.titleDisplay.addClass("watchlist-item");
->>>>>>> Stashed changes
-    }
-
-
+   
     goBack = () => {
         removeElements();
         setup();

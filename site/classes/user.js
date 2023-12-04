@@ -111,6 +111,8 @@ class User{
 
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
             this.plan_to_watch_movies_display[i] = createP(this.plan_to_watch_movies[i].name);
+            this.plan_to_watch_movies_display[i].mouseClicked(this.plan_to_watch_movies[i].buttonPressed);
+            this.plan_to_watch_movies_display[i].addClass('watchlist-item');
             this.plan_to_watch_movies_display[i].addClass('movie-title');
             this.plan_to_watch_movies_display[i].parent(planningContainer);          
             y += 25;
@@ -121,6 +123,8 @@ class User{
          
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             this.currently_watching_movies_display[i] = createP(this.currently_watching_movies[i].name);
+            this.currently_watching_movies_display[i].mouseClicked(this.currently_watching_movies[i].buttonPressed);
+            this.currently_watching_movies_display[i].addClass('watchlist-item');
             this.currently_watching_movies_display[i].addClass('movie-title');
             this.currently_watching_movies_display[i].parent(currentlyContainer);
             y += 25;
@@ -131,10 +135,11 @@ class User{
 
         for (let i = 0; i < this.completed_movies.length; i++){
             this.completed_movies_display[i] = createP(this.completed_movies[i].name);
+            this.completed_movies_display[i].mouseClicked(this.completed_movies[i].buttonPressed);
+            this.completed_movies_display[i].addClass('watchlist-item');
             this.completed_movies_display[i].addClass('movie-title');
             this.completed_movies_display[i].parent(completedContainer);
             y += 25;
-<<<<<<< Updated upstream
         }
         
         //display tv
@@ -143,6 +148,8 @@ class User{
 
         for (let i = 0; i < this.plan_to_watch_tv.length; i++){
             this.plan_to_watch_tv_display[i] = createP(this.plan_to_watch_tv[i].name);
+            this.plan_to_watch_tv_display[i].mouseClicked(this.plan_to_watch_tv[i].buttonPressed);
+            this.plan_to_watch_tv_display[i].addClass('watchlist-item');
             this.plan_to_watch_tv_display[i].addClass('movie-title');
             this.plan_to_watch_tv_display[i].parent(planningContainer);
             this.plan_to_watch_tv_display[i].hide();
@@ -154,6 +161,8 @@ class User{
          
         for (let i = 0; i < this.currently_watching_tv.length; i++){
             this.currently_watching_tv_display[i] = createP(this.currently_watching_tv[i].name);
+            this.currently_watching_tv_display[i].mouseClicked(this.currently_watching_tv[i].buttonPressed);
+            this.currently_watching_tv_display[i].addClass('watchlist-item');
             this.currently_watching_tv_display[i].addClass('movie-title');
             this.currently_watching_tv_display[i].parent(currentlyContainer);
             this.currently_watching_tv_display[i].hide();
@@ -165,6 +174,8 @@ class User{
 
         for (let i = 0; i < this.completed_tv.length; i++){
             this.completed_tv_display[i] = createP(this.completed_tv[i].name);
+            this.completed_tv_display[i].mouseClicked(this.completed_tv[i].buttonPressed);
+            this.completed_tv_display[i].addClass('watchlist-item');
             this.completed_tv_display[i].addClass('movie-title');
             this.completed_tv_display[i].parent(completedContainer);
             this.completed_tv_display[i].hide();
@@ -172,9 +183,6 @@ class User{
         }
 
         
-=======
-        }   
->>>>>>> Stashed changes
     }
 
     toggleWatchlist = () =>{

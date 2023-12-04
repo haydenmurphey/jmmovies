@@ -243,7 +243,6 @@ class TvShow{
     }
 
     displayReviews = () => {
-        this.review_y = 500
         let totalReviews = createP("Reviews: ");
         totalReviews.addClass('total-review-text');
         totalReviews.position(50, this.review_y + 75);
