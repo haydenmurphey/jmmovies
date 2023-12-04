@@ -243,11 +243,6 @@ class User{
         }
     }
 
-
-
-
-
-
     update_favorite_movie = () =>{
         let test;
         let url = "https://api.themoviedb.org/3/movie/" + this.favorite_movie_id + "?language=en-US&api_key=" + TMDB_API_KEY;
