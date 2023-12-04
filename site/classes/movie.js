@@ -72,10 +72,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 5, y + 125, 130);
+        text(this.name, x + 2, y + 120, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 5, y + 150, x + 10)
+        text(this.releaseDate, x + 2, y + 150, x + 10)
     }
 
     buttonPressed = () =>{
