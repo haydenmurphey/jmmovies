@@ -82,9 +82,11 @@ class TvShow{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.selected(user.contained_in_watchlist_tv(this.id));
             this.list_selector.class("list-selector");
 
             list_type = this.list_selector.value();
@@ -140,25 +142,6 @@ class TvShow{
     
         });
     }
-
-    /*
-    displayForWatchlist = (x, y) =>{
-        //this.titleDisplay = createP(this.name);
-        //this.titleDisplay.position(x,y);
-        //this.titleDisplay.hide();
-    }
-
-    showWatchlist = () =>{
-        this.titleDisplay.show();
-    }
-
-    hideWatchlist = () => {
-        this.titleDisplay.hide();
-    }
-
-    */
-
-
 
     saveReviews = () => {
         /* 
@@ -274,6 +257,6 @@ class TvShow{
     callAddTv = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addTvToList();
+        addTvToList(this.id);
     }
 }

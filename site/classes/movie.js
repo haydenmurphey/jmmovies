@@ -109,9 +109,11 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
 
         }
@@ -209,7 +211,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList();
+        addMovieToList(this.id);
     }
 
     saveReviews = () => {

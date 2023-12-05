@@ -338,6 +338,9 @@ class User{
         else if (this.completed_movies_ids.includes(id)){
             return "Completed";
         }
+        else{
+            return "None";
+        }
     }
     contained_in_watchlist_tv(id){
         if (this.plan_to_watch_tv_ids.includes(id)){
@@ -353,7 +356,8 @@ class User{
             return "None";
         }
     }
-    remove_repeat_from_list = (id) =>{
+
+    remove_repeat_from_list_movie = (id) =>{
         let index = this.currently_watching_movies_ids.indexOf(id);
         print(index)
         if (index > -1) { // only splice array when item is found
@@ -380,6 +384,33 @@ class User{
 
     }
 
+    remove_repeat_from_list_tv = (id) =>{
+        let index = this.currently_watching_tv_ids.indexOf(id);
+        print(index)
+        if (index > -1) { // only splice array when item is found
+            this.currently_watching_tv.splice(index, 1); // 2nd parameter means remove one item only
+            this.currently_watching_tv_ids.splice(index, 1); // 2nd parameter means remove one item only
+        }
+        index = this.plan_to_watch_tv_ids.indexOf(id);
+        print(index)
+        print(this.currently_watching_tv);
+
+        if (index > -1) { // only splice array when item is found
+            this.plan_to_watch_tv.splice(index, 1); // 2nd parameter means remove one item only
+            this.plan_to_watch_tv_ids.splice(index, 1); // 2nd parameter means remove one item only
+        }
+        index = this.completed_tv_ids.indexOf(id);
+        print(index)
+        print(this.plan_to_watch_tv);
+
+        if (index > -1) { // only splice array when item is found
+            this.completed_tv_ids.splice(index, 1); // 2nd parameter means remove one item only
+            this.completed_tv.splice(index, 1); // 2nd parameter means remove one item only
+        }
+        print(this.completed_tv);
+
+    }
+
 }
 
 function makeFavorite(){
@@ -389,7 +420,7 @@ function makeFavorite(){
 }
 
 function addMovieToList(id){
-    user.remove_repeat_from_list(id);
+    user.remove_repeat_from_list_movie(id);
 
     if (list_type === "Plan to Watch"){
         user.plan_to_watch_movies_ids.push(to_add_list);
@@ -405,7 +436,9 @@ function addMovieToList(id){
     saveUsers();    
 }
 
-function addTvToList(){
+function addTvToList(id){
+    user.remove_repeat_from_list_tv(id);
+
     if (list_type === "Plan to Watch"){
         user.plan_to_watch_tv_ids.push(to_add_list);
     }
