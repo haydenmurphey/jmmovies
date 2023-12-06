@@ -168,9 +168,12 @@ class Movie{
 
     goBack = () => {
         removeElements();
-        if(this.person != null){
+        if(this.person == "profile"){
+            displayUserProfile(); 
+        }  else if (this.person != null){
+            print("TTTTTTTTTTTTT");
             this.person.buttonPressed();
-        } else if (this.displayed_on_home == false){
+        }else if (this.displayed_on_home == false){
             setup();
             searchMovie(this.search_val);
         } else{

@@ -7,7 +7,7 @@ class User{
         if (favorite_movie_id != null){
             let url = "https://api.themoviedb.org/3/movie/" + favorite_movie_id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
             loadJSON(url, test = (data) => {
-                this.favorite_movie = new Movie("id", data);
+                this.favorite_movie = new Movie("id", data,0,"","profile");
             });
         }
         else{
@@ -252,7 +252,7 @@ class User{
         let test;
         let url = "https://api.themoviedb.org/3/movie/" + this.favorite_movie_id + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, test = (data) => {
-                this.favorite_movie = new Movie("id", data);
+                this.favorite_movie = new Movie("id", data, 0, "", "profile");
             });
     }
 
@@ -271,7 +271,7 @@ class User{
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.currently_watching_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, (data) => {
-                this.currently_watching_movies[i] = new Movie("id", data);
+                this.currently_watching_movies[i] = new Movie("id", data, 0, "", "proifle");
                 console.log("Movie loaded"); 
             });
         }
@@ -283,7 +283,7 @@ class User{
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.plan_to_watch_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, (data) => {
-                this.plan_to_watch_movies[i] = new Movie("id", data);
+                this.plan_to_watch_movies[i] = new Movie("id", data, 0, "", "profile");
                 console.log("Movie loaded"); 
 
             });
@@ -296,7 +296,7 @@ class User{
         for (let i = 0; i < this.completed_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.completed_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, (data) => {
-                this.completed_movies[i] = new Movie("id", data);
+                this.completed_movies[i] = new Movie("id", data, 0, "", "profile");
                 console.log("Movie loaded"); 
 
             });
@@ -308,7 +308,7 @@ class User{
         for (let i = 0; i < this.currently_watching_tv.length; i++){
             let url = "https://api.themoviedb.org/3/tv/" + this.currently_watching_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, create_tv = (data) => {
-                this.currently_watching_tv[i] = new TvShow("id", data);
+                this.currently_watching_tv[i] = new TvShow("id", data, 0, "", "profile");
             });
         }
     }
@@ -318,7 +318,7 @@ class User{
         for (let i = 0; i < this.plan_to_watch_tv.length; i++){
             let url = "https://api.themoviedb.org/3/tv/" + this.plan_to_watch_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, create_tv = (data) => {
-                this.plan_to_watch_tv[i] = new TvShow("id", data);
+                this.plan_to_watch_tv[i] = new TvShow("id", data, 0, "", "profile");
             });
         }
     }
@@ -328,7 +328,7 @@ class User{
         for (let i = 0; i < this.completed_tv.length; i++){
             let url = "https://api.themoviedb.org/3/tv/" + this.completed_tv_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, create_tv = (data) => {
-                this.completed_tv[i] = new TvShow("id", data);
+                this.completed_tv[i] = new TvShow("id", data, 0, "", "profile");
             });
         }
     }

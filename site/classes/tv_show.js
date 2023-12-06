@@ -1,5 +1,5 @@
 class TvShow{
-    constructor(type, tvJson, num=0, search_val=""){
+    constructor(type, tvJson, num=0, search_val="", person = null){
         if(type === "search"){
             this.name = tvJson.results[num].name;
             this.imgPath = tvJson.results[num].poster_path;
@@ -20,6 +20,7 @@ class TvShow{
             this.voteCount = tvJson.vote_count;
             this.popularity = tvJson.popularity;
         }
+        this.person = person;
         this.getReviews();
         this.image = createElement("img");
         this.image.class("image");
@@ -266,9 +267,16 @@ class TvShow{
 
     goBack = () => {
         removeElements();
-        setup();
-        //search_bar.input(this.search_val);
-        searchTV(this.search_val);
+        if(this.person == "profile"){
+            displayUserProfile(); 
+        }  else if (this.person != null){
+            this.person.buttonPressed();
+        }else if (this.search_val != ""){
+            setup();
+            searchTV(this.search_val);
+        } else{
+            setup();
+        }
     }
 
     callAddTv = () =>{
