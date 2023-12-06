@@ -1,5 +1,5 @@
 class TvShow{
-    constructor(type, tvJson, num=0, search_val=""){
+    constructor(type, tvJson, num=0, search_val="", person = null){
         if(type === "search"){
             this.name = tvJson.results[num].name;
             this.imgPath = tvJson.results[num].poster_path;
@@ -20,6 +20,7 @@ class TvShow{
             this.voteCount = tvJson.vote_count;
             this.popularity = tvJson.popularity;
         }
+        this.person = person;
         this.getReviews();
         this.image = createElement("img");
         this.image.class("image");
@@ -74,6 +75,13 @@ class TvShow{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+        if (this.description.length > 600) {
+          text("Release Date: ", this.releaseDate, 600, 700, 800);
+        } else if (this.description.length > 400) {
+          text("Release Date: " + this.releaseDate, 600, 600, 800);
+        } else {
+          text("Release Date: " + this.releaseDate, 600, 500, 800);
+        }
         if (getItem('user') != null){
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);
@@ -249,9 +257,16 @@ class TvShow{
 
     goBack = () => {
         removeElements();
-        setup();
-        //search_bar.input(this.search_val);
-        searchTV(this.search_val);
+        if(this.person == "profile"){
+            displayUserProfile(); 
+        }  else if (this.person != null){
+            this.person.buttonPressed();
+        }else if (this.search_val != ""){
+            setup();
+            searchTV(this.search_val);
+        } else{
+            setup();
+        }
     }
 
     callAddTv = () =>{
