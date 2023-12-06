@@ -106,9 +106,6 @@ class User{
         this.currently_watching_tv_display = Array(this.currently_watching_tv.length);
         this.completed_tv_display = Array(this.completed_tv.length);
 
-
-
-
         for (let i = 0; i < this.plan_to_watch_movies.length; i++){
             this.plan_to_watch_movies_display[i] = createP(this.plan_to_watch_movies[i].name);
             this.plan_to_watch_movies_display[i].mouseClicked(this.plan_to_watch_movies[i].buttonPressed);
@@ -181,14 +178,10 @@ class User{
             this.completed_tv_display[i].hide();
             y += 25;
         }
-
-        
     }
 
     toggleWatchlist = () =>{
         
-
-
         this.showMovie = !this.showMovie;
         if (this.showMovie){
             for (let i = 0; i < this.plan_to_watch_movies.length; i++){
@@ -252,6 +245,12 @@ class User{
     }
 
     make_lists = () =>{
+        this.currently_watching_movies = Array(this.currently_watching_movies_ids.length);
+        this.plan_to_watch_movies = Array(this.plan_to_watch_movies_ids.length);
+        this.completed_movies = Array(this.completed_movies_ids.length);
+        this.currently_watching_tv = Array(this.currently_watching_tv_ids.length);
+        this.plan_to_watch_tv = Array(this.plan_to_watch_tv_ids.length);
+        this.completed_tv = Array(this.completed_tv_ids.length);
         print("making lists");
         this.make_watching_movies();
         this.make_to_watch_movies();
