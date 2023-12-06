@@ -410,7 +410,17 @@ class User{
 
     }
 
+    display(x,y){
+        fill("black");
+        textSize(30);
+        textWrap(WORD);
+        textSize(12);
+        text(this.username, x, y + 60, 60);
+        }
+    
 }
+
+
 
 function makeFavorite(){
     user.favorite_movie_id = to_favorite;
@@ -450,3 +460,4 @@ function addTvToList(id){
     user.make_lists();
     saveUsers();
 }
+

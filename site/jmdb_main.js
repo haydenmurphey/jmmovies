@@ -37,7 +37,7 @@ function setup() {
     search_dropdown.option("TV Show");
     search_dropdown.option("Actor");
     search_dropdown.class("search-dropdown");
-    //search_dropdown.option("User");
+    search_dropdown.option("User");
     
     search_button = createButton("Search");
     search_button.position(search_bar.x + 328, search_bar.y);
@@ -332,7 +332,13 @@ function searchActor(value){
 }
 
 function searchUser(value){
-
+    let searchResult = Array();
+    for (let i = 0; i < users.length; i ++){
+        if (users[i].username.includes(value)){
+            searchResult.push(users[i]);
+        }
+    }   
+    print(searchResult);
 }
 
 function displayUserProfile(){
