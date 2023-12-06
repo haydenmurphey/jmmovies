@@ -130,7 +130,11 @@ class Movie{
         text("Cast List:", 200, 1000, 600);
         textSize(20);
         text(this.description, 600, 350, 800);
-        text("Release Date: " + this.releaseDate, 600, 500, 800);
+        if (this.description.length > 400) {
+          text("Release Date: " + this.releaseDate, 600, 600, 800);
+        } else {
+          text("Release Date: " + this.releaseDate, 600, 500, 800);
+        }
         
         //LEAVE A REVIEW SECTION
         let date = new Date;
