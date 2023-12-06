@@ -212,11 +212,31 @@ function searchType(){
         }
     }
 
+    let dropdown_value = search_dropdown.value();
+
     if(search_bar.value() == ""){
         background("darkgray");
+
+        let noInputMessage;
+        if (dropdown_value == "Movie") {
+          noInputMessage = "Error: Please Provide a Valid Movie Title";
+        }
+        else if (dropdown_value == "TV Show") {
+          noInputMessage = "Error: Please Provide a Valid TV Show Title";
+        }
+        else if (dropdown_value == "Actor") {
+          noInputMessage = "Error: Please Provide a Valid Actor Name";
+        }
+        else if (dropdown_value == "User") {
+          noInputMessage = "Error: Please Provide a Valid User Name";
+        }
+        
+        textSize(30);
+        fill("black");
+        text(noInputMessage, 50, 50);
         return;
     }
-    let dropdown_value = search_dropdown.value();
+    
     if (dropdown_value === "Movie"){
         searchMovie(search_bar.value());
     }
