@@ -232,8 +232,14 @@ function searchType(){
         }
         
         textSize(30);
+        strokeWeight(3);
+        stroke(160, 32, 240);
+        fill("white");
+        rect(windowWidth / 4, 100, 750, 100);
+        strokeWeight(0);
         fill("black");
-        text(noInputMessage, 50, 50);
+        textAlign(CENTER);
+        text(noInputMessage, windowWidth / 2, 160);
         return;
     }
     
