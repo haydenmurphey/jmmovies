@@ -73,10 +73,10 @@ class Movie{
         }
         textSize(12);
         textStyle(BOLD);
-        text(this.name, x - 5, y + 125, 130);
+        text(this.name, x + 2, y + 120, 130);
         textSize(12);
         textStyle(NORMAL);
-        text(this.releaseDate, x - 5, y + 150, x + 10)
+        text(this.releaseDate, x + 2, y + 150, x + 10)
     }
 
     buttonPressed = () =>{
@@ -109,9 +109,11 @@ class Movie{
     
             this.list_selector = createSelect();
             this.list_selector.position(600, 150);
+            this.list_selector.option("None");
             this.list_selector.option("Plan to Watch");
             this.list_selector.option("Currently Watching");
             this.list_selector.option("Completed");
+            this.list_selector.selected(user.contained_in_watchlist_movie(this.id));
             this.list_selector.class("list-selector");
 
         }
@@ -136,24 +138,24 @@ class Movie{
         let release_date_as_int = Date.parse(this.releaseDate);
         print(date_as_int, release_date_as_int);
         
-        if (release_date_as_int < date_as_int){
-        text("Leave a review", 600, 600);
-        this.area = createElement('textarea');
-        this.area.position(600, 740);
-        this.area.class("review-box");
+        if ((release_date_as_int < date_as_int) && !this.reviewUsernames.includes(user.username)){
+            text("Leave a review", 600, 600);
+            this.area = createElement('textarea');
+            this.area.position(600, 740);
+            this.area.class("review-box");
 
-        text("Leave a rating", 800, 600);
-        this.ratingScore = createSelect();
-        this.ratingScore.position(800, 740);
-        this.ratingScore.class("rating-score");
-        for(let i = 0; i < 10; i++){
-            this.ratingScore.option(i +1);
-        }
+            text("Leave a rating", 800, 600);
+            this.ratingScore = createSelect();
+            this.ratingScore.position(800, 740);
+            this.ratingScore.class("rating-score");
+            for(let i = 0; i < 10; i++){
+                this.ratingScore.option(i +1);
+            }
 
-        this.submitButton = createButton("Submit Review");
-        this.submitButton.mousePressed(this.submitReview);
-        this.submitButton.position(950, 740);
-        this.submitButton.class("submit-button");
+            this.submitButton = createButton("Submit Review");
+            this.submitButton.mousePressed(this.submitReview);
+            this.submitButton.position(950, 740);
+            this.submitButton.class("submit-button");
     }
 
     }
@@ -212,7 +214,7 @@ class Movie{
     callAddMovie = () =>{
         to_add_list = this.id;
         list_type = this.list_selector.value();
-        addMovieToList();
+        addMovieToList(this.id);
     }
 
     saveReviews = () => {
@@ -323,4 +325,5 @@ class Movie{
         }
     }
     
+
 }

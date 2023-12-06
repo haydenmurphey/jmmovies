@@ -212,11 +212,37 @@ function searchType(){
         }
     }
 
+    let dropdown_value = search_dropdown.value();
+
     if(search_bar.value() == ""){
         background("darkgray");
+
+        let noInputMessage;
+        if (dropdown_value == "Movie") {
+          noInputMessage = "Error: Please Provide a Valid Movie Title";
+        }
+        else if (dropdown_value == "TV Show") {
+          noInputMessage = "Error: Please Provide a Valid TV Show Title";
+        }
+        else if (dropdown_value == "Actor") {
+          noInputMessage = "Error: Please Provide a Valid Actor Name";
+        }
+        else if (dropdown_value == "User") {
+          noInputMessage = "Error: Please Provide a Valid User Name";
+        }
+        
+        textSize(30);
+        strokeWeight(3);
+        stroke(160, 32, 240);
+        fill("white");
+        rect(windowWidth / 4, 100, 750, 100);
+        strokeWeight(0);
+        fill("black");
+        textAlign(CENTER);
+        text(noInputMessage, windowWidth / 2, 160);
         return;
     }
-    let dropdown_value = search_dropdown.value();
+    
     if (dropdown_value === "Movie"){
         searchMovie(search_bar.value());
     }
@@ -418,7 +444,7 @@ function displayUpcoming() {
     
     fill("black");
     textSize(30);
-    text("Upcoming Movies:", 50, 730);
+    text("Upcoming Movies:", 50, 770);
 
     if(searchResult == null) {
     
@@ -436,7 +462,7 @@ function displayUpcoming() {
             }
     
             let x = 50;
-            let y = 850;
+            let y = 890;
     
             for (let i = 0; i < upcomingMovie.length; i++) {
                 if (upcomingMovie[i] != null) {
