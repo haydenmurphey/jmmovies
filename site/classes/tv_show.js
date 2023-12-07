@@ -75,6 +75,13 @@ class TvShow{
         text("Average Review Rating: " + this.reviewAverage, 100, 900);
         textSize(20);
         text(this.description, 600, 350, 800);
+        if (this.description.length > 600) {
+          text("Release Date: ", this.releaseDate, 600, 700, 800);
+        } else if (this.description.length > 400) {
+          text("Release Date: " + this.releaseDate, 600, 600, 800);
+        } else {
+          text("Release Date: " + this.releaseDate, 600, 500, 800);
+        }
         if (getItem('user') != null){
             let add_to_list_button = createButton("Add to List");
             add_to_list_button.position(800, 150);

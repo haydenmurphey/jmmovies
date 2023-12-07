@@ -265,7 +265,7 @@ class User{
         for (let i = 0; i < this.currently_watching_movies.length; i++){
             let url = "https://api.themoviedb.org/3/movie/" + this.currently_watching_movies_ids[i] + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, (data) => {
-                this.currently_watching_movies[i] = new Movie("id", data, 0, "", "proifle");
+                this.currently_watching_movies[i] = new Movie("id", data, 0, "", "profile");
                 console.log("Movie loaded"); 
             });
         }
