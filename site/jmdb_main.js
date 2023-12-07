@@ -332,7 +332,7 @@ function searchActor(value){
 }
 
 function searchUser(value){
-
+    
 }
 
 function displayUserProfile(){
