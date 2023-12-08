@@ -384,7 +384,7 @@ function displayRecents() {
 } else {
     let new_day =(day - 7);
     let new_day_result = new_day.toString().padStart(2, '0');
-    max_date = `${year}-${month_result}-${new_day_result}`;
+    max_date = `${year}-${paddedMonth}-${new_day_result}`;
 }
 
    let url1 = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&primary_release_date.gte=";

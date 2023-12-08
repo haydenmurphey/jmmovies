@@ -258,7 +258,6 @@ class Movie{
             rating
             review
         */
-        let data_found = true;
         let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "movie?apikey=" + KEYVAL_API_KEY;
         let test;
         let test1;
@@ -280,9 +279,6 @@ class Movie{
                 },
                     test2 = () =>{
                     print("no reviews");
-                            
-                    
-        
                 });
     
             }
