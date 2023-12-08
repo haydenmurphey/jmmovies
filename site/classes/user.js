@@ -69,23 +69,30 @@ class User{
             text("No favorite movie", 300, 300);
         }
 
+        let watchlistContainer = createDiv();
+        watchlistContainer.addClass("watchlist-container");
+
+        let planningContainer = createDiv();
+        planningContainer.addClass('planning-container');
+        planningContainer.parent(watchlistContainer);
+
         let currentlyContainer = createDiv();
         currentlyContainer.addClass('currently-container');
-        currentlyContainer.position(550, 500);
+        currentlyContainer.parent(watchlistContainer);
         let currentlyWatchingP = createP("Currently Watching:");
         currentlyWatchingP.addClass('currently');
         currentlyWatchingP.parent(currentlyContainer);
 
-        let planningContainer = createDiv();
-        planningContainer.addClass('planning-container');
-        planningContainer.position(100, 500)
+        
         let toWatchP = createP("Planning:");
         toWatchP.addClass('toWatch');
         toWatchP.parent(planningContainer);
         
+      
+
         let completedContainer = createDiv();
         completedContainer.addClass('completed-container');
-        completedContainer.position(1000, 500);
+        completedContainer.parent(watchlistContainer);
         let completedP = createP("Completed:");
         completedP.addClass('completed');
         completedP.parent(completedContainer);
