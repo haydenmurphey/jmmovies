@@ -51,13 +51,18 @@ class User{
     
     
     display_profile_screen = () =>{
-        console.log("Displaying Profile");
         removeElements();
+        let movie_watchlist_div = createDiv();
+        movie_watchlist_div.addClass("movie_watchlist_div");
+        console.log("Displaying Profile");
         let img = createElement("img");
+        img.parent(movie_watchlist_div);
+        img.addClass("image");
+        img.addClass("profile-image");
+        img.mouseClicked(this.favorite_movie.buttonPressed);
         if (this.favorite_movie != null){
             img.attribute("src", this.favorite_movie.getImage());
         }
-        img.position(100,150);
         img.size(200,300);
         let usernameP = createP(this.username);
         usernameP.class("profile-username");
@@ -70,6 +75,7 @@ class User{
         }
 
         let watchlistContainer = createDiv();
+        watchlistContainer.parent(movie_watchlist_div);
         watchlistContainer.addClass("watchlist-container");
 
         let planningContainer = createDiv();
