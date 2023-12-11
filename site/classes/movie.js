@@ -314,7 +314,8 @@ class Movie{
             let reviwer = createP("Username: " + this.reviewUsernames[i]);
             let review_rating = createP("Rating: " + this.reviewRatings[i]);
             let review_text = createP(this.reviews[i]);
-
+            review_text.style('width', '500px');
+            review_text.style('word-wrap', 'break-word')
             // Style for Reviews
             let reviewContainer = createDiv();
             reviewContainer.addClass('review-container');
