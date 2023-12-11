@@ -56,20 +56,35 @@ class User{
 
         let usernameP = createP("Username: " + this.username);
         usernameP.parent(movie_watchlist_div);
-
-
-        let favoriteMovieP = createP("Favorite Movie:");
+        let favoriteMovieP;
+        if (this.favorite_movie != null){
+            favoriteMovieP = createP("Favorite Movie: " + this.favorite_movie.name);
+        }else{
+            favoriteMovieP = createP("No Favorite Movie");
+        }
         favoriteMovieP.parent(movie_watchlist_div);
         favoriteMovieP.style('font-size', '20px');
 
-
         movie_watchlist_div.addClass("movie_watchlist_div");
         console.log("Displaying Profile");
+        let imgDiv = createDiv();
+        imgDiv.style('display', 'flex');
+        imgDiv.style('height', 'auto');
+        imgDiv.style('margin-bottom', '20px');
+        imgDiv.parent(movie_watchlist_div)
+
         let img = createElement("img");
-        img.parent(movie_watchlist_div);
+        img.style('margin-right', '30px');
+        img.style('margin-bottom', '0px');
+        img.parent(imgDiv);
         img.addClass("image");
         img.addClass("profile-image");
-        img.mouseClicked(this.favorite_movie.buttonPressed);
+        let descriptionP = createP(this.favorite_movie.description);
+        descriptionP.parent(imgDiv);
+        if (this.favorite_movie != null){
+            img.mouseClicked(this.favorite_movie.buttonPressed);
+
+        }
         if (this.favorite_movie != null){
             img.attribute("src", this.favorite_movie.getImage());
         }

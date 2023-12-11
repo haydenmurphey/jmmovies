@@ -39,12 +39,15 @@ function setup() {
     search_dropdown.class("search-dropdown");
     search_dropdown.option("User");
     
+
+
     search_button = createButton("Search");
     search_button.position(search_bar.x + 328, search_bar.y);
     search_button.size(75);
     search_button.mousePressed(searchType);
     search_button.class("search-button");
 
+    
     login_button = createButton("Login");
     login_input = createInput();
     login_input.position(1265, search_bar.y + 6);
