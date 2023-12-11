@@ -53,6 +53,16 @@ class User{
     display_profile_screen = () =>{
         removeElements();
         let movie_watchlist_div = createDiv();
+
+        let usernameP = createP("Username: " + this.username);
+        usernameP.parent(movie_watchlist_div);
+
+
+        let favoriteMovieP = createP("Favorite Movie:");
+        favoriteMovieP.parent(movie_watchlist_div);
+        favoriteMovieP.style('font-size', '20px');
+
+
         movie_watchlist_div.addClass("movie_watchlist_div");
         console.log("Displaying Profile");
         let img = createElement("img");
@@ -63,17 +73,22 @@ class User{
         if (this.favorite_movie != null){
             img.attribute("src", this.favorite_movie.getImage());
         }
-        img.size(200,300);
-        let usernameP = createP(this.username);
+        let watchlistButtonDiv = createDiv();
+        watchlistButtonDiv.addClass("watchlist-button-div")
+        watchlistButtonDiv.parent(movie_watchlist_div);
+
+        let watchlistP = createP("Watchlist:");
+        watchlistP.parent(watchlistButtonDiv)
+        watchlistP.style('font-size', '20px')
+
         usernameP.class("profile-username");
-        usernameP.position(100,100);
         usernameP.style('font-size', '23px');
         if (this.favorite_movie != null){
-            this.favorite_movie.display(100,125);
         }else{
             text("No favorite movie", 300, 300);
         }
 
+        
         let watchlistContainer = createDiv();
         watchlistContainer.parent(movie_watchlist_div);
         watchlistContainer.addClass("watchlist-container");
@@ -103,11 +118,19 @@ class User{
         completedP.addClass('completed');
         completedP.parent(completedContainer);
 
-        let toggleButton = createButton("Show Tv");
-        toggleButton.position(700, 500);
-        toggleButton.mousePressed(this.toggleWatchlist);
+        this.toggleButton = createButton("Show TV");
+        this.toggleButton.size(70,50);
+        this.toggleButton.style('margin-left', '50px')
+        this.toggleButton.mousePressed(this.toggleWatchlist);
+        this.toggleButton.addClass('toggle-button')
+        this.toggleButton.parent(watchlistButtonDiv);
+
+        
 
         this.showMovie = true;
+
+        
+
 
         let x = 100;
         let y = 500;
@@ -194,7 +217,12 @@ class User{
     }
 
     toggleWatchlist = () =>{
-        
+        if (this.toggleButton.html() === "Show TV"){
+            this.toggleButton.html("Show Movies");
+        }
+        else{
+            this.toggleButton.html("Show TV");
+        }
         this.showMovie = !this.showMovie;
         if (this.showMovie){
             for (let i = 0; i < this.plan_to_watch_movies.length; i++){
@@ -429,11 +457,9 @@ class User{
         textWrap(WORD);
         textSize(12);
         text(this.username, x, y + 60, 60);
-        }
+    }
     
 }
-
-
 
 function makeFavorite(){
     user.favorite_movie_id = to_favorite;
