@@ -93,8 +93,11 @@ class User{
         img.parent(imgDiv);
         img.addClass("image");
         img.addClass("profile-image");
-        let descriptionP = createP(this.favorite_movie.description);
-        descriptionP.parent(imgDiv);
+        if (this.favorite_movie != null){
+            let descriptionP = createP(this.favorite_movie.description);
+            descriptionP.parent(imgDiv);
+
+        }
         if (this.favorite_movie != null){
             img.mouseClicked(this.favorite_movie.buttonPressed);
 
@@ -112,10 +115,7 @@ class User{
 
         usernameP.class("profile-username");
         usernameP.style('font-size', '23px');
-        if (this.favorite_movie != null){
-        }else{
-            text("No favorite movie", 300, 300);
-        }
+        
 
         
         let watchlistContainer = createDiv();
