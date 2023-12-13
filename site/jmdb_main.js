@@ -354,7 +354,6 @@ function displayUserProfile(){
     if (searchResult != null){
         for (let i = 0; i < searchResult.length; i++){
             searchResult[i].image.remove();
-            searchResult[i].button.remove();   
         }
     }
     
