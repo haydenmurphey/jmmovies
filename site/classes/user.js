@@ -50,8 +50,22 @@ class User{
     }
     
     
+    display(x,y){
+        let searchUsernameP = createP(this.username);
+        searchUsernameP.style('font-size', '23px')
+        searchUsernameP.addClass('watchlist-item');
+        searchUsernameP.mouseClicked(this.display_profile_screen);
+        searchUsernameP.position(x,y);
+    }
+
+
+
+   
+
     display_profile_screen = () =>{
         removeElements();
+
+
         let movie_watchlist_div = createDiv();
 
         let usernameP = createP("Username: " + this.username);
@@ -466,13 +480,7 @@ class User{
 
     }
 
-    display(x,y){
-        fill("black");
-        textSize(30);
-        textWrap(WORD);
-        textSize(12);
-        text(this.username, x, y + 60, 60);
-    }
+    
     
 }
 

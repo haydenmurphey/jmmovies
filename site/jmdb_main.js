@@ -190,6 +190,24 @@ function saveUsers(){
 }
 
 
+function removeHomescreen() {
+    if(upcomingMovie != null){
+        for (let i = 0; i < upcomingMovie.length; i ++){
+            upcomingMovie[i].image.remove();
+            
+        }
+    }
+    if (trendingMovies != null) {
+        for (let i = 0; i < trendingMovies.length; i ++) {
+            trendingMovies[i].image.remove();
+        }
+    }
+    if (recentlyReleased != null){
+        for (let i = 0; i < recentlyReleased.length; i++){
+            recentlyReleased[i].image.remove();
+        }
+    }
+}
 
 function searchType(){
     search_val = search_bar.value();
@@ -335,10 +353,15 @@ function searchActor(value){
 }
 
 function searchUser(value){
+    background('darkgray');
     let searchResult = Array();
+    let x = 100;
+    let y = 150;
     for (let i = 0; i < users.length; i ++){
         if (users[i].username.includes(value)){
             searchResult.push(users[i]);
+            users[i].display(x,y);
+            y += 100;
         }
     }   
     print(searchResult);
