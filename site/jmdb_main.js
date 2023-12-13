@@ -190,24 +190,6 @@ function saveUsers(){
 }
 
 
-function removeHomescreen() {
-    if(upcomingMovie != null){
-        for (let i = 0; i < upcomingMovie.length; i ++){
-            upcomingMovie[i].image.remove();
-            
-        }
-    }
-    if (trendingMovies != null) {
-        for (let i = 0; i < trendingMovies.length; i ++) {
-            trendingMovies[i].image.remove();
-        }
-    }
-    if (recentlyReleased != null){
-        for (let i = 0; i < recentlyReleased.length; i++){
-            recentlyReleased[i].image.remove();
-        }
-    }
-}
 
 function searchType(){
     search_val = search_bar.value();
@@ -448,7 +430,7 @@ function displayUpcoming() {
     let date = new Date;
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
-    let day = date.getDate();
+    let day = date.getDate() + 1;
     let day_result = day.toString().padStart(2, '0');
     let month_result = month.toString().padStart(2, '0');
     let days_in_month = daysInMonth(month, year);
