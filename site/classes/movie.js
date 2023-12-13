@@ -62,7 +62,7 @@ class Movie{
     
     HomeDisplay(x,y){
         this.displayed_on_home = true;
-        //this.image.position(x,y);
+        this.image.position(x,y);
         this.image.attribute("src", this.getImage());
         this.image.size(120,200);
         this.image.mouseClicked(this.buttonPressed);
@@ -70,16 +70,25 @@ class Movie{
         if (this.imgPath == null){
             this.image.attribute("src", "https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg")
         }
-        let textContainer = createDiv();
-        this.image.parent(textContainer);
-        textContainer.addClass('text-container');
-        let movieText = createP(this.name);
-        movieText.addClass('movie-text');
-        movieText.parent(textContainer);
-        let dateText = createP(this.releaseDate);
-        dateText.addClass('movie-text');
-        dateText.parent(textContainer);
-        textContainer.position(x, y);
+        textSize(12);
+        textStyle(BOLD);
+        text(this.name, x + 2, y + 135, 130);
+        textSize(12);
+        textStyle(NORMAL);
+        text(this.releaseDate, x + 2, y + 120, x + 10);
+
+        // couldn't figure out how to hide the div when 
+        // the search button was clicked. 
+        // let textContainer = createDiv();
+        // this.image.parent(textContainer);
+        // textContainer.addClass('text-container');
+        // let movieText = createP(this.name);
+        // movieText.addClass('movie-text');
+        // movieText.parent(textContainer);
+        // let dateText = createP(this.releaseDate);
+        // dateText.addClass('movie-text');
+        // dateText.parent(textContainer);
+        // textContainer.position(x, y); 
     }
 
     buttonPressed = () =>{
