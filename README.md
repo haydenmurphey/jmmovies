@@ -1,6 +1,6 @@
 # JMMovies
 
-A movie and TV discovery site inspired by IMDb, built by a team of five in **CS 345 (Software Engineering)** at James Madison University, Fall 2023.
+A movie and TV discovery site inspired by IMDb, built in **CS 345 (Software Engineering)** at James Madison University, Fall 2023.
 
 **Tech:** [p5.js](https://p5js.org/) 1.7 (used mostly for its DOM helpers like `createButton` and `createInput`), the [TMDB REST API](https://developer.themoviedb.org/), and plain JavaScript classes. There's no build step and no framework.
 
