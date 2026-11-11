@@ -49,13 +49,3 @@ This was a group project. Credit goes to everyone who worked on it:
 - **Sam Sorrell**
 
 Course instructor: Phil Riley.
-
-### My contributions
-
-<!-- TODO: a few bullets on what you personally built, e.g. search, user profiles, watchlists -->
-
-The full commit history from the original class repository is preserved here, so each team member's contributions remain attributed to them.
-
----
-
-*This product uses the TMDB API but is not endorsed or certified by TMDB.*
