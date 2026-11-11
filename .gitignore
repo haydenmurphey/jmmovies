@@ -1,2 +1,4 @@
+# Local API keys - never commit
+api_key.js
 
-api_keys.js
+.DS_Store

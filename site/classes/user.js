@@ -5,7 +5,7 @@ class User{
         this.favorite_movie_id = favorite_movie_id;
         this.favorite_movie = null;
         if (favorite_movie_id != null){
-            let url = "https://api.themoviedb.org/3/movie/" + favorite_movie_id + "?language=en-US&api_key=YOUR_TMDB_API_KEY";
+            let url = "https://api.themoviedb.org/3/movie/" + favorite_movie_id + "?language=en-US&api_key=" + TMDB_API_KEY;
             loadJSON(url, test = (data) => {
                 this.favorite_movie = new Movie("id", data,0,"","profile");
             });
