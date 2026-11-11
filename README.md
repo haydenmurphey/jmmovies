@@ -49,3 +49,7 @@ This was a group project. Credit goes to everyone who worked on it:
 - **Sam Sorrell**
 
 Course instructor: Phil Riley.
+
+---
+
+*This product uses the TMDB API but is not endorsed or certified by TMDB.*
