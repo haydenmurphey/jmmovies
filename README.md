@@ -2,7 +2,7 @@
 
 A movie and TV discovery site inspired by IMDb, built by a team of five in **CS 345 (Software Engineering)** at James Madison University, Fall 2023.
 
-Built with [p5.js](https://p5js.org/) and [The Movie Database (TMDB) API](https://developer.themoviedb.org/).
+**Tech:** [p5.js](https://p5js.org/) 1.7 (used mostly for its DOM helpers like `createButton` and `createInput`), the [TMDB REST API](https://developer.themoviedb.org/), and plain JavaScript classes. There's no build step and no framework.
 
 ## Features
 
@@ -18,13 +18,13 @@ Built with [p5.js](https://p5js.org/) and [The Movie Database (TMDB) API](https:
    ```sh
    cp api_key.example.js api_key.js
    ```
-2. Serve the repo root with any static server and open `site/index.html`:
+2. Serve the repo root with any static server:
    ```sh
    python3 -m http.server 5501
-   # then visit http://localhost:5501/site/index.html
+   # then visit http://localhost:5501/
    ```
 
-> **Note:** Accounts and reviews were stored in a key-value service provided by the course (`keyval.learnscrum.xyz`), which may no longer be available. Search and browsing only need a TMDB key.
+> **Note:** Accounts, watchlists, and reviews were originally stored in a key-value service run by the course, which has since been retired. They are now saved in your browser's `localStorage`, so they stay on your machine. A TMDB key is the only setup needed.
 
 ## Project structure
 
@@ -34,9 +34,8 @@ site/
   jmdb_main.js      p5.js setup, search, home page sections, login
   classes/          Movie, TVShow, Person, User, Review models
 lib/
-  keyval.js         Small client for the course key-value store
-  jstest.js         Minimal test harness
-test/               Browser test runner
+  keyval.js         Key-value storage (localStorage; originally the course's web service)
+index.html          Redirects to site/
 ```
 
 ## Team
@@ -50,6 +49,10 @@ This was a group project. Credit goes to everyone who worked on it:
 - **Sam Sorrell**
 
 Course instructor: Phil Riley.
+
+### My contributions
+
+<!-- TODO: a few bullets on what you personally built, e.g. search, user profiles, watchlists -->
 
 The full commit history from the original class repository is preserved here, so each team member's contributions remain attributed to them.
 

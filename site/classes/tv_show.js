@@ -161,7 +161,7 @@ class TvShow{
            rating
            review
        */
-       let movieKeyval = new Keyval(KEYVAL_API_KEY);
+       let movieKeyval = new Keyval();
        let reviews_json = {};
        reviews_json.review_total_rating = this.totalReviewScore;
        let reviewsArray = Array(this.reviews.length);
@@ -188,39 +188,27 @@ class TvShow{
         rating
         review
     */
-    let data_found = true;
-    let review_url = "https://keyval.learnscrum.xyz/keystore/" + this.id + "tv?apikey=" + KEYVAL_API_KEY;
-    let test;
-    let test1;
-    let test2;
-    let blah = fetch(review_url).then(test1 = (response) =>{
-        if (response.status == 200){
-            loadJSON(review_url, test = (data) =>{
-                this.reviews = Array(data.reviews.length);
-                this.reviewUsernames = Array(data.reviews.length);
-                this.reviewRatings = Array(data.reviews.length);
-                this.totalReviewScore = data.review_total_rating;
-                this.reviewAverage = this.totalReviewScore / data.reviews.length;
-    
-                for (let i = 0; i < this.reviews.length; i++){
-                    this.reviews[i] = data.reviews[i].review;
-                    this.reviewUsernames[i] = data.reviews[i].username;
-                    this.reviewRatings[i] = data.reviews[i].rating;
-                }
-            },
-                test2 = () =>{
-                print("no reviews");
-            });
+    let data = Keyval.read(this.id + "tv");
+    if (data !== null && Array.isArray(data.reviews)){
+        this.reviews = Array(data.reviews.length);
+        this.reviewUsernames = Array(data.reviews.length);
+        this.reviewRatings = Array(data.reviews.length);
+        this.totalReviewScore = data.review_total_rating;
+        this.reviewAverage = data.reviews.length ? this.totalReviewScore / data.reviews.length : 0;
 
+        for (let i = 0; i < this.reviews.length; i++){
+            this.reviews[i] = data.reviews[i].review;
+            this.reviewUsernames[i] = data.reviews[i].username;
+            this.reviewRatings[i] = data.reviews[i].rating;
         }
-        else{
-            this.reviews = Array();
-                this.reviewUsernames = Array();
-                this.reviewRatings = Array();
-                this.totalReviewScore = 0;
-                this.reviewAverage = 0;
-        }
-    })
+    }
+    else{
+        this.reviews = Array();
+        this.reviewUsernames = Array();
+        this.reviewRatings = Array();
+        this.totalReviewScore = 0;
+        this.reviewAverage = 0;
+    }
     }
 
     submitReview = () => {

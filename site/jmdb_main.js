@@ -67,7 +67,13 @@ function setup() {
     profile_button.hide();
     profile_button.mousePressed(displayUserProfile);
     profile_button.class("profile");
-    
+
+    if (typeof TMDB_API_KEY === "undefined" || TMDB_API_KEY === "YOUR_TMDB_API_KEY") {
+        let notice = createP("No TMDB API key found. Copy api_key.example.js to api_key.js and add your key (see README).");
+        notice.position(50, 100);
+        return;
+    }
+
     login();
 
     displayUpcoming();
@@ -76,15 +82,11 @@ function setup() {
 }
 
 function preload(){
-    let key = "users";
-    url = "https://keyval.learnscrum.xyz/keystore/users?apikey=" + KEYVAL_API_KEY;
-    loadJSON(url, function(data){
-        user_json = data;
-        users = Array(user_json.users.length);
-        for (let i = 0; i < user_json.users.length; i++){
-            users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id, user_json.users[i].currently_watching_movies, user_json.users[i].plan_to_watch_movies, user_json.users[i].completed_movies, user_json.users[i].currently_watching_tv, user_json.users[i].plan_to_watch_tv, user_json.users[i].completed_tv);
-        }
-    });
+    user_json = Keyval.read("users") || {users: []};
+    users = Array(user_json.users.length);
+    for (let i = 0; i < user_json.users.length; i++){
+        users[i] = new User(user_json.users[i].username, user_json.users[i].favorite_movie_id, user_json.users[i].currently_watching_movies, user_json.users[i].plan_to_watch_movies, user_json.users[i].completed_movies, user_json.users[i].currently_watching_tv, user_json.users[i].plan_to_watch_tv, user_json.users[i].completed_tv);
+    }
 }
 
 
@@ -165,7 +167,7 @@ function saveUsers(){
     */
     let json = {};
     let json_string;
-    let user_keyval = new Keyval(KEYVAL_API_KEY);
+    let user_keyval = new Keyval();
     let users_array_json = Array(users.length); 
     for (let i = 0; i < users.length; i++){
         users_array_json[i] = {};
